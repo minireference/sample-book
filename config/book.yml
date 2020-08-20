@@ -1,0 +1,11 @@
+---
+slug: sample-book
+filename: sample-book
+title: Sample Book
+subtitle: An example of using softcover with Minireference Co. customizations
+description: This is a simple project to showcase the power of sofcover build system that generates HTML, ePub, Mobi, and PDF from LaTeX source code.
+author: Ivan Savov
+copyright: 2020
+uuid: 04a37eea-e9d1-4f35-9146-49bc1240263e
+pdf_preview_page_range: 1..30
+epub_mobi_preview_chapter_range: 0..1
