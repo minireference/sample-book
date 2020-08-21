@@ -3,6 +3,7 @@ config/marketing.yml
 images/cover-web.png
 latex_styles/applekeys.sty
 
+99anssol/*tex
 
 ###### SOFTCOVER GITIGNORE #####################################################
 

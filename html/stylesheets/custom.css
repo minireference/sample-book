@@ -13,3 +13,13 @@ body #book {
 }
 
 */
+
+
+.exparts, .exparts-star {
+  list-style-type: lower-alpha;
+}
+
+.ansparts, .ansparts-star {
+  list-style-type: lower-alpha;
+}
+

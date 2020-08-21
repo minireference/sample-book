@@ -76,3 +76,33 @@ they will be resolved correctly.
   - `99anssol` directory where exercises answers and solutions are collected to
     be printed in the Answers and Solutions appendix. Only relevant when `\setboolean{SOLSINTHEBACK}{true}`.
   - `log` very detailed logging output you'll want to check when things break
+
+
+## Exercises and problems
+
+### Definitions
+
+  - Exercise = easy question with numbering contiguous throughout chapter e.g. E{chapter}.{counter}
+  - Problem = harder end-of-chapter problem 
+
+
+### Exercise formatting
+
+  - each exercise section starts an `{exercises}{CHNUM}` where CHNUM is some filename  (e.g. ch2)
+  - each exercise envoronment contains
+    - question text
+    - one or more {hint} environments
+    - an {eanswer} environment (optional)
+    - an {esolution} environment (optional)
+
+
+### Problems formatting
+
+  - each problems section starts an `{problems}{CHNUM}` where CHNUM is some filename  (e.g. ch2)
+  - each problem environment contains
+    - question text
+    - one or more {hint} environments
+    - an {answer} environment (optional)
+    - an {solution} environment (optional)
+
+

@@ -1,5 +1,4 @@
 \chapter{The first chapter}
-
 \label{cha:a_chapter}
 
 This is the first paragraph of the Softcover Markdown template produced with the \softcover\ command-line interface. It shows how to write a document in Markdown, a lightweight markup language, augmented with the \href{http://kramdown.gettalong.org/}{kramdown} converter and some custom extensions, including support for embedded \PolyTeX, a subset of the powerful \LaTeX\ typesetting system.\footnote{Pronunciations of {}``LaTeX{}'' differ, but \emph{lay}-tech is the one I prefer.} For more information, see \href{http://manual.softcover.io/book}{\emph{The Softcover Book}}. To learn how to easily publish (and optionally sell) documents produced with Softcover, visit \href{http://softcover.io/}{Softcover.io}.
@@ -71,6 +70,41 @@ Softcover also supports an alternate math syntax, such as \(\phi^2 - \phi - 1 = 
 \[\phi = \frac{1+\sqrt{5}}{2}.\]
 
 The \LaTeX\ syntax is strongly preferred, but the alternate syntax is included for maximum compatibility with other systems.
+
+
+
+
+\subsection{Exercises}
+
+\beforeFirstExercises{ch1}
+
+\begin{exercises}{ch1}
+
+	\begin{exercise} 
+		Do the following vectors represent probability distributions?
+		\begin{exparts*}
+			\partsitem	$\left(\tfrac{1}{2}, \tfrac{1}{2}, \tfrac{1}{2} \right)^T$
+			\partsitem	$\left(\tfrac{1}{4}, \tfrac{1}{4}, \tfrac{1}{4}, \tfrac{1}{4} \right)^T$
+			\partsitem	$\left(0.3, 0.3, -0.1, 0.5  \right)^T$
+		\end{exparts*}
+
+		\begin{eanswer}\begin{ansparts*}
+					\partsitem No; weights don't add to one.
+					\partsitem Yes.
+					\partsitem No; contains a negative number.
+					\end{ansparts*}\end{eanswer}
+
+		\begin{esolution}
+			In each case we check if each probability weight is positive and
+			the total probability sums to one.
+		\end{esolution}
+	\end{exercise}
+
+\end{exercises}
+
+\afterLastExercises{ch1}
+
+
 
 \section{Images and tables}
 
@@ -157,3 +191,40 @@ This is the end of the template---apart from two mostly empty chapters. In fact,
 %= <<(chapters/yet_another_chapter.tex, lang: text)
 
 Visit \href{http://manual.softcover.io}{\emph{The Softcover Book}} to learn more about what Softcover can do.
+
+
+
+
+\section{Probability problems}
+
+\begin{problems}{ch1}
+
+	\begin{problem}		\label{problem:geometric_distr_biased_coin_until_heads}
+		You have a biased coin which lands on \texttt{heads} with probability $p$,
+		and consequently lands on \texttt{tails} with probability $(1-p)$.
+		Suppose you want to flip the coin until you get \texttt{heads}.
+		Define the random variable $N$ as the number of tosses required until the first \texttt{heads} outcome.
+		What is the probability mass function $P_N(n)$ for success on the $n$\textsuperscript{th} toss?
+		Confirm that the formula is a valid probability distribution by showing $\sum_{n=1}^\infty P_N(n) = 1$.
+
+		\begin{hint}
+			Find the probabilities for cases $n=1,2,3,\ldots$ and look for a pattern.
+		\end{hint}
+
+		\begin{answer}$P_N(n) = (1-p)^{n-1}p$\end{answer}
+
+		\begin{solution}
+			The biased coin flip is modelled by a random variable $Y$,
+			and different coin flips correspond to random variables $Y_1$, $Y_2$, $Y_3$, \ldots which are independent copies of $Y$.
+			The probability of getting \texttt{heads} on the first flip is $P_N(1)=\textrm{Pr}\!\left( \{ Y_1=\texttt{heads} \} \right)\! =p$.
+			The probability of getting \texttt{heads} on the second flip corresponds
+			to the event $\{Y_1=\texttt{tails}\} \ \texttt{AND} \ \{Y_2=\texttt{heads} \}$.
+			We assumed the coin flips are independent so % the probability of this event is the product
+			$P_N(2)=(1-p)p$.
+			Similarly $P_N(3) = (1-p)^2p$.
+			The general formula is $P_N(n) = (1-p)^{n-1}p$.
+		\end{solution}
+	\end{problem}
+
+
+\end{problems}
