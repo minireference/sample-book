@@ -32,6 +32,23 @@ sofcover build    # builds HTML, ePub, mobi, and PDF
 ```
 
 
+## Docker build
+
+Assuming docker installed on your machine you can built the image using:
+```bash
+docker build -t softcover-docker .
+```
+
+Then build html book from this project, by mounting the current directory under
+the `/book` directory inside the container:
+```bash
+docker run -v $PWD:/book softcover-docker sc build:html
+```
+
+To start the softcover live-updating server, run the command
+```bash
+docker run -v $PWD:/book -p 4000:4000 softcover-docker sc server
+```
 
 ## Book source structure
 
