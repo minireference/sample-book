@@ -1,4 +1,4 @@
-FROM circleci/ruby:2.6.3-stretch-node-browsers-legacy
+FROM circleci/ruby:2.6.6-buster-node-browsers-legacy
 LABEL maintainer="ivan@minireference.com"
 LABEL company="Minireference Co."
 LABEL version="1.1.0"
@@ -10,13 +10,16 @@ USER root
 # install deps
 # ==============================================================================
 RUN gem install -v 2.1.4 bundler
+RUN echo 'deb http://deb.debian.org/debian buster-backports main' > /etc/apt/sources.list.d/backports.list
 RUN apt-get update -qq \
+  && apt-get -t buster-backports install -qy --no-install-recommends "inkscape" \
   && apt-get install -qy --no-install-recommends \
-  texlive-full texlive-latex-extra \
-  texlive-fonts-recommended texlive-fonts-extra fonts-gfs-bodoni-classic \
-  inkscape \
-  ghostscript \
-  cabextract \
+      texlive-latex-recommended texlive-latex-extra \
+      texlive-lang-english texlive-lang-french texlive-lang-cyrillic \
+      texlive-science texlive-pictures latexdiff \
+      texlive-fonts-recommended texlive-fonts-extra fonts-gfs-bodoni-classic \
+      ghostscript \
+      cabextract \
   && rm -rf /var/lib/apt/lists/*
 RUN wget http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.6_all.deb \
   && dpkg -i ttf-mscorefonts-installer_3.6_all.deb
@@ -30,10 +33,19 @@ RUN wget https://softcover-static.s3.amazonaws.com/Bodoni%2072%20Smallcaps%20Boo
 
 
 # ==============================================================================
-# softcover gem
+# Install miniref versions of softcover and polytexnic
 # ==============================================================================
-RUN gem install softcover:1.6.4
-
+RUN cd /root \
+  && git clone https://github.com/minireference/softcover.git \
+  && cd softcover \
+  && bundle install \
+  && bundle exec rake install \
+  && cd /root \
+  && git clone https://github.com/minireference/polytexnic.git \
+  && cd polytexnic \
+  && bundle install \
+  && bundle exec rake install \
+  && echo "softcover installed"
 
 # ==============================================================================
 # Health check
