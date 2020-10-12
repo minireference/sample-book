@@ -38,11 +38,13 @@ RUN wget https://softcover-static.s3.amazonaws.com/Bodoni%2072%20Smallcaps%20Boo
 RUN cd /root \
   && git clone https://github.com/minireference/softcover.git \
   && cd softcover \
+  && git checkout miniref \
   && bundle install \
   && bundle exec rake install \
   && cd /root \
   && git clone https://github.com/minireference/polytexnic.git \
   && cd polytexnic \
+  && git checkout miniref \
   && bundle install \
   && bundle exec rake install \
   && echo "softcover installed"
