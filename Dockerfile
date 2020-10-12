@@ -1,7 +1,7 @@
 FROM circleci/ruby:2.6.6-buster-node-browsers-legacy
 LABEL maintainer="ivan@minireference.com"
 LABEL company="Minireference Co."
-LABEL version="1.1.0"
+LABEL version="1.1.1"
 
 USER root
 
@@ -14,7 +14,7 @@ RUN echo 'deb http://deb.debian.org/debian buster-backports main' > /etc/apt/sou
 RUN apt-get update -qq \
   && apt-get -t buster-backports install -qy --no-install-recommends "inkscape" \
   && apt-get install -qy --no-install-recommends \
-      texlive-latex-recommended texlive-latex-extra \
+      texlive-xetex texlive-latex-recommended texlive-latex-extra \
       texlive-lang-english texlive-lang-french texlive-lang-cyrillic \
       texlive-science texlive-pictures latexdiff \
       texlive-fonts-recommended texlive-fonts-extra fonts-gfs-bodoni-classic \
