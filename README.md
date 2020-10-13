@@ -14,13 +14,15 @@ Technologies uses:
 ```bash
 # 1. create a Python virtualenv (required for pygments code highliting)
 virtualenv -p python2.7 venv
+source venv/bin/activate
+pip install -r requirements.txt
 
 # 2. install Ruby v2.6.3 so we don't have to use system-ruby
 rvm install ruby-2.6.3
 ```
 
 
-## Build
+## Build (local)
 
 ```bash
 # make sure we're running the right Pythons and Rubies
@@ -32,7 +34,7 @@ sofcover build    # builds HTML, ePub, mobi, and PDF
 ```
 
 
-## Docker build
+## Docker build (local)
 
 Assuming docker installed on your machine you can built the image using:
 ```bash
@@ -50,7 +52,22 @@ To start the softcover live-updating server, run the command
 docker run -v $PWD:/book -p 4000:4000 softcover-docker sc server
 ```
 
-## Book source structure
+## Docker build using Fabric (local or remote)
+
+Edit the constants at the top of `fabfile.py` to specify access credentials to a
+machine that has docker installed.
+
+Build the docker image that contains softcover:
+```bash
+fab dbuildimage
+```
+
+Build the ePub format:
+```bash
+fab dbuild:epub
+```
+
+## Book structure
 
     sample-book.tex
     chapters/
@@ -99,14 +116,14 @@ they will be resolved correctly.
 
 ### Definitions
 
-  - Exercise = easy question with numbering contiguous throughout chapter e.g. E{chapter}.{counter}
-  - Problem = harder end-of-chapter problem 
+  - Exercise = easy question with numbering contiguous throughout chapter, e.g. `E{chapter}.{ecounter}`.
+  - Problem = harder end-of-chapter problem, labelled `P{chapter}.{pcounter}`.
 
 
 ### Exercise formatting
 
-  - each exercise section starts an `{exercises}{CHNUM}` where CHNUM is some filename  (e.g. ch2)
-  - each exercise envoronment contains
+  - each exercise section starts an `{exercises}{chNUM}` where `chNUM` is some filename  (e.g. ch2)
+  - each exercise environment contains
     - question text
     - one or more {hint} environments
     - an {eanswer} environment (optional)
@@ -121,5 +138,4 @@ they will be resolved correctly.
     - one or more {hint} environments
     - an {answer} environment (optional)
     - an {solution} environment (optional)
-
 
