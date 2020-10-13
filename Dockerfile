@@ -41,13 +41,14 @@ RUN cd /root \
   && git checkout miniref \
   && bundle install \
   && bundle exec rake install \
+  && echo "miniref softcover insalled" \
   && cd /root \
   && git clone https://github.com/minireference/polytexnic.git \
   && cd polytexnic \
   && git checkout miniref \
   && bundle install \
   && bundle exec rake install \
-  && echo "softcover installed"
+  && echo "miniref polytexnic installed"
 
 # ==============================================================================
 # Health check
