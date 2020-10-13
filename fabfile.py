@@ -208,3 +208,46 @@ def get_ebooks_from_docker_host_dir(remotepath, format):
             localfilepath = os.path.join('ebooks', filename + '.' + format)
             get(remotefilepath, localfilepath)
 
+
+
+# PROVISION DOCKER ON REMOTE HOST
+################################################################################
+
+@task
+def install_docker():
+    """
+    Install docker on remote host following the instructions from the docs:
+    https://docs.docker.com/engine/install/debian/#install-using-the-repository
+    """
+    with settings(warn_only=True), hide('stdout', 'stderr', 'warnings'):
+        sudo('apt-get -qy remove docker docker-engine docker.io containerd runc')
+    with hide('stdout'):
+        sudo('apt-get update -qq')
+        sudo('apt-get -qy install apt-transport-https ca-certificates curl gnupg-agent software-properties-common')
+    sudo('curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -')
+    sudo('add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"')
+    with hide('stdout'):
+        sudo('apt-get update -qq')
+        sudo('apt-get -qy install docker-ce docker-ce-cli containerd.io')
+    sudo('usermod -aG docker {}'.foramt(env.user))  # add user to `docker` group
+    # docker-compose opens >10 SSH sessions, hence we need to up default value
+    # via https://github.com/docker/compose/issues/6463#issuecomment-458607840
+    sudo("sed -i 's/^#MaxSessions 10/MaxSessions 30/' /etc/ssh/sshd_config")
+    sudo('service sshd restart')
+    print(green('Docker installed on ' + env.host))
+
+
+@task
+def uninstall_docker(deep=False):
+    """
+    Uninstall docker using instructions from the official Docker docs:
+    https://docs.docker.com/engine/install/debian/#uninstall-docker-engine
+    """
+    deep = (deep and deep.lower() == 'true')  # defaults to False
+    with hide('stdout'):
+        sudo('apt-get -qy purge docker-ce docker-ce-cli containerd.io')
+        if deep:
+            sudo('rm -rf /var/lib/docker')
+            sudo('rm -rf /var/lib/containerd')
+    print(green('Docker uninstalled from ' + env.host))
+
