@@ -67,7 +67,71 @@ Build the ePub format:
 fab dbuild:epub
 ```
 
-## Book structure
+
+
+## Book sources (minireference LaTeX)
+Before we can the `softcover` framework to build the ePub and mobi formats for
+our book, we must first extract the source code and perform some preprocessing
+steps to make sure the .tex source is in the format expected by Softcover.
+
+You can automatically generate a draft book manifest file using the command:
+```bash
+fab extractmanifest:"/Users/ivan/Projects/Minireference/MATHPHYSbook/noBSguideMath.tex"
+```
+
+The book manifest `config/manifest.yml` format has the following structure:
+```yaml
+---
+sourcedir: "/Users/ivan/Projects/Minireference/MATHPHYSbook"
+frontmatter:
+  chapters:
+    - title: Concept maps
+      label: concept_maps
+      sourcefiles:
+        - "00_frontmatter/concept_map.tex"
+    - title: Preface
+      label: sec:preface
+      sourcefiles:
+        - 00.preface.tex
+    - title: Introduction
+      label: sec:introduction
+      sourcefiles:
+        - "00.introduction.tex"
+mainmatter:
+  chapters:
+    - title: Numbers, variables, and equations
+      label: chapter:equations
+      sourcefiles:
+        - 01_math/01.solving_equations.tex
+        - 01_math/02.numbers.tex
+        - ...
+    - title: Algebra
+      label: chapter:algebra
+      sourcefiles:
+        - 01_math/05.basic_rules_of_algebra.tex
+        - 01_math/06.solving_quadratic_equations.tex
+        - ...
+backmatter:  # not implemented yet (just add as a regular chapter)
+headers:   # shouldn't be need for any (assume all minireference.hdr.tex macros pre-packaged)
+graphics:  # the contents of all includegraphics commands (as png)
+  - figures/math/circle-centered-at-h-k.png
+  - figures/math/polar/empty_coordinate_system_polar.png
+  - ...
+```
+
+This manifest provides all the info needed to extract the relevant source files,
+transform them into softcover-compatible LaTeX markup, and load them into the
+`chapters/` directory, where they will be picked up by the softcover build step.
+
+All three these steps can be performed using:
+```bash
+fab extract transform load
+```
+
+
+
+
+## Book structure (softcover LaTeX)
 
     sample-book.tex
     chapters/
