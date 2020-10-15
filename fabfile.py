@@ -40,45 +40,8 @@ EXERCISE_INCLUDES_LOOKUP = {
     'showProblemSolutions': 'solutions_',
 }
 
-TexLine = namedtuple('TexLine', ['relpath', 'texnode'])
+TexLine = namedtuple('TexLine', ['parent', 'relpath', 'texnode'])
 
-
-def latexpandonce(sourcedir, mainfilename):
-    """
-    Process the latex document `mainfilename` and expand one level of `\input`s.
-    Returns a list of `TexLine` named tuples that are used by `extractmanifest`.
-    """
-    mainpath = os.path.join(sourcedir, mainfilename)
-    print('reading ', mainfilename)
-    soup = TexSoup.TexSoup(open(mainpath).read(), skip_envs=('verbatimtab',))
-    doc = soup.document  # skip preamble
-    texlines = []
-    for texnode in doc.children:
-        if hasattr(texnode, 'name') and texnode.name == 'input':
-            # try:
-                # an include of another file
-                relpath = str(texnode.string)
-                print('  - reading', relpath)
-                includepath = os.path.join(sourcedir, relpath)
-                assert os.path.exists(includepath), 'missing input file ' + includepath
-                subsoup = TexSoup.TexSoup(open(includepath).read(), skip_envs=('verbatimtab',))
-                for subtexnode in subsoup.children:
-                    texlines.append(TexLine(relpath, subtexnode))
-            # except (TypeError, EOFError) as e:
-            #     print(e)
-        else:
-            # non-include line
-            texlines.append(TexLine(mainfilename, texnode))
-    return texlines
-
-def name_matches(texnode, names):
-    """
-    Returns True if `texnode`'s name is on one of the names in `names`.
-    """
-    if hasattr(texnode, 'name') and texnode.name in names:
-        return True
-    else:
-        return False
 
 @task
 def extractmanifest(mainpath):
@@ -100,7 +63,7 @@ def extractmanifest(mainpath):
     # starting with frontmatter...
     current_chapters = manifest['frontmatter']['chapters']
     current_chapter = None
-    texlines = latexpandonce(sourcedir, mainfilename)
+    texlines = latexpand(sourcedir, mainfilename)
     peekable_texlines = peekable(texlines)
     for texline in peekable_texlines:
         relpath = texline.relpath
@@ -122,38 +85,45 @@ def extractmanifest(mainpath):
             # Look ahead to check if there is a \label command
             nextlines = peekable_texlines[0:2]
             for nextline in nextlines:
-                if hasattr(nextline, 'name') and nextline.name == 'label':
-                    chapter_dict['label'] = str(nextline.string)
+                if name_matches(nextline.texnode, ['label']):
+                    chapter_dict['label'] = str(nextline.texnode.string)
                     break
             if chapter_dict['label'] is None:
-                chapter_dict['label'] = chapter_dict['title'].replace(' ', '_') \
-                    .replace(',', '_').replace('.', '_')
+                # fallback set label based on title
+                chapter_dict['label'] = chapter_dict['title'].lower() \
+                    .replace(' ', '_').replace(',', '_').replace('.', '_')
             current_chapters.append(chapter_dict)
             current_chapter = chapter_dict
         else:
             # filename extraction
-            if current_chapter is None and relpath not in ignore_relpaths:
+            if current_chapter is None:
                 print('skipping line ', str(texline.texnode)[0:30] + '...', 'in', relpath)
-            elif relpath not in current_chapter['sourcefiles'] and relpath not in ignore_relpaths:
+            elif relpath not in current_chapter['sourcefiles'] \
+                and relpath not in ignore_relpaths \
+                and texline.parent == mainfilename:  # only first-level inputs go into manifest
                 current_chapter['sourcefiles'].append(relpath)
-            #
+            elif texline.parent != mainfilename \
+                and relpath != mainfilename \
+                and relpath not in manifest['includes']:
+                # found a new include file
+                manifest['includes'].append(relpath)
+
             # other extractions
             if name_matches(texnode, ['includegraphics']):
-                manifest['graphics'].append(str(texnode.includegraphics.string))
-            elif name_matches(texnode, ['figure', 'exercise', 'problem']):
-                ig = texnode.find('includegraphics')
-                if isinstance(ig.args[0], TexSoup.data.BraceGroup):
-                    imagerelpath = ig.args[0].string
-                else:
-                    imagerelpath = ig.args[1].string
-                manifest['graphics'].append(str(imagerelpath))
-            elif name_matches(texnode, ['input']):
-                manifest['includes'].append(str(texnode.string))
+                imagerelpath = process_includegraphics(sourcedir, texnode)
+                manifest['graphics'].append(imagerelpath)
+            elif texnode.find('includegraphics'):
+                igs = texnode.find_all('includegraphics')
+                for ig in igs:
+                    imagerelpath = process_includegraphics(sourcedir, ig)
+                    manifest['graphics'].append(imagerelpath)
             elif name_matches(texnode, EXERCISE_INCLUDES_LOOKUP.keys()):
                 chN = str(texnode.string)
                 filename = EXERCISE_INCLUDES_LOOKUP[texnode.name] + chN + '.tex'
                 includerelpath =  os.path.join(EXERCISE_INCLUDES_DIR, filename)
                 manifest['includes'].append(includerelpath)
+            elif name_matches(texnode, ['input']):
+                print('ERROR: there should not be any input commands in stream')
     # save
     manifest_str = yaml.dump(manifest, default_flow_style=False, sort_keys=False)
     # print(manifest_str)
@@ -161,7 +131,6 @@ def extractmanifest(mainpath):
         yamlfile.write(manifest_str)
     puts(green('Manifest saved to config/manifest.yml; plz inspect and edit.'))
     return manifest
-
 
 
 # SOFTCOVER INSIDE DOCKER COMMANDS
@@ -392,3 +361,68 @@ def uninstall_docker(deep=False):
             sudo('rm -rf /var/lib/containerd')
     print(green('Docker uninstalled from ' + env.host))
 
+
+
+
+
+# UTILS FOR extractmanifest TASK
+################################################################################
+
+def name_matches(texnode, names):
+    """
+    Returns True if `texnode`'s name is on one of the names in `names`.
+    """
+    if hasattr(texnode, 'name') and texnode.name in names:
+        return True
+    else:
+        return False
+
+
+def latexpand(sourcedir, mainfilename):
+    """
+    Process the latex document `mainfilename` and expand `\input`s statements.
+    Returns a list of `TexLine` named tuples that are used by `extractmanifest`.
+    """
+
+    def latexpand_recursive(doc, texlines, relpath, parentrelpath):
+        """
+        Recustively process the node `doc` append its lines to texlines (list).
+        """
+        for texnode in doc.children:
+            if name_matches(texnode, ['input']):
+                childrelpath = str(texnode.string)
+                if childrelpath in IGNORE_RELPATHS:
+                    print("    Skipping input relpath", childrelpath)
+                    continue
+                print('  - reading', childrelpath)
+                includepath = os.path.join(sourcedir, childrelpath)
+                assert os.path.exists(includepath), 'missing input file ' + includepath
+                childdoc = TexSoup.TexSoup(open(includepath).read(), skip_envs=('verbatimtab',))
+                latexpand_recursive(childdoc, texlines, relpath=childrelpath, parentrelpath=relpath)
+            else:
+                #  non-include line
+                texlines.append(TexLine(parentrelpath, relpath, texnode))
+        return texlines
+
+    mainpath = os.path.join(sourcedir, mainfilename)
+    print('reading ', mainfilename)
+    soup = TexSoup.TexSoup(open(mainpath).read(), skip_envs=('verbatimtab',))
+    doc = soup.document  # skip preamble
+    texlines = []
+    latexpand_recursive(doc, texlines, relpath=mainfilename, parentrelpath=None)
+    return texlines
+
+
+def process_includegraphics(sourcedir, includegraphics):
+    """
+    Extract the figure relpath and replace .pdf with .png version if available.
+    """
+    if isinstance(includegraphics.args[0], TexSoup.data.BraceGroup):
+        imagerelpath = str(includegraphics.args[0].string)
+    else:
+        imagerelpath = str(includegraphics.args[1].string)
+    if imagerelpath.endswith('.pdf'):
+        imagerelpath_png = imagerelpath.replace('.pdf', '.png')
+        if os.path.exists(os.path.join(sourcedir, imagerelpath_png)):
+            imagerelpath = imagerelpath_png
+    return imagerelpath
