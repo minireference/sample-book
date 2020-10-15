@@ -13,9 +13,9 @@ Technologies uses:
 
 ```bash
 # 1. create a Python virtualenv (required for pygments code highliting)
-virtualenv -p python2.7 venv
-source venv/bin/activate
-pip install -r requirements.txt
+virtualenv -p python2.7 venv2
+source venv2/bin/activate
+
 
 # 2. install Ruby v2.6.3 so we don't have to use system-ruby
 rvm install ruby-2.6.3
@@ -26,7 +26,7 @@ rvm install ruby-2.6.3
 
 ```bash
 # make sure we're running the right Pythons and Rubies
-source venv/bin/activate
+source venv2/bin/activate
 rvm use ruby-2.6.3
 
 softcover check   # make sure sytem all requirements are installed
@@ -50,6 +50,15 @@ docker run -v $PWD:/book softcover-docker sc build:html
 To start the softcover live-updating server, run the command
 ```bash
 docker run -v $PWD:/book -p 4000:4000 softcover-docker sc server
+```
+
+
+## Install fabric
+
+```bash
+virtualenv -p python3.6 venv
+source venv/bin/activate
+pip install -r requirements.txt
 ```
 
 ## Docker build using Fabric (local or remote)
@@ -111,9 +120,9 @@ mainmatter:
         - 01_math/05.basic_rules_of_algebra.tex
         - 01_math/06.solving_quadratic_equations.tex
         - ...
-backmatter:  # not implemented yet (just add as a regular chapter)
-headers:   # shouldn't be need for any (assume all minireference.hdr.tex macros pre-packaged)
-graphics:  # the contents of all includegraphics commands (as png)
+backmatter:   # not implemented yet (just add as a regular chapter)
+includes:     # .tex files included in one of the sourcefiles
+graphics:     # the contents of all includegraphics commands (prefer png)
   - figures/math/circle-centered-at-h-k.png
   - figures/math/polar/empty_coordinate_system_polar.png
   - ...

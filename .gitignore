@@ -5,6 +5,20 @@ latex_styles/applekeys.sty
 
 99anssol/*tex
 
+# Not ready to add these yet...
+problems
+images/figures/calculus/
+images/figures/concept_maps/
+images/figures/conic_sections_four-shapes.png
+images/figures/cover_v40_noline_lite.png
+images/figures/dot/
+images/figures/math/
+images/figures/physics/
+images/figures/styles/
+images/figures/vectors/
+images/figures/x-question.*
+
+
 # Code symlink
 Code
 
@@ -164,6 +178,7 @@ celerybeat.pid
 .venv
 env/
 venv/
+venv2/
 ENV/
 env.bak/
 venv.bak/

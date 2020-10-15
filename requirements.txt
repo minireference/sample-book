@@ -1,3 +1,5 @@
 # fab-classic is a Fabric fork with py3 support, faithful to the py27 API
 fab-classic==1.18.1
 pyyaml==5.3.1
+texsoup==0.3.1
+more-itertools==8.5.0

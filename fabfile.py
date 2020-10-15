@@ -1,10 +1,12 @@
 """
-Automation scripts for exporting, processing, and building ePub from tex source.
+Automation scripts for extract, pre-process, and building ePub from tex sources.
 """
-from collections import defaultdict
+from collections import defaultdict, namedtuple
 import json
 import os
-import time
+
+from more_itertools import peekable
+import TexSoup
 import yaml
 
 from fabric.api import env, task, local, sudo, run, settings
@@ -15,12 +17,151 @@ from fabric.contrib.files import exists, sed, upload_template
 from fabric.utils import puts
 
 
-# DOCKER HOST
+# DOCKER HOST INFO
 ################################################################################
 env.hosts = ['192.168.0.105']
 env.user = 'ivan'
 env.password = os.environ.get('SUDO_PASSWORD')
 env.DOCKER_HOST = "ssh://ivan@192.168.0.105"
+
+
+
+
+# LATEX SOURCE PRE-PROCESSING
+################################################################################
+IGNORE_RELPATHS = ['00_frontmatter/copyright.tex', 'index/allsees.tex']
+END_MATTER_STARTS = ['End matter', 'Conclusion']
+CHAPTER_COMMAND_NAMES = ['chapter', 'softchapter', 'mycenteredheading']
+EXERCISE_INCLUDES_DIR = '99anssol'
+EXERCISE_INCLUDES_LOOKUP = {
+    'showExerciseAnswers': 'eanswers_',
+    'showExerciseSolutions': 'esolutions_',
+    'showProblemAnswers': 'answers_',
+    'showProblemSolutions': 'solutions_',
+}
+
+TexLine = namedtuple('TexLine', ['relpath', 'texnode'])
+
+
+def latexpandonce(sourcedir, mainfilename):
+    """
+    Process the latex document `mainfilename` and expand one level of `\input`s.
+    Returns a list of `TexLine` named tuples that are used by `extractmanifest`.
+    """
+    mainpath = os.path.join(sourcedir, mainfilename)
+    print('reading ', mainfilename)
+    soup = TexSoup.TexSoup(open(mainpath).read(), skip_envs=('verbatimtab',))
+    doc = soup.document  # skip preamble
+    texlines = []
+    for texnode in doc.children:
+        if hasattr(texnode, 'name') and texnode.name == 'input':
+            # try:
+                # an include of another file
+                relpath = str(texnode.string)
+                print('  - reading', relpath)
+                includepath = os.path.join(sourcedir, relpath)
+                assert os.path.exists(includepath), 'missing input file ' + includepath
+                subsoup = TexSoup.TexSoup(open(includepath).read(), skip_envs=('verbatimtab',))
+                for subtexnode in subsoup.children:
+                    texlines.append(TexLine(relpath, subtexnode))
+            # except (TypeError, EOFError) as e:
+            #     print(e)
+        else:
+            # non-include line
+            texlines.append(TexLine(mainfilename, texnode))
+    return texlines
+
+def name_matches(texnode, names):
+    """
+    Returns True if `texnode`'s name is on one of the names in `names`.
+    """
+    if hasattr(texnode, 'name') and texnode.name in names:
+        return True
+    else:
+        return False
+
+@task
+def extractmanifest(mainpath):
+    """
+    Extract the book manifest YAML from the LaTex source file at `mainpath` and
+    save it to `config/manifest.yml` for further processing and fine tuning.
+    """
+    sourcedir, mainfilename = os.path.split(mainpath)
+    manifest = {
+        'sourcedir': sourcedir,
+        'frontmatter': {'chapters': []},
+        'mainmatter': {'chapters': []},
+        'backmatter': {'chapters': []},
+        'includes': [],
+        'graphics': []
+    }
+    ignore_relpaths = IGNORE_RELPATHS + [mainfilename]
+
+    # starting with frontmatter...
+    current_chapters = manifest['frontmatter']['chapters']
+    current_chapter = None
+    texlines = latexpandonce(sourcedir, mainfilename)
+    peekable_texlines = peekable(texlines)
+    for texline in peekable_texlines:
+        relpath = texline.relpath
+        texnode = texline.texnode
+        if hasattr(texnode, 'name') and texnode.name == 'mainmatter':
+            # switch to mainmatter
+            current_chapters = manifest['mainmatter']['chapters']
+            current_chapter = None
+        if name_matches(texnode, CHAPTER_COMMAND_NAMES) and str(texnode.string) in END_MATTER_STARTS:
+            # switch to backmatter
+            current_chapters = manifest['backmatter']['chapters']
+            current_chapter = None
+        if name_matches(texnode, CHAPTER_COMMAND_NAMES):
+            chapter_dict = {
+                'title': str(texnode.string),
+                'label': None,
+                'sourcefiles': [relpath],
+            }
+            # Look ahead to check if there is a \label command
+            nextlines = peekable_texlines[0:2]
+            for nextline in nextlines:
+                if hasattr(nextline, 'name') and nextline.name == 'label':
+                    chapter_dict['label'] = str(nextline.string)
+                    break
+            if chapter_dict['label'] is None:
+                chapter_dict['label'] = chapter_dict['title'].replace(' ', '_') \
+                    .replace(',', '_').replace('.', '_')
+            current_chapters.append(chapter_dict)
+            current_chapter = chapter_dict
+        else:
+            # filename extraction
+            if current_chapter is None and relpath not in ignore_relpaths:
+                print('skipping line ', str(texline.texnode)[0:30] + '...', 'in', relpath)
+            elif relpath not in current_chapter['sourcefiles'] and relpath not in ignore_relpaths:
+                current_chapter['sourcefiles'].append(relpath)
+            #
+            # other extractions
+            if name_matches(texnode, ['includegraphics']):
+                manifest['graphics'].append(str(texnode.includegraphics.string))
+            elif name_matches(texnode, ['figure', 'exercise', 'problem']):
+                ig = texnode.find('includegraphics')
+                if isinstance(ig.args[0], TexSoup.data.BraceGroup):
+                    imagerelpath = ig.args[0].string
+                else:
+                    imagerelpath = ig.args[1].string
+                manifest['graphics'].append(str(imagerelpath))
+            elif name_matches(texnode, ['input']):
+                manifest['includes'].append(str(texnode.string))
+            elif name_matches(texnode, EXERCISE_INCLUDES_LOOKUP.keys()):
+                chN = str(texnode.string)
+                filename = EXERCISE_INCLUDES_LOOKUP[texnode.name] + chN + '.tex'
+                includerelpath =  os.path.join(EXERCISE_INCLUDES_DIR, filename)
+                manifest['includes'].append(includerelpath)
+    # save
+    manifest_str = yaml.dump(manifest, default_flow_style=False, sort_keys=False)
+    # print(manifest_str)
+    with open('config/manifest.yml', 'w') as yamlfile:
+        yamlfile.write(manifest_str)
+    puts(green('Manifest saved to config/manifest.yml; plz inspect and edit.'))
+    return manifest
+
 
 
 # SOFTCOVER INSIDE DOCKER COMMANDS
@@ -146,7 +287,7 @@ def dcdown(options=''):
 ################################################################################
 
 DOCKER_HOST_VOLUMES_BASE_DIR = '/storage/volumes'
-EXCLUDE_DIRS = ['venv', 'Code', 'fabfile.py', '.git', '.DS_Store']
+EXCLUDE_DIRS = ['venv', 'venv2', 'Code', 'fabfile.py', '.git', '.DS_Store']
 
 @task
 def copy_local_dir_to_docker_host_dir(localpath):
