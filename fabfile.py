@@ -390,6 +390,7 @@ def latexpand(sourcedir, mainfilename):
         """
         for texnode in doc.children:
             if name_matches(texnode, ['input']):
+                # A: regular includes
                 childrelpath = str(texnode.string)
                 if childrelpath in IGNORE_RELPATHS:
                     print("    Skipping input relpath", childrelpath)
@@ -399,8 +400,21 @@ def latexpand(sourcedir, mainfilename):
                 assert os.path.exists(includepath), 'missing input file ' + includepath
                 childdoc = TexSoup.TexSoup(open(includepath).read(), skip_envs=('verbatimtab',))
                 latexpand_recursive(childdoc, texlines, relpath=childrelpath, parentrelpath=relpath)
+            elif texnode.find('input'):
+                # B: deep includes: input statements in environment or BraceGroup
+                texlines.append(TexLine(parentrelpath, relpath, texnode))
+                inputs = texnode.find_all('input')
+                for input in inputs:
+                    childrelpath = str(input.string)
+                    if childrelpath in IGNORE_RELPATHS:
+                        print("    Skipping input relpath", childrelpath)
+                    print('  - reading deep include', childrelpath)
+                    includepath = os.path.join(sourcedir, childrelpath)
+                    assert os.path.exists(includepath), 'missing deep input file ' + includepath
+                    childdoc = TexSoup.TexSoup(open(includepath).read(), skip_envs=('verbatimtab',))
+                    latexpand_recursive(childdoc, texlines, relpath=childrelpath, parentrelpath=relpath)
             else:
-                #  non-include line
+                #  C: regular non-include lines
                 texlines.append(TexLine(parentrelpath, relpath, texnode))
         return texlines
 
