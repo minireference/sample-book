@@ -439,4 +439,5 @@ def process_includegraphics(sourcedir, includegraphics):
         imagerelpath_png = imagerelpath.replace('.pdf', '.png')
         if os.path.exists(os.path.join(sourcedir, imagerelpath_png)):
             imagerelpath = imagerelpath_png
+    assert os.path.exists(os.path.join(sourcedir, imagerelpath)), 'no ' + imagerelpath
     return imagerelpath

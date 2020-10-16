@@ -123,6 +123,9 @@ includes:
 - problems/chapter1_compound_interest.tex
 - problems/chapter1_set_notation.tex
 - problems/chapter1_inequalities.tex
+- problems/chapter3_problems_simple_vectors.tex
+- problems/chapter3_problems.tex
+- problems/chapter3_problems_complex_numbers.tex
 graphics:
 - figures/concept_maps/noBSmath_1_equations_and_functions.pdf
 - figures/concept_maps/noBSmath_2_algebra.pdf
@@ -154,7 +157,7 @@ graphics:
 - figures/math/functions-inverse.png
 - figures/math/functions-composition.png
 - figures/math/empty_coordinate_system.png
-- figures/math/functions/3x3_functions_miniplots.pdf
+- figures/math/functions/3x3_functions_miniplots.png
 - figures/math/graph_of_2x_plus_3.png
 - figures/math/quadratic_func.png
 - figures/math/sqrt_of_x.png
@@ -246,3 +249,4 @@ graphics:
 - problems/figures/geometry/twelve_circles.png
 - problems/figures/increasing_and_decreasing_exponential_function.png
 - problems/figures/geometry/rectangle_and_triangle_areas.png
+- problems/figures/vector_addition_problem.png
