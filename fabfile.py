@@ -154,6 +154,115 @@ def extractmanifest(mainpath):
     return manifest
 
 
+# EXTRACT
+################################################################################
+
+@task
+def extract(manifest=SOURCE_MANIFEST):
+    """
+    Read the source `manifest` and copy all the source files to `extracted/`.
+    The `sourcefiles` for each chapter are combiend to form single-file chapters.
+    """
+    manifest = yaml.safe_load(open(manifest))
+    sourcedir = manifest['sourcedir']
+    destdir = os.path.join('sources', 'extracted')
+    if not os.path.exists(destdir):
+        os.makedirs(destdir, exist_ok=True)
+
+    def combine_chapters(sourcedir, chapters, destdir, prefix=''):
+        newchapters = []
+        for i, chapter in enumerate(chapters):
+            newchapter = {'title': chapter['title'], 'label': chapter['label']}
+            chnum = '{:02d}'.format(i+1)
+            label = chapter['label']
+            cleanlabel = label.split(':')[1] if ':' in label else label
+            chapterfilename = prefix + chnum + '_' + cleanlabel + '.tex'
+            chapterpath = os.path.join(destdir, chapterfilename)
+            with open(chapterpath, 'w') as chf:
+                for sourcefile in chapter['sourcefiles']:
+                    sourcepath = os.path.join(sourcedir, sourcefile)
+                    with open(sourcepath) as srcf:
+                        sourcetext = srcf.read()
+                    chf.write(sourcetext)
+            newchapter['sourcefiles'] = [chapterfilename]
+            newchapters.append(newchapter)
+        return newchapters
+
+    extractedmanifest = {
+        'sourcedir': sourcedir,
+        'frontmatter': {'chapters': []},
+        'mainmatter': {'chapters': []},
+        'backmatter': {'chapters': []},
+        'includes': [],
+        'graphics': []
+    }
+
+    # frontmatter
+    fchapters = manifest['frontmatter']['chapters']
+    newfchapters = combine_chapters(sourcedir, fchapters, destdir, prefix='00_')
+    extractedmanifest['frontmatter']['chapters'] = newfchapters
+
+    # mainmatter
+    mchapters = manifest['mainmatter']['chapters']
+    newmchapters = combine_chapters(sourcedir, mchapters, destdir, prefix='')
+    extractedmanifest['mainmatter']['chapters'] = newmchapters
+
+    # backmatter
+    bchapters = manifest['backmatter']['chapters']
+    newbchapters = combine_chapters(sourcedir, bchapters, destdir, prefix='99_')
+    extractedmanifest['backmatter']['chapters'] = newbchapters
+
+    # includes
+    for includerelpath in manifest['includes']:
+        sourcepath = os.path.join(sourcedir, includerelpath)
+        destpath = os.path.join(destdir, includerelpath)
+        dirname = os.path.dirname(includerelpath)
+        destdirpath = os.path.join(destdir, dirname)
+        if not os.path.exists(destdirpath):
+            os.makedirs(destdirpath, exist_ok=True)
+        local('cp {} {}'.format(sourcepath, destpath))
+        assert os.path.exists(destpath), 'file missing ' + destpath
+        extractedmanifest['includes'].append(includerelpath)
+
+    # graphics
+    for imagerelpath in manifest['graphics']:
+        sourcepath = os.path.join(sourcedir, imagerelpath)
+        destpath = os.path.join(destdir, imagerelpath)
+        dirname = os.path.dirname(imagerelpath)
+        destdirpath = os.path.join(destdir, dirname)
+        if not os.path.exists(destdirpath):
+            os.makedirs(destdirpath, exist_ok=True)
+        local('cp {} {}'.format(sourcepath, destpath))
+        assert os.path.exists(destpath), 'graphics file missing ' + destpath
+        extractedmanifest['graphics'].append(imagerelpath)
+
+    # book main file (for testing)
+    maintexpath = os.path.join(destdir, 'extracted_mainfile_tester.tex')
+    with open(maintexpath, 'w') as mainf:
+        mainf.write(r"""\documentclass[14pt]{book}
+                        \title{Extracted test main file}
+                        % put headers here plz
+                        \begin{document}
+                    """)
+        mainf.write("\n\\frontmatter\n\n")
+        for chapter in extractedmanifest['frontmatter']['chapters']:
+            mainf.write('\\input{' + chapter['sourcefiles'][0] + '}\n')
+        mainf.write("\n\\mainmatter\n\n")
+        for chapter in extractedmanifest['mainmatter']['chapters']:
+            mainf.write('\\input{' + chapter['sourcefiles'][0] + '}\n')
+        mainf.write("\n\\appendix\n\n")
+        for chapter in extractedmanifest['backmatter']['chapters']:
+            mainf.write('\\input{' + chapter['sourcefiles'][0] + '}\n')
+        mainf.write("\n\\end{document}\n")
+
+    # write extracted manifest
+    extractedmanifest_str = yaml.dump(extractedmanifest, default_flow_style=False, sort_keys=False)
+    with open(EXTRACTED_MANIFEST, 'w') as yamlfile:
+        yamlfile.write(extractedmanifest_str)
+    puts(green('Book source files extracted and combined into ' + destdir))
+
+
+
 # SOFTCOVER INSIDE DOCKER COMMANDS
 ################################################################################
 DOCKER_IMAGE_NAME = 'softcover-docker'
