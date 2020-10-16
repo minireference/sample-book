@@ -79,7 +79,7 @@ mainmatter:
   - title: Practice problems
     label: chapter:problems
     sourcefiles:
-    - noBSguideMath.tex
+    - noBSmath_intros/09_00_problems.tex
     - problems/chapter1_problems.tex
 backmatter:
   chapters:
@@ -126,6 +126,20 @@ includes:
 - problems/chapter3_problems_simple_vectors.tex
 - problems/chapter3_problems.tex
 - problems/chapter3_problems_complex_numbers.tex
+- 99anssol/eanswers_ch1.tex
+- 99anssol/esolutions_ch1.tex
+- 99anssol/eanswers_ch2.tex
+- 99anssol/eanswers_ch3.tex
+- 99anssol/eanswers_ch3.tex
+- 99anssol/eanswers_ch5.tex
+- 99anssol/esolutions_ch5.tex
+- 99anssol/eanswers_ch6.tex
+- 99anssol/esolutions_ch6.tex
+- 99anssol/eanswers_ch7.tex
+- 99anssol/eanswers_ch8.tex
+- 99anssol/esolutions_ch8.tex
+- 99anssol/answers_ch9.tex
+- 99anssol/solutions_ch9.tex
 graphics:
 - figures/concept_maps/noBSmath_1_equations_and_functions.pdf
 - figures/concept_maps/noBSmath_2_algebra.pdf

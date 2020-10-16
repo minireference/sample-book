@@ -46,8 +46,10 @@ EXERCISE_INCLUDES_LOOKUP = {
     'showProblemAnswers': 'answers_',
     'showProblemSolutions': 'solutions_',
 }
+SOURCE_MANIFEST = 'config/manifest.yml'
+EXTRACTED_MANIFEST = 'sources/extracted/manifest.yml'
+TRANSFROMED_MANIFEST = 'sources/transformed/manifest.yml'
 
-TexLine = namedtuple('TexLine', ['parent', 'relpath', 'texnode'])
 
 
 @task
@@ -115,7 +117,7 @@ def extractmanifest(mainpath):
                 # found a new include file
                 manifest['includes'].append(relpath)
 
-            # other extractions
+            # graphics
             if name_matches(texnode, ['includegraphics']):
                 imagerelpath = process_includegraphics(sourcedir, texnode)
                 manifest['graphics'].append(imagerelpath)
@@ -124,17 +126,29 @@ def extractmanifest(mainpath):
                 for ig in igs:
                     imagerelpath = process_includegraphics(sourcedir, ig)
                     manifest['graphics'].append(imagerelpath)
-            elif name_matches(texnode, EXERCISE_INCLUDES_LOOKUP.keys()):
+
+            # exercie and problem solution streams
+            if name_matches(texnode, EXERCISE_INCLUDES_LOOKUP.keys()):
                 chN = str(texnode.string)
                 filename = EXERCISE_INCLUDES_LOOKUP[texnode.name] + chN + '.tex'
                 includerelpath =  os.path.join(EXERCISE_INCLUDES_DIR, filename)
                 manifest['includes'].append(includerelpath)
-            elif name_matches(texnode, ['input']):
+            elif contains_names(texnode, EXERCISE_INCLUDES_LOOKUP.keys()):
+                for includename in EXERCISE_INCLUDES_LOOKUP.keys():
+                    includenodes = texnode.find_all(includename)
+                    for includenode in includenodes:
+                        chN = str(includenode.string)
+                        filename = EXERCISE_INCLUDES_LOOKUP[includenode.name] + chN + '.tex'
+                        includerelpath =  os.path.join(EXERCISE_INCLUDES_DIR, filename)
+                        manifest['includes'].append(includerelpath)
+
+            # Sanity check
+            if name_matches(texnode, ['input']):
                 print('ERROR: there should not be any input commands in stream')
     # save
     manifest_str = yaml.dump(manifest, default_flow_style=False, sort_keys=False)
     # print(manifest_str)
-    with open('config/manifest.yml', 'w') as yamlfile:
+    with open(SOURCE_MANIFEST, 'w') as yamlfile:
         yamlfile.write(manifest_str)
     puts(green('Manifest saved to config/manifest.yml; plz inspect and edit.'))
     return manifest
@@ -192,11 +206,24 @@ def name_matches(texnode, names):
         return False
 
 
+def contains_names(texnode, names):
+    """
+    Returns True if `texnode` (env or BraceGroup) contains one of the `names`.
+    """
+    verdict = False
+    for name in names:
+        if texnode.find(name):
+            verdict = True
+            break
+    return verdict
+
+
 def latexpand(sourcedir, mainfilename):
     """
     Process the latex document `mainfilename` and expand `\input`s statements.
     Returns a list of `TexLine` named tuples that are used by `extractmanifest`.
     """
+    TexLine = namedtuple('TexLine', ['parent', 'relpath', 'texnode'])
 
     def latexpand_recursive(doc, texlines, relpath, parentrelpath):
         """
