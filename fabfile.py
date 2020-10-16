@@ -2,6 +2,7 @@
 Automation scripts for extract, pre-process, and building ePub from tex sources.
 """
 from collections import defaultdict, namedtuple
+import copy
 import json
 import os
 
@@ -189,7 +190,7 @@ def extract(manifest=SOURCE_MANIFEST):
         return newchapters
 
     extractedmanifest = {
-        'sourcedir': sourcedir,
+        'sourcedir': destdir,
         'frontmatter': {'chapters': []},
         'mainmatter': {'chapters': []},
         'backmatter': {'chapters': []},
@@ -216,10 +217,7 @@ def extract(manifest=SOURCE_MANIFEST):
     for includerelpath in manifest['includes']:
         sourcepath = os.path.join(sourcedir, includerelpath)
         destpath = os.path.join(destdir, includerelpath)
-        dirname = os.path.dirname(includerelpath)
-        destdirpath = os.path.join(destdir, dirname)
-        if not os.path.exists(destdirpath):
-            os.makedirs(destdirpath, exist_ok=True)
+        ensure_containing_dir_exists(destdir, includerelpath)
         local('cp {} {}'.format(sourcepath, destpath))
         assert os.path.exists(destpath), 'file missing ' + destpath
         extractedmanifest['includes'].append(includerelpath)
@@ -228,10 +226,7 @@ def extract(manifest=SOURCE_MANIFEST):
     for imagerelpath in manifest['graphics']:
         sourcepath = os.path.join(sourcedir, imagerelpath)
         destpath = os.path.join(destdir, imagerelpath)
-        dirname = os.path.dirname(imagerelpath)
-        destdirpath = os.path.join(destdir, dirname)
-        if not os.path.exists(destdirpath):
-            os.makedirs(destdirpath, exist_ok=True)
+        ensure_containing_dir_exists(destdir, imagerelpath)
         local('cp {} {}'.format(sourcepath, destpath))
         assert os.path.exists(destpath), 'graphics file missing ' + destpath
         extractedmanifest['graphics'].append(imagerelpath)
@@ -260,6 +255,167 @@ def extract(manifest=SOURCE_MANIFEST):
     with open(EXTRACTED_MANIFEST, 'w') as yamlfile:
         yamlfile.write(extractedmanifest_str)
     puts(green('Book source files extracted and combined into ' + destdir))
+
+
+
+
+
+# TRANSFORM
+################################################################################
+
+@task
+def transform(extractedmanifest=EXTRACTED_MANIFEST):
+    """
+    Transforms all the LaTeX source code of all the files in `extractedmanifest`
+    to Softcover-compatible macros and writes output to `sources/transformed/`.
+    """
+    extractedmanifest = yaml.safe_load(open(extractedmanifest))
+    sourcedir = extractedmanifest['sourcedir']
+    destdir = os.path.join('sources', 'transformed')
+    if not os.path.exists(destdir):
+        os.makedirs(destdir, exist_ok=True)
+
+    # the transformed sourcefiles are the same (only graphics paths will change)
+    transformedmanifest = copy.deepcopy(extractedmanifest)
+    transformedmanifest['sourcedir'] = destdir
+    transformedmanifest['graphics'] = []
+
+
+    # collect a list of all the .tex source files that need to be transformed
+    allsourcefiles = []
+    for part in ['frontmatter', 'mainmatter', 'backmatter']:
+        for chapter in extractedmanifest[part]['chapters']:
+            assert len(chapter['sourcefiles']) == 1, 'unexpected num. of sourcefiles'
+            allsourcefiles.extend(chapter['sourcefiles'])
+    allsourcefiles.extend(extractedmanifest['includes'])
+
+    tansformations = [
+        transform_figure_captions,
+        # transform_tables
+        transform_pdf_graphics,
+    ]
+    for relpath in allsourcefiles:
+        # read in
+        sourcepath = os.path.join(sourcedir, relpath)
+        soup = TexSoup.TexSoup(open(sourcepath).read())
+
+        # run the soup-transforming pipeline
+        for tansformation in tansformations:
+            soup = tansformation(soup, extractedmanifest, transformedmanifest)
+
+        # write out
+        ensure_containing_dir_exists(destdir, relpath)
+        destpath = os.path.join(destdir, relpath)
+        with open(destpath, 'w') as outf:
+            outf.write(str(soup))
+
+        # in-place cleanup TODO
+
+
+    # write transformed manifest
+    transformedmanifest_str = yaml.dump(transformedmanifest, default_flow_style=False, sort_keys=False)
+    with open(TRANSFROMED_MANIFEST, 'w') as yamlfile:
+        yamlfile.write(transformedmanifest_str)
+    puts(green('Book source files transformed and saved to ' + destdir + '/'))
+
+
+def transform_figure_captions(soup, extractedmanifest, transformedmanifest):
+    """
+    Softcover expectes figure labels to be found inside figure captions.
+    """
+    figures = soup.find_all('figure')
+    for figure in figures:
+        assert figure.caption, 'encountered unexpected figure with no caption'
+        if figure.label:
+            figure.caption.args[0].append(figure.label)
+            figure.label.delete()
+    return soup
+
+
+def transform_tables(soup, extractedmanifest, transformedmanifest):
+    pass
+
+
+def transform_pdf_graphics(soup, extractedmanifest, transformedmanifest):
+    """
+    Replace .pdf includegraphics paths with .png (when .png version exists),
+    or convert .pdf figure to .jpg format (used for concept maps).
+    """
+    sourcedir = extractedmanifest['sourcedir']
+    destdir = transformedmanifest['sourcedir']
+
+    igs = soup.find_all('includegraphics')
+    for ig in igs:
+        if isinstance(ig.args[0], TexSoup.data.BraceGroup):
+            imagerelpath = str(ig.args[0].string)
+            igargnum = 0
+        else:
+            imagerelpath = str(ig.args[1].string)
+            igargnum = 1
+
+        # create containing folder in destdir (will be needed by all code paths)
+        ensure_containing_dir_exists(destdir, imagerelpath)
+
+        if imagerelpath.endswith('.pdf'):
+            # PDF includes must be renamed
+            imagerelpath_png = imagerelpath.replace('.pdf', '.png')
+
+            if os.path.exists(os.path.join(sourcedir, imagerelpath_png)):
+                # .png file already exists, just need to copy over the file
+                imagesrcpath_png = os.path.join(sourcedir, imagerelpath_png)
+                imagedestpath_png = os.path.join(destdir, imagerelpath_png)
+                local('cp {} {}'.format(imagesrcpath_png, imagedestpath_png))
+                ig.args[igargnum].string = imagerelpath_png
+                newimagerelpath = imagerelpath_png
+
+            else:
+                # no .png file exists, so we'll convert the .pdf file to .jpg
+                imagesrcpath = os.path.join(sourcedir, imagerelpath)
+                imagerelpath_jpg = imagerelpath.replace('.pdf', '.jpg')
+                imagedestpath = os.path.join(destdir, imagerelpath_jpg)
+                print('Converting', imagesrcpath, 'to', imagedestpath)
+                cmd = 'convert -density 452 '
+                cmd += ' -define pdf:use-cropbox=true '  # via https://stackoverflow.com/a/25387099
+                cmd += imagesrcpath
+                cmd += ' -background white '
+                cmd += ' -alpha remove '
+                cmd += ' -resize 25% '
+                cmd += ' -quality 90 '
+                cmd += imagedestpath
+                local(cmd)
+                ig.args[igargnum].string = imagerelpath_jpg
+                newimagerelpath = imagerelpath_jpg
+
+        else:
+            # non-PDF graphics are OK, just need to copy over the file
+            imagesrcpath = os.path.join(sourcedir, imagerelpath)
+            imagedestpath = os.path.join(destdir, imagerelpath)
+            local('cp {} {}'.format(imagesrcpath, imagedestpath))
+            newimagerelpath = imagerelpath
+
+        # final verificaiton...
+        assert os.path.exists(os.path.join(destdir, newimagerelpath)), 'missing ' + newimagerelpath
+        transformedmanifest['graphics'].append(newimagerelpath)
+
+    return soup
+
+
+def inplace_cleanup(transformeddir, relpath):
+    print('Cleaning up file', relpath)
+    filepath = os.path.join(transformeddir, relpath)
+    local('./scrpts/cleanup.pl ' + filepath)
+
+
+
+# LOAD
+################################################################################
+
+@task
+def load(manifest=TRANSFROMED_MANIFEST):
+    pass
+
+
+
 
 
 
@@ -295,9 +451,6 @@ def dserver():
     cmd = 'docker run -v {cwd}:/book -p 4000:4000 {image} sc server'.format(
         cwd=cwd, image=DOCKER_IMAGE_NAME)
     dlocal(cmd)
-
-
-
 
 
 
@@ -391,3 +544,14 @@ def process_includegraphics(sourcedir, includegraphics):
             imagerelpath = imagerelpath_png
     assert os.path.exists(os.path.join(sourcedir, imagerelpath)), 'no ' + imagerelpath
     return imagerelpath
+
+
+
+# UTILS FOR transform TASK
+################################################################################
+
+def ensure_containing_dir_exists(destdir, relpath):
+    dirname = os.path.dirname(relpath)
+    destdirpath = os.path.join(destdir, dirname)
+    if not os.path.exists(destdirpath):
+        os.makedirs(destdirpath, exist_ok=True)

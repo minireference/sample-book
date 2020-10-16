@@ -20,7 +20,7 @@ images/figures/x-question.*
 
 # source dirs
 sources/extracted
-sources/transforemed
+sources/transformed
 
 
 # Code symlink
