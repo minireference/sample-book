@@ -234,7 +234,7 @@ def extract(manifest=SOURCE_MANIFEST):
     # book main file (for testing)
     maintexpath = os.path.join(destdir, 'extracted_mainfile_tester.tex')
     with open(maintexpath, 'w') as mainf:
-        mainf.write(r"""\documentclass[14pt]{book}
+        mainf.write(r"""\documentclass[10pt]{book}
                         \title{Extracted test main file}
                         % put headers here plz
                         \begin{document}
@@ -272,6 +272,7 @@ def transform(extractedmanifest=EXTRACTED_MANIFEST):
     extractedmanifest = yaml.safe_load(open(extractedmanifest))
     sourcedir = extractedmanifest['sourcedir']
     destdir = os.path.join('sources', 'transformed')
+    local('rm -rf ' + destdir)
     if not os.path.exists(destdir):
         os.makedirs(destdir, exist_ok=True)
 
@@ -291,8 +292,10 @@ def transform(extractedmanifest=EXTRACTED_MANIFEST):
 
     tansformations = [
         transform_figure_captions,
-        # transform_tables
         transform_pdf_graphics,
+        transform_includes_noext,
+        # transform_replace_paths,
+        # transform_tables,
     ]
     for relpath in allsourcefiles:
         # read in
@@ -311,6 +314,20 @@ def transform(extractedmanifest=EXTRACTED_MANIFEST):
 
         # in-place cleanup TODO
 
+    # book main file (for testing)
+    maintexpath = os.path.join(destdir, 'transformed_mainfile_tester.tex')
+    with open(maintexpath, 'w') as mainf:
+        mainf.write(LATEX_TRANSFORMED_DOC_PREAMBLE)
+        mainf.write("\n\\frontmatter\n\n")
+        for chapter in transformedmanifest['frontmatter']['chapters']:
+            mainf.write('\\input{' + chapter['sourcefiles'][0] + '}\n')
+        mainf.write("\n\\mainmatter\n\n")
+        for chapter in transformedmanifest['mainmatter']['chapters']:
+            mainf.write('\\input{' + chapter['sourcefiles'][0] + '}\n')
+        mainf.write("\n\\appendix\n\n")
+        for chapter in transformedmanifest['backmatter']['chapters']:
+            mainf.write('\\input{' + chapter['sourcefiles'][0] + '}\n')
+        mainf.write("\n\\end{document}\n")
 
     # write transformed manifest
     transformedmanifest_str = yaml.dump(transformedmanifest, default_flow_style=False, sort_keys=False)
@@ -334,6 +351,19 @@ def transform_figure_captions(soup, extractedmanifest, transformedmanifest):
 
 def transform_tables(soup, extractedmanifest, transformedmanifest):
     pass
+
+
+def transform_includes_noext(soup, extractedmanifest, transformedmanifest):
+    """
+    Softcover's input command automatically adds tha .tex extention so must edit
+    all \input statemnts to remove the `.tex` extensio for this to work.
+    """
+    inputs = soup.find_all('input')
+    for input in inputs:
+        includerelpath = str(input.string)
+        includerelpath_noext = includerelpath.replace('.tex', '')
+        input.string = includerelpath_noext
+    return soup
 
 
 def transform_pdf_graphics(soup, extractedmanifest, transformedmanifest):
@@ -555,3 +585,52 @@ def ensure_containing_dir_exists(destdir, relpath):
     destdirpath = os.path.join(destdir, dirname)
     if not os.path.exists(destdirpath):
         os.makedirs(destdirpath, exist_ok=True)
+
+LATEX_TRANSFORMED_DOC_PREAMBLE = r"""
+\documentclass[10pt]{book}
+\title{Transformed test main file}
+\usepackage{etex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% STEP 2: Set the boolean (true/false) values for the document custom variables
+\usepackage{ifthen}
+
+\newboolean{DRAFTMODE}				% if PROOFREADING=true:
+\setboolean{DRAFTMODE}{false}			%   10pt, dblspaced, source line nums, 8.5'' x 11'' paper
+
+\newboolean{SOLSINTHEBACK}      		% Controls answers and solutions for exercises and problems
+\setboolean{SOLSINTHEBACK}{true}    		% SOLSINTHEBACK=true for final print version
+
+\newboolean{IPAD}						% IPAD=true 12pt, sansserif, 6''x~8'' paper
+\setboolean{IPAD}{false}					% IPAD=false    10pt, cm, print, 5.5'' x 8.5''
+
+\newboolean{FORPRINT}					% FORPRINT=true 	     special pagebreaks for print version
+\setboolean{FORPRINT}{true}				% FORPRINT=false
+
+\newboolean{SYMMETRIC}				% SYMMETRIC=true	SYMMETRIC page margins (for screen version of PDF)
+\setboolean{SYMMETRIC}{true}			% SYMMETRIC=false
+
+\newboolean{PG13}						% PG13=true 	No swearwords please, no pot, vodka ok, humanist and anti-corporate propaganda ok.
+\setboolean{PG13}{false}					% PG13=false	Tell it like it is!
+
+\newboolean{TUTORIAL}					% for SYMPY tutorial Appendix
+\setboolean{TUTORIAL}{false}				% if TUTORIAL==true: show extra defs and repeats of explanations
+
+\newboolean{FORLA}					% if FORLA:  show extra content in SYMPY tutorial intended for LA book
+\setboolean{FORLA}{false}				% if not FORLA:  show only content for MathPhys book
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{00.minireference.hdr.tex}
+\input{00.exercises_problems.hdr.tex}
+\input{00.exercises.hdr.tex}
+
+
+\begin{document}
+\maketitle
+
+\cleardoublepage
+
+\setcounter{tocdepth}{1}
+\tableofcontents
+
+"""
