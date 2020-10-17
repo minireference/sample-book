@@ -9,12 +9,12 @@ frontmatter:
     label: sec:preface
     sourcefiles:
     - preface.tex
-mainmatter:
-  chapters:
   - title: Introduction
     label: sec:introduction
     sourcefiles:
     - introduction.tex
+mainmatter:
+  chapters:
   - title: Numbers, variables, and equations
     label: chapter:equations
     sourcefiles:
@@ -91,7 +91,6 @@ backmatter:
     label: appendix:ans_and_solutions
     sourcefiles:
     - 99_endmatter/appendix_ans_and_sols_to_probs.tex
-    - 99_endmatter/appendix_notation.tex
   - title: Notation
     label: appendix:notation
     sourcefiles:
