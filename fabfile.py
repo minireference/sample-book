@@ -294,7 +294,6 @@ def transform(extractedmanifest=EXTRACTED_MANIFEST):
         transform_figure_captions,
         transform_pdf_graphics,
         transform_includes_noext,
-        # transform_replace_paths,
         # transform_tables,
     ]
     for relpath in allsourcefiles:
@@ -312,7 +311,8 @@ def transform(extractedmanifest=EXTRACTED_MANIFEST):
         with open(destpath, 'w') as outf:
             outf.write(str(soup))
 
-        # in-place cleanup TODO
+        # in-place cleanup
+        inplace_cleanup(destdir, relpath)
 
     # book main file (for testing)
     maintexpath = os.path.join(destdir, 'transformed_mainfile_tester.tex')
@@ -433,7 +433,7 @@ def transform_pdf_graphics(soup, extractedmanifest, transformedmanifest):
 def inplace_cleanup(transformeddir, relpath):
     print('Cleaning up file', relpath)
     filepath = os.path.join(transformeddir, relpath)
-    local('./scrpts/cleanup.pl ' + filepath)
+    local('./scripts/cleanup.pl ' + filepath)
 
 
 
