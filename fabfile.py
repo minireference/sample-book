@@ -294,7 +294,7 @@ def transform(extractedmanifest=EXTRACTED_MANIFEST):
         transform_figure_captions,
         transform_pdf_graphics,
         transform_includes_noext,
-        # transform_tables,
+        transform_tables,
     ]
     for relpath in allsourcefiles:
         # read in
@@ -350,7 +350,55 @@ def transform_figure_captions(soup, extractedmanifest, transformedmanifest):
 
 
 def transform_tables(soup, extractedmanifest, transformedmanifest):
-    pass
+    """
+    Make tables and wraptable environments Softcover compatible.
+    """
+    # Chapters overview wraptable in noBSmathphys book
+    wraptables = soup.find_all('wraptable')
+    for wraptable in wraptables:
+        'precalc' in ' '.join(wraptable.text)
+        wraptable.name = 'table'
+        wraptable.args = wraptable.args[3:]
+
+    def find_index_of(array, obj):
+        for i, objati in enumerate(array):
+            if str(objati) == str(obj):
+                return i
+        return None
+
+    for table in soup.find_all('table'):
+        if 'input' in ' '.join(table.text) and 'output' in ' '.join(table.text):
+            # print('first table', table)
+            # FUNCTIONS table containing eqnarray* of input-output pairs
+            # 1. move the align* to in front of the table
+            align = table.find('align*')
+            table_idx = find_index_of(soup.expr.all, table)
+            soup.insert(table_idx, align.copy())
+            soup.insert(table_idx+1, '\n')
+            table.remove(align)
+            # 2. add an empty inner tabular so Softcover lookups won't fail
+            tabular = TexSoup.TexSoup(r"\begin{tabular}{c}\end{tabular}").tabular
+            table.append(tabular)
+            # 3. move label inside caption like we do for figures
+            table.caption.args[0].append(table.label)
+            table.label.delete()
+        elif '359.761' in ' '.join(table.text) or 'Conic' in ' '.join(table.text):
+            # print('second table clause', table)
+            # ELLIPSE table with Earth pos. or CONICS summary table
+            # 1.extact useful stuff
+            longtable = table.longtable.copy()
+            if '@{}' in longtable.args[0].string:
+                longtable.args[0].string = longtable.args[0].string.replace('@{}', '')
+            caption = table.caption.copy()
+            label = table.label.copy()
+            # 2. clear children
+            for ch in table.children:
+                table.remove(ch)
+            # 3. add the useful stuff back in
+            table.insert(2, longtable)
+            caption.args[0].append(label)
+            table.insert(4, caption)
+    return soup
 
 
 def transform_includes_noext(soup, extractedmanifest, transformedmanifest):
@@ -394,38 +442,48 @@ def transform_pdf_graphics(soup, extractedmanifest, transformedmanifest):
                 # .png file already exists, just need to copy over the file
                 imagesrcpath_png = os.path.join(sourcedir, imagerelpath_png)
                 imagedestpath_png = os.path.join(destdir, imagerelpath_png)
-                local('cp {} {}'.format(imagesrcpath_png, imagedestpath_png))
-                ig.args[igargnum].string = imagerelpath_png
-                newimagerelpath = imagerelpath_png
+                if not os.path.exists(imagedestpath_png):
+                    local('cp {} {}'.format(imagesrcpath_png, imagedestpath_png))
+                    ig.args[igargnum].string = imagerelpath_png
+                    newimagerelpath = imagerelpath_png
+                else:
+                    newimagerelpath = None
 
             else:
                 # no .png file exists, so we'll convert the .pdf file to .jpg
                 imagesrcpath = os.path.join(sourcedir, imagerelpath)
                 imagerelpath_jpg = imagerelpath.replace('.pdf', '.jpg')
                 imagedestpath = os.path.join(destdir, imagerelpath_jpg)
-                print('Converting', imagesrcpath, 'to', imagedestpath)
-                cmd = 'convert -density 452 '
-                cmd += ' -define pdf:use-cropbox=true '  # via https://stackoverflow.com/a/25387099
-                cmd += imagesrcpath
-                cmd += ' -background white '
-                cmd += ' -alpha remove '
-                cmd += ' -resize 25% '
-                cmd += ' -quality 90 '
-                cmd += imagedestpath
-                local(cmd)
-                ig.args[igargnum].string = imagerelpath_jpg
-                newimagerelpath = imagerelpath_jpg
+                if not os.path.exists(imagedestpath):
+                    print('Converting', imagesrcpath, 'to', imagedestpath)
+                    cmd = 'convert -density 452 '
+                    cmd += ' -define pdf:use-cropbox=true '  # via https://stackoverflow.com/a/25387099
+                    cmd += imagesrcpath
+                    cmd += ' -background white '
+                    cmd += ' -alpha remove '
+                    cmd += ' -resize 25% '
+                    cmd += ' -quality 90 '
+                    cmd += imagedestpath
+                    local(cmd)
+                    ig.args[igargnum].string = imagerelpath_jpg
+                    newimagerelpath = imagerelpath_jpg
+                else:
+                    newimagerelpath = None
 
         else:
             # non-PDF graphics are OK, just need to copy over the file
             imagesrcpath = os.path.join(sourcedir, imagerelpath)
             imagedestpath = os.path.join(destdir, imagerelpath)
-            local('cp {} {}'.format(imagesrcpath, imagedestpath))
-            newimagerelpath = imagerelpath
+            if not os.path.exists(imagedestpath):
+                local('cp {} {}'.format(imagesrcpath, imagedestpath))
+                newimagerelpath = imagerelpath
+            else:
+                newimagerelpath = None
 
         # final verificaiton...
-        assert os.path.exists(os.path.join(destdir, newimagerelpath)), 'missing ' + newimagerelpath
-        transformedmanifest['graphics'].append(newimagerelpath)
+        if newimagerelpath:
+            assert os.path.exists(os.path.join(destdir, newimagerelpath)), 'missing ' + newimagerelpath
+            transformedmanifest['graphics'].append(newimagerelpath)
 
     return soup
 
