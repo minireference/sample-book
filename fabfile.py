@@ -5,6 +5,7 @@ from collections import defaultdict, namedtuple
 import copy
 import json
 import os
+import re
 
 from more_itertools import peekable
 import TexSoup
@@ -484,6 +485,29 @@ def transform_tables(soup, extractedmanifest, transformedmanifest):
             table.insert(2, longtable)
             caption.args[0].append(label)
             table.insert(6, caption)
+
+    if soup.chapter and str(soup.chapter.string) == 'Notation':
+        bracegroups = []
+        for child in soup.children:
+            if hasattr(child, 'name') and child.name == 'BraceGroup':
+                if child.tabularx:
+                    bracegroups.append(child)
+
+        for bracegroup in bracegroups:
+            bracegroup_idx = find_index_of(soup.expr.all, bracegroup)
+            tabularx = bracegroup.tabularx.copy()
+            tabularx.args[0] = tabularx.args[1]
+            del tabularx.args[1]
+            tabularx.name = 'longtable'
+            alignspec = tabularx.args[0].string
+            if '@{}' in alignspec:
+                alignspec = alignspec.replace('@{}', '')
+            if 'p' in alignspec:
+                alignspec = re.sub('p\{.*?\}', 'l', alignspec)
+            tabularx.args[0].string = alignspec
+            soup.insert(bracegroup_idx, tabularx)
+            soup.insert(bracegroup_idx+1, '\n\n')
+            bracegroup.delete()
 
     return soup
 
