@@ -357,8 +357,10 @@ def transform_figure_captions(soup, extractedmanifest, transformedmanifest):
     """
     figures = soup.find_all('figure')
     for figure in figures:
-        assert figure.caption, 'encountered unexpected figure with no caption'
-        if figure.label:
+        if figure.caption is None:
+            print('WARNING: unexpected figure with no caption.')
+            print(str(figure))
+        if figure.caption and figure.label:
             figure.caption.args[0].append(figure.label)
             figure.label.delete()
     return soup

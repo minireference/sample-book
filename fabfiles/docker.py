@@ -168,7 +168,7 @@ def copy_local_dir_to_docker_host_dir(localpath):
     exclude_str = ''
     for exlcude_dir in EXCLUDE_DIRS:
         exclude_str += " --exclude='{}'".format(exlcude_dir)
-    local('tar {} -czf {} .'.format(exclude_str, archivelocalpath))
+    local('COPYFILE_DISABLE=true tar {} -czf {} .'.format(exclude_str, archivelocalpath))
     put(archivelocalpath, archiveremotepath)
     local('rm ' + archivelocalpath)
     # ...and remote unarchive

@@ -17,6 +17,7 @@ s/\\raisebox\{\.52ex\}\{\\rule\{0\.9em\}\{\.4pt\}\}/-/g;
 # change figures/ to images/figures/ (softcover expectes images dir for html build)
 s/\{figures/\{images\/figures/g;
 s/\{problems\/figures/\{images\/problems\/figures/g;
+s/\{problemsfigures/\{images\/problemsfigures/g;
 
 # verb env for miniref code blocks
 s/\\begin\{verbatimtab\}/\\begin\{verbatim\}/g;
@@ -32,8 +33,8 @@ s/\n[^\n]*
 (?:(?!\{\{\/zBLOCK\}\}).)*
 \{\{\/zBLOCK\}\}/$1/gsx;
 
-# vertical skip modifiers on newlines (not supported in tables)
-s/\\\\\[.*\]\n/\\\\\n/g;
+# vertical skip modifiers on newlines (get confused as start of displaymath)
+s/\\\\\[.*m\]/\\\\/g;
 
 # remove all comments
 s/([^\\])%.*?\n/$1/g;
@@ -60,3 +61,8 @@ s/\\softsection\{/\\section\*\{/g;
 s/\\softchapter/\\chapter/g;
 s/\\mycenteredheading/\\chapter/g;
 
+# LA specific
+s/\{bsmallmatrix\}/{bmatrix}/g;
+
+# rm custom commands for switching TOC depth (used in functions reference sec)
+s/\\addtocontents\{.*\n//g
