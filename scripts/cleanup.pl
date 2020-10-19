@@ -32,6 +32,9 @@ s/\n[^\n]*
 (?:(?!\{\{\/zBLOCK\}\}).)*
 \{\{\/zBLOCK\}\}/$1/gsx;
 
+# vertical skip modifiers on newlines (not supported in tables)
+s/\\\\\[.*\]\n/\\\\\n/g;
+
 # remove all comments
 s/([^\\])%.*?\n/$1/g;
 
@@ -52,4 +55,8 @@ s/\\subsection\{Sequences and series problems\}/\\noindent\n\\large\{\\textbf\{S
 
 # Softsections to \section* in appendices
 s/\\softsection\{/\\section\*\{/g;
+
+# vertical skip modifiers on newlines (not supported in tables)
+s/\\softchapter/\\chapter/g;
+s/\\mycenteredheading/\\chapter/g;
 
