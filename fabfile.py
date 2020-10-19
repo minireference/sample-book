@@ -509,6 +509,20 @@ def transform_tables(soup, extractedmanifest, transformedmanifest):
             soup.insert(bracegroup_idx+1, '\n\n')
             bracegroup.delete()
 
+    elif soup.chapter and str(soup.chapter.string) == 'Formulas':
+        # remove numbering
+        for align in soup.find_all('align'):
+            align.name = 'align*'
+        for equation in soup.find_all('equation'):
+            equation.name = 'equation*'
+        # other cleanup
+        for DStrut in soup.find_all('DStrut'):
+            DStrut.delete()
+        for ds in soup.find_all('ds'):
+            ds.name = 'displaystyle'
+        for efrac in soup.find_all('efrac'):
+            efrac.name = 'frac'
+
     return soup
 
 
