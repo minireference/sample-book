@@ -636,12 +636,71 @@ def inplace_cleanup(transformeddir, relpath):
 ################################################################################
 
 @task
-def load(manifest=TRANSFROMED_MANIFEST):
-    pass
+def load(transformedmanifest=TRANSFROMED_MANIFEST):
+    """
+    Transforms all the LaTeX source code of all the files in `extractedmanifest`
+    to Softcover-compatible macros and writes output to `sources/transformed/`.
+    """
+    transformedmanifest = yaml.safe_load(open(transformedmanifest))
+    sourcedir = transformedmanifest['sourcedir']
+    bookdir = os.path.abspath('.')
+    imagesdir = os.path.join(bookdir, 'images')
+    # chaptersdir = os.path.join(bookdir, 'chapters')
+    book_info = yaml.safe_load(open(os.path.join('config', 'book.yml')))
+    mainfilename = book_info['filename']
 
+    # includes
+    for includerelpath in transformedmanifest['includes']:
+        srcpath = os.path.join(sourcedir, includerelpath)
+        destpath = os.path.join(bookdir, includerelpath)
+        ensure_containing_dir_exists(bookdir, includerelpath)
+        local('cp {} {}'.format(srcpath, destpath))
 
+    # graphics
+    for imagerelpath in transformedmanifest['graphics']:
+        srcpath = os.path.join(sourcedir, imagerelpath)
+        destpath = os.path.join(imagesdir, imagerelpath)
+        ensure_containing_dir_exists(imagesdir, imagerelpath)
+        local('cp {} {}'.format(srcpath, destpath))
 
+    # copy-over book chapters and simultaneously build the book mainfile
+    mainfilenametex = mainfilename + '.tex'
+    if os.path.exists(mainfilenametex):
+        local('cp {} {}'.format(mainfilenametex, mainfilenametex + '.bak'))
 
+    with open(mainfilenametex, 'w') as mainf:
+
+        mainf.write(LATEX_MAINFILE_DOC_PREAMBLE)
+        for chapter in transformedmanifest['frontmatter']['chapters']:
+            sourcefile = chapter['sourcefiles'][0]
+            srcpath = os.path.join(sourcedir, sourcefile)
+            destrelpath = os.path.join('chapters', sourcefile)
+            ensure_containing_dir_exists(bookdir, destrelpath)
+            local('cp {} {}'.format(srcpath, destrelpath))
+            mainf.write('\\include{' + destrelpath.replace('.tex', '') + '}\n')
+
+        mainf.write("\n\n\\mainmatter\n\n")
+        for chapter in transformedmanifest['mainmatter']['chapters']:
+            sourcefile = chapter['sourcefiles'][0]
+            srcpath = os.path.join(sourcedir, sourcefile)
+            destrelpath = os.path.join('chapters', sourcefile)
+            ensure_containing_dir_exists(bookdir, destrelpath)
+            local('cp {} {}'.format(srcpath, destrelpath))
+            mainf.write('\\include{' + destrelpath.replace('.tex', '') + '}\n')
+
+        mainf.write("\n\\appendix\n\n")
+        for chapter in transformedmanifest['backmatter']['chapters']:
+            sourcefile = chapter['sourcefiles'][0]
+            srcpath = os.path.join(sourcedir, sourcefile)
+            destrelpath = os.path.join('chapters', sourcefile)
+            ensure_containing_dir_exists(bookdir, destrelpath)
+            local('cp {} {}'.format(srcpath, destrelpath))
+            mainf.write('\\include{' + destrelpath.replace('.tex', '') + '}\n')
+
+        mainf.write("\n\\end{document}\n")
+        puts(green('Book mainfile written to ' + mainfilenametex))
+
+    puts(green('Book loaded into chapters/, images/, problems/, and 99anssol/'))
 
 
 # SOFTCOVER INSIDE DOCKER COMMANDS
@@ -826,6 +885,30 @@ LATEX_TRANSFORMED_DOC_PREAMBLE = r"""
 \cleardoublepage
 
 \setcounter{tocdepth}{1}
+\tableofcontents
+
+"""
+
+
+LATEX_MAINFILE_DOC_PREAMBLE = r"""
+\documentclass[10pt]{book}
+\usepackage{latex_styles/softcover}
+
+\VerbatimFootnotes  % Allows verbatim text in footnotes
+
+\title{Book}
+\subtitle{Book}
+\author{Ivan Savov}
+\date{}
+
+
+\begin{document}
+
+\includepdf{images/cover.pdf}
+
+\maketitle
+
+\frontmatter
 \tableofcontents
 
 """
