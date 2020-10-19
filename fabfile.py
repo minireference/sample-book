@@ -291,6 +291,7 @@ def transform(extractedmanifest=EXTRACTED_MANIFEST):
     allsourcefiles.extend(extractedmanifest['includes'])
 
     tansformations = [
+        transform_remove_index_commands,
         transform_figure_captions,
         transform_pdf_graphics,
         transform_includes_noext,
@@ -336,6 +337,19 @@ def transform(extractedmanifest=EXTRACTED_MANIFEST):
     puts(green('Book source files transformed and saved to ' + destdir + '/'))
 
 
+def transform_remove_index_commands(soup, extractedmanifest, transformedmanifest):
+    """
+    Get rid of \index and \emphindexdef commands.
+    """
+    indexs = soup.find_all('index')
+    for index in indexs:
+        index.delete()
+    emphindexdefs = soup.find_all('emphindexdef')
+    for emphindexdef in emphindexdefs:
+        emphindexdef.name = 'emph'
+    return soup
+
+
 def transform_figure_captions(soup, extractedmanifest, transformedmanifest):
     """
     Softcover expectes figure labels to be found inside figure captions.
@@ -361,15 +375,63 @@ def transform_tables(soup, extractedmanifest, transformedmanifest):
         wraptable.args = wraptable.args[3:]
 
     def find_index_of(array, obj):
+        """
+        Find index within `array`==parent.expr.all for insert-before operations.
+        Note basic `__eq__` doesn't work so using str() for equality comparison.
+        """
         for i, objati in enumerate(array):
             if str(objati) == str(obj):
                 return i
         return None
 
     for table in soup.find_all('table'):
-        if 'input' in ' '.join(table.text) and 'output' in ' '.join(table.text):
-            # print('first table', table)
-            # FUNCTIONS table containing eqnarray* of input-output pairs
+        table_text = ' '.join(table.text)
+
+        if 'Quantum' in table_text:
+            # LINEAR ALGEBRA QUANTUM MODELS TABLE
+            # 1. pull out text blocks in front of table
+            frameds = table.find_all('framed')
+            for framed in frameds:
+                table_idx = find_index_of(soup.expr.all, table)
+                newnodes = []
+                for child in framed.children:
+                    newnodes.append(child.copy())
+                    newnodes.append('\n')
+                newnodes.extend(['\n', '\n'])
+                soup.insert(table_idx, *newnodes)
+            # 2. get caption and label
+            caption = table.caption.copy()
+            label = table.label.copy()
+            caption.args[0].append(label)
+            # 3. clear children
+            for ch in table.children:
+                table.remove(ch)
+            # 4. add an eempty tabular
+            tabular = TexSoup.TexSoup(r"\begin{tabular}{c}\end{tabular}").tabular
+            table.append(tabular)
+            table.append('\n')
+            # 5. add back the caption
+            table.append(caption)
+            table.append('\n')
+
+        elif 'Correspondences' in table_text:
+            # LINEAR ALGEBRA INTRODUCTION TABLE
+            align = table.find('align*')
+            table_idx = find_index_of(soup.expr.all, table)
+            soup.insert(table_idx, align.copy())
+            soup.insert(table_idx+1, '\n')
+            # 2. add an empty inner tabular so Softcover lookups won't fail
+            tabular = TexSoup.TexSoup(r"\begin{tabular}{c}\end{tabular}").tabular
+            table.append(tabular)
+            table.append('\n')
+            # 3. move label inside caption like we do for figures
+            table.caption.args[0].append(table.label)
+            table.label.delete()
+            # 4. cleanup
+            table.remove(table.shadebox)
+
+        elif 'input' in table_text and 'output' in table_text:
+            # FUNCTIONS INPUT-OUTPUT EXAMPLES TABLE
             # 1. move the align* to in front of the table
             align = table.find('align*')
             table_idx = find_index_of(soup.expr.all, table)
@@ -382,9 +444,9 @@ def transform_tables(soup, extractedmanifest, transformedmanifest):
             # 3. move label inside caption like we do for figures
             table.caption.args[0].append(table.label)
             table.label.delete()
-        elif '359.761' in ' '.join(table.text) or 'Conic' in ' '.join(table.text):
-            # print('second table clause', table)
-            # ELLIPSE table with Earth pos. or CONICS summary table
+
+        elif '359.761' in table_text or 'Conic' in table_text or 'PageRank' in table_text:
+            # ELLIPSE, CONICS SUMMARY, and PAGE RANK TABLES
             # 1.extact useful stuff
             longtable = table.longtable.copy()
             if '@{}' in longtable.args[0].string:
@@ -398,6 +460,31 @@ def transform_tables(soup, extractedmanifest, transformedmanifest):
             table.insert(2, longtable)
             caption.args[0].append(label)
             table.insert(4, caption)
+
+        elif 'XOR' in table_text:
+            # XOR TRUTH TABLE (LINEAR ALGEBRA)
+            table.caption.args[0].append(table.label)
+            table.label.delete()
+
+        elif 'Fourier' in table_text:
+            # FOURIER TABLE (LINEAR ALGEBRA BOOK)
+            longtable = table.tabularx.copy()
+            longtable.args[0] = longtable.args[1]
+            del longtable.args[1]
+            longtable.name = 'longtable'
+            if '@{}' in longtable.args[0].string:
+                longtable.args[0].string = longtable.args[0].string.replace('@{}', '')
+            caption = table.caption.copy()
+            label = table.label.copy()
+            # 2. clear children
+            for ch in table.children:
+                table.remove(ch)
+            # 3. add the useful stuff back in
+            table.insert(0, '\n\n')
+            table.insert(2, longtable)
+            caption.args[0].append(label)
+            table.insert(6, caption)
+
     return soup
 
 
