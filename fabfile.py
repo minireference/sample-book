@@ -523,6 +523,18 @@ def transform_tables(soup, extractedmanifest, transformedmanifest):
         for efrac in soup.find_all('efrac'):
             efrac.name = 'frac'
 
+    elif soup.chapter and 'Constants' in str(soup.chapter.string):
+        for tabularx in soup.find_all('tabularx'):
+            tabularx.args[0] = tabularx.args[1]
+            del tabularx.args[1]
+            tabularx.name = 'longtable'
+            alignspec = tabularx.args[0].string
+            if '@{}' in alignspec:
+                alignspec = alignspec.replace('@{}', '')
+            if 'p' in alignspec:
+                alignspec = re.sub('p\{.*?\}', 'l', alignspec)
+            tabularx.args[0].string = alignspec
+
     return soup
 
 
