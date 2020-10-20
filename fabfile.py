@@ -127,7 +127,8 @@ def extractmanifest(mainpath):
                 igs = texnode.find_all('includegraphics')
                 for ig in igs:
                     imagerelpath = process_includegraphics(sourcedir, ig)
-                    manifest['graphics'].append(imagerelpath)
+                    if imagerelpath not in manifest['graphics']:
+                        manifest['graphics'].append(imagerelpath)
 
             # exercie and problem solution streams
             if name_matches(texnode, EXERCISE_INCLUDES_LOOKUP.keys()):
@@ -170,6 +171,7 @@ def extract(manifest=SOURCE_MANIFEST):
     destdir = os.path.join('sources', 'extracted')
     if not os.path.exists(destdir):
         os.makedirs(destdir, exist_ok=True)
+    allsourcefiles_set = set()
 
     def combine_chapters(sourcedir, chapters, destdir, prefix=''):
         newchapters = []
@@ -186,6 +188,10 @@ def extract(manifest=SOURCE_MANIFEST):
                     with open(sourcepath) as srcf:
                         sourcetext = srcf.read()
                     chf.write(sourcetext)
+                    # duplicate checks
+                    if sourcefile in allsourcefiles_set:
+                        puts(red('ERROR: sourcefile ' + sourcefile + ' multiply included'))
+                    allsourcefiles_set.add(sourcefile)
             newchapter['sourcefiles'] = [chapterfilename]
             newchapters.append(newchapter)
         return newchapters
@@ -221,7 +227,10 @@ def extract(manifest=SOURCE_MANIFEST):
         ensure_containing_dir_exists(destdir, includerelpath)
         local('cp {} {}'.format(sourcepath, destpath))
         assert os.path.exists(destpath), 'file missing ' + destpath
-        extractedmanifest['includes'].append(includerelpath)
+        if includerelpath not in extractedmanifest['includes']:
+            extractedmanifest['includes'].append(includerelpath)
+        else:
+            puts(red('WARNING: file ' + includerelpath  + ' multiply included'))
 
     # graphics
     for imagerelpath in manifest['graphics']:
@@ -230,7 +239,8 @@ def extract(manifest=SOURCE_MANIFEST):
         ensure_containing_dir_exists(destdir, imagerelpath)
         local('cp {} {}'.format(sourcepath, destpath))
         assert os.path.exists(destpath), 'graphics file missing ' + destpath
-        extractedmanifest['graphics'].append(imagerelpath)
+        if imagerelpath not in extractedmanifest['graphics']:
+            extractedmanifest['graphics'].append(imagerelpath)
 
     # book main file (for testing)
     maintexpath = os.path.join(destdir, 'extracted_mainfile_tester.tex')
