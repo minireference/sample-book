@@ -583,10 +583,8 @@ def transform_pdf_graphics(soup, extractedmanifest, transformedmanifest):
                 imagedestpath_png = os.path.join(destdir, imagerelpath_png)
                 if not os.path.exists(imagedestpath_png):
                     local('cp {} {}'.format(imagesrcpath_png, imagedestpath_png))
-                    ig.args[igargnum].string = imagerelpath_png
-                    newimagerelpath = imagerelpath_png
-                else:
-                    newimagerelpath = None
+                ig.args[igargnum].string = imagerelpath_png
+                newimagerelpath = imagerelpath_png
 
             else:
                 # no .png file exists, so we'll convert the .pdf file to .jpg
@@ -604,10 +602,8 @@ def transform_pdf_graphics(soup, extractedmanifest, transformedmanifest):
                     cmd += ' -quality 90 '
                     cmd += imagedestpath
                     local(cmd)
-                    ig.args[igargnum].string = imagerelpath_jpg
-                    newimagerelpath = imagerelpath_jpg
-                else:
-                    newimagerelpath = None
+                ig.args[igargnum].string = imagerelpath_jpg
+                newimagerelpath = imagerelpath_jpg
 
         else:
             # non-PDF graphics are OK, just need to copy over the file
@@ -615,13 +611,11 @@ def transform_pdf_graphics(soup, extractedmanifest, transformedmanifest):
             imagedestpath = os.path.join(destdir, imagerelpath)
             if not os.path.exists(imagedestpath):
                 local('cp {} {}'.format(imagesrcpath, imagedestpath))
-                newimagerelpath = imagerelpath
-            else:
-                newimagerelpath = None
+            newimagerelpath = imagerelpath
 
         # final verificaiton...
-        if newimagerelpath:
-            assert os.path.exists(os.path.join(destdir, newimagerelpath)), 'missing ' + newimagerelpath
+        assert os.path.exists(os.path.join(destdir, newimagerelpath)), 'missing ' + newimagerelpath
+        if newimagerelpath not in transformedmanifest['graphics']:
             transformedmanifest['graphics'].append(newimagerelpath)
 
     return soup
