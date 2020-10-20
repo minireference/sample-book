@@ -66,3 +66,7 @@ s/\{bsmallmatrix\}/{bmatrix}/g;
 
 # rm custom commands for switching TOC depth (used in functions reference sec)
 s/\\addtocontents\{.*\n//g
+
+# remove sentences referring to index since no index in ePub and mobi
+s/Consult.*thebookindex.*defined\.//g
+s/,\s*\{thebookindex\}//g
