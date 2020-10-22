@@ -3,6 +3,7 @@ Automation scripts for extract, pre-process, and building ePub from tex sources.
 """
 from collections import defaultdict, namedtuple
 import copy
+from datetime import datetime
 import json
 import os
 import re
@@ -36,6 +37,9 @@ env.DOCKER_HOST = "ssh://ivan@192.168.0.105"
 
 
 
+
+
+
 # LATEX SOURCE PRE-PROCESSING
 ################################################################################
 IGNORE_RELPATHS = ['00_frontmatter/copyright.tex', 'index/allsees.tex']
@@ -53,6 +57,10 @@ EXTRACTED_MANIFEST = 'sources/extracted/manifest.yml'
 TRANSFROMED_MANIFEST = 'sources/transformed/manifest.yml'
 
 
+
+
+# EXTRACT
+################################################################################
 
 @task
 def extractmanifest(mainpath):
@@ -156,9 +164,6 @@ def extractmanifest(mainpath):
     puts(green('Manifest saved to config/manifest.yml; plz inspect and edit.'))
     return manifest
 
-
-# EXTRACT
-################################################################################
 
 @task
 def extract(manifest=SOURCE_MANIFEST):
@@ -694,7 +699,7 @@ def load(transformedmanifest=TRANSFROMED_MANIFEST):
             local('cp {} {}'.format(srcpath, destrelpath))
             mainf.write('\\include{' + destrelpath.replace('.tex', '') + '}\n')
 
-        mainf.write("\n\\appendix\n\n")
+        mainf.write("\n\\backmatter\n\n")
         for chapter in transformedmanifest['backmatter']['chapters']:
             sourcefile = chapter['sourcefiles'][0]
             srcpath = os.path.join(sourcedir, sourcefile)
@@ -709,8 +714,45 @@ def load(transformedmanifest=TRANSFROMED_MANIFEST):
     puts(green('Book loaded into chapters/, images/, problems/, and 99anssol/'))
 
 
+
+
+
+# ARCHIVE
+################################################################################
+
+ARCHIVES_DIR = "/Users/ivan/Projects/Minireference/ePub/archives"
+
+@task
+def archive(bookdir='.', ebooksdir='ebooks'):
+    """
+    Save a backup copy of the files in ebooks/ directory to ePub/archives/ dir.
+    """
+    bookdir = os.path.abspath(bookdir)
+    assert os.path.exists(os.path.join(bookdir, ebooksdir)), 'ebooks/ not found'
+    book_info = yaml.safe_load(open(os.path.join(bookdir, 'config', 'book.yml')))
+    bookname = book_info['filename']
+    date_str = datetime.now().strftime("%Y%m%d")
+    destdir = os.path.join(ARCHIVES_DIR, bookname, date_str)
+    if not os.path.exists(destdir):
+        os.makedirs(destdir, exist_ok=True)
+    archived_filenames = []
+    for ext in ['.epub', '.mobi']:
+        filename = bookname + ext
+        sourcepath = os.path.join(bookdir, ebooksdir, filename)
+        if os.path.exists(sourcepath):
+            destpath = os.path.join(destdir, filename)
+            local('cp {} {}'.format(sourcepath, destpath))
+            archived_filenames.append(filename)
+        else:
+            puts(yellow('Did not find ebook ' + sourcepath))
+    puts(green('Archived ' + str(archived_filenames) + ' to ' + destdir))
+
+    
+
+
 # SOFTCOVER INSIDE DOCKER COMMANDS
 ################################################################################
+
 DOCKER_IMAGE_NAME = 'softcover-docker'
 
 @task
@@ -846,6 +888,15 @@ def ensure_containing_dir_exists(destdir, relpath):
     if not os.path.exists(destdirpath):
         os.makedirs(destdirpath, exist_ok=True)
 
+
+
+
+
+
+
+
+
+
 LATEX_TRANSFORMED_DOC_PREAMBLE = r"""
 \documentclass[10pt]{book}
 \title{Transformed test main file}
@@ -899,8 +950,6 @@ LATEX_TRANSFORMED_DOC_PREAMBLE = r"""
 LATEX_MAINFILE_DOC_PREAMBLE = r"""
 \documentclass[10pt]{book}
 \usepackage{latex_styles/softcover}
-
-\VerbatimFootnotes  % Allows verbatim text in footnotes
 
 \title{Book}
 \subtitle{Book}

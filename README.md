@@ -5,8 +5,17 @@ producing PDF, HTML, ePub, and mobi eBook formats.
 
 Technologies uses:
   - `softcover` the best build system for eBooks ever built
-  - `Fabric` automation library in Python (think Makefile but written in Python)
   - `alvinwan/TexSoup` for parsing latex source into AST (used for source linting and formatting only)
+  - `Fabric` automation library in Python (think Makefile but written in Python)
+  - `Docker` for running processing on a remote machine (so laptop doesn't melt)
+
+
+TODOs
+ - improve sanity checks at each step
+   - one sourcefile cannot appear in two places (ERROR instead of warn?)
+   - after load, cannot be includegraphics with .pdf paths
+   - includes only once
+
 
 
 ## Install
@@ -120,7 +129,7 @@ mainmatter:
         - 01_math/05.basic_rules_of_algebra.tex
         - 01_math/06.solving_quadratic_equations.tex
         - ...
-backmatter:   # not implemented yet (just add as a regular chapter)
+backmatter:
 includes:     # .tex files included in one of the sourcefiles
 graphics:     # the contents of all includegraphics commands (prefer png)
   - figures/math/circle-centered-at-h-k.png
@@ -164,6 +173,7 @@ they will be resolved correctly.
 
   - `config/book.yml`: book metadata
   - `config/lang.yml`: i18n strings
+  - `config/manifest.yml`: detailed list of source files that make up the book (external repo)
   - `config/preamble.tex`: this file is only used to get the latex `documentclass` declaration.
      The actual `documentclass` declaration used for `build:pdf` is whatever is in `sample-book.tex`.
   - `latex_styles/softcover.sty`: main LaTeX header file that defines the LaTeX macros and styles
