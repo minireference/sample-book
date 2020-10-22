@@ -34,7 +34,7 @@ s/\n[^\n]*
 \{\{\/zBLOCK\}\}/$1/gsx;
 
 # vertical skip modifiers on newlines (get confused as start of displaymath)
-s/\\\\\[.*m\]/\\\\/g;
+s/\\\\\[.*?m\]/\\\\/g;
 
 # remove all comments
 s/([^\\])%.*?\n/$1/g;
@@ -63,6 +63,7 @@ s/\\mycenteredheading/\\chapter/g;
 
 # LA specific
 s/\{bsmallmatrix\}/{bmatrix}/g;
+s/\{vsmallmatrix\}/{vmatrix}/g;
 
 # rm custom commands for switching TOC depth (used in functions reference sec)
 s/\\addtocontents\{.*\n//g;
@@ -70,3 +71,6 @@ s/\\addtocontents\{.*\n//g;
 # remove sentences referring to index since no index in ePub and mobi
 s/Consult.*thebookindex.*defined\.//g;
 s/,\n.*?\{thebookindex\}//g;
+
+# graph mini-figures in exercises and problems of the LA book
+s/\$\\vcenter\{\\hbox\{\\includegraphics\[(.*?)\]\{(.*?)\}\}\}\$/\\includegraphics\[$1\]\{$2\}/g;

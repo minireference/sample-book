@@ -197,7 +197,8 @@ def get_ebooks_from_docker_host_dir(remotepath, format):
     for format in formats:
         if format == 'html':
             remotehtmldirpath = os.path.join(remotepath, 'html/*')
-            get(remotehtmldirpath, 'html/')
+            with hide('warnings'):
+                get(remotehtmldirpath, 'html/')
         else:
             remotefilepath = os.path.join(remotepath, 'ebooks', filename + '.' + format)
             localfilepath = os.path.join('ebooks', filename + '.' + format)
