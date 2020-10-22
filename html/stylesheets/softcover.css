@@ -1,13 +1,37 @@
 /* This file is auto-generated. Do not edit. */
 
 body #book {
-  width: 41em;
+  max-width: 41em;
   font-size: 18px;
   font-family: Georgia, serif;
   line-height: 1.5;
   margin-left: 5em;
   color: #070707;
   margin-bottom: 20em;
+}
+
+@media only screen and (max-width: 900px) {
+  body #book {
+    /* ease up on the left margin when screens get medium size */
+    margin-left: 3em;
+    margin-right: 3em;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+
+  body #book {
+    /* smaller font and minimal margin for mobile */
+    font-size: 14px;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+  }
+
+  body #book .graphics img {
+    /* prevent images using percent width from becoming too small on mobile */
+    min-width: 300px;
+  }
+
 }
 
 #book h1 {
@@ -189,7 +213,7 @@ body #book {
   text-align: center;
 }
 
-#book .graphics.image img {
+#book .graphics img {
   margin-top: 2em;
   max-width: 100%
 }
@@ -470,3 +494,58 @@ body #book {
 #book span.intersentencespace {
   margin-right: 0.2em;
 }
+
+
+
+/* MINIREF EXERCISES STYLING */
+
+#book div.miniref-exercise > div.multicols > strong {
+  margin-left: 1.3em;
+}
+
+#book div.miniref-exercise {
+  margin-top: 0.7em;
+  margin-bottom: 0.7em;
+}
+
+#book div.miniref-exercise > ul {
+  margin-block-start: 0.1em;
+  margin-block-end: 0em;
+  padding-inline-start: 0.6em;
+}
+
+#book div.miniref-exercise > ul > label {
+  float: left;
+}
+
+#book div.miniref-exercise > ul > li {
+  list-style: none;
+}
+
+
+
+/* MINIREF ROBLEMS STYLING */
+
+#book div.miniref-problem > div.multicols > strong {
+  margin-left: 1.3em;
+}
+
+#book div.miniref-problem {
+  margin-top: 0.7em;
+  margin-bottom: 0.7em;
+}
+
+#book div.miniref-problem > ul {
+  margin-block-start: 0.1em;
+  margin-block-end: 0em;
+  padding-inline-start: 0.6em;
+}
+
+#book div.miniref-problem > ul > label {
+  float: left;
+}
+
+#book div.miniref-problem > ul > li {
+  list-style: none;
+}
+
