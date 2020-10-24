@@ -61,6 +61,9 @@ s/\\softsection\{/\\section\*\{/g;
 s/\\softchapter/\\chapter/g;
 s/\\mycenteredheading/\\chapter/g;
 
+# Special en-dash bullet list in MATH & PHYS concept map
+s/\\item\[--\]/\\item/g;
+
 # LA specific
 s/\{bsmallmatrix\}/{bmatrix}/g;
 s/\{vsmallmatrix\}/{vmatrix}/g;
@@ -74,3 +77,4 @@ s/,\n.*?\{thebookindex\}//g;
 
 # graph mini-figures in exercises and problems of the LA book
 s/\$\\vcenter\{\\hbox\{\\includegraphics\[(.*?)\]\{(.*?)\}\}\}\$/\\includegraphics\[$1\]\{$2\}/g;
+

@@ -681,7 +681,12 @@ def load(transformedmanifest=TRANSFROMED_MANIFEST):
 
     with open(mainfilenametex, 'w') as mainf:
 
-        mainf.write(LATEX_MAINFILE_DOC_PREAMBLE)
+        title = book_info.get('title', mainfilename)
+        subtitle = book_info.get('subtitle', '')
+        author = book_info.get('author', '')
+        preamble = LATEX_MAINFILE_DOC_PREAMBLE % (title, subtitle, author)
+        mainf.write(preamble)
+
         for chapter in transformedmanifest['frontmatter']['chapters']:
             sourcefile = chapter['sourcefiles'][0]
             srcpath = os.path.join(sourcedir, sourcefile)
@@ -951,9 +956,9 @@ LATEX_MAINFILE_DOC_PREAMBLE = r"""
 \documentclass[10pt]{book}
 \usepackage{latex_styles/softcover}
 
-\title{Book}
-\subtitle{Book}
-\author{Ivan Savov}
+\title{%s}
+\subtitle{%s}
+\author{%s}
 \date{}
 
 
