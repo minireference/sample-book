@@ -312,6 +312,7 @@ def transform(extractedmanifest=EXTRACTED_MANIFEST):
         transform_pdf_graphics,
         transform_includes_noext,
         transform_tables,
+        transform_aquote,
     ]
     for relpath in allsourcefiles:
         # read in
@@ -633,6 +634,20 @@ def transform_pdf_graphics(soup, extractedmanifest, transformedmanifest):
         if newimagerelpath not in transformedmanifest['graphics']:
             transformedmanifest['graphics'].append(newimagerelpath)
 
+    return soup
+
+
+def transform_aquote(soup, extractedmanifest, transformedmanifest):
+    """
+    Restructure `aquote` (attribution quote) environemts to be regular `quote`.
+    """
+    aquotes = soup.find_all('aquote')
+    for aquote in aquotes:
+        attribution = aquote.args[0].string
+        aquote.args[1].append(' --- ')
+        aquote.args[1].append(attribution)
+        del aquote.args[0]
+        aquote.name = 'quote'
     return soup
 
 
