@@ -78,3 +78,9 @@ s/,\n.*?\{thebookindex\}//g;
 # graph mini-figures in exercises and problems of the LA book
 s/\$\\vcenter\{\\hbox\{\\includegraphics\[(.*?)\]\{(.*?)\}\}\}\$/\\includegraphics\[$1\]\{$2\}/g;
 
+# print- and ipad-specific LAYOUT commands
+s/\\printcp//g;
+s/\\printni//g;
+s/\\ipadcp//g;
+s/\\ipadni//g;
+

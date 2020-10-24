@@ -174,6 +174,7 @@ def extract(manifest=SOURCE_MANIFEST):
     manifest = yaml.safe_load(open(manifest))
     sourcedir = manifest['sourcedir']
     destdir = os.path.join('sources', 'extracted')
+    local('rm -rf ' + destdir)
     if not os.path.exists(destdir):
         os.makedirs(destdir, exist_ok=True)
     allsourcefiles_set = set()
@@ -331,21 +332,6 @@ def transform(extractedmanifest=EXTRACTED_MANIFEST):
 
         # in-place cleanup
         inplace_cleanup(destdir, relpath)
-
-    # book main file (for testing)
-    maintexpath = os.path.join(destdir, 'transformed_mainfile_tester.tex')
-    with open(maintexpath, 'w') as mainf:
-        mainf.write(LATEX_TRANSFORMED_DOC_PREAMBLE)
-        mainf.write("\n\\frontmatter\n\n")
-        for chapter in transformedmanifest['frontmatter']['chapters']:
-            mainf.write('\\input{' + chapter['sourcefiles'][0] + '}\n')
-        mainf.write("\n\\mainmatter\n\n")
-        for chapter in transformedmanifest['mainmatter']['chapters']:
-            mainf.write('\\input{' + chapter['sourcefiles'][0] + '}\n')
-        mainf.write("\n\\appendix\n\n")
-        for chapter in transformedmanifest['backmatter']['chapters']:
-            mainf.write('\\input{' + chapter['sourcefiles'][0] + '}\n')
-        mainf.write("\n\\end{document}\n")
 
     # write transformed manifest
     transformedmanifest_str = yaml.dump(transformedmanifest, default_flow_style=False, sort_keys=False)
@@ -652,6 +638,9 @@ def transform_aquote(soup, extractedmanifest, transformedmanifest):
 
 
 def inplace_cleanup(transformeddir, relpath):
+    """
+    Process the tex file at `relpath` using a Perl search-and-replace script.
+    """
     print('Cleaning up file', relpath)
     filepath = os.path.join(transformeddir, relpath)
     local('./scripts/cleanup.pl ' + filepath)
@@ -734,6 +723,26 @@ def load(transformedmanifest=TRANSFROMED_MANIFEST):
     puts(green('Book loaded into chapters/, images/, problems/, and 99anssol/'))
 
 
+LATEX_MAINFILE_DOC_PREAMBLE = r"""
+\documentclass[10pt]{book}
+\usepackage{latex_styles/softcover}
+
+\title{%s}
+\subtitle{%s}
+\author{%s}
+\date{}
+
+
+\begin{document}
+
+\includepdf{images/cover.pdf}
+
+\maketitle
+
+\frontmatter
+\tableofcontents
+
+"""
 
 
 
@@ -807,7 +816,7 @@ def dserver():
 
 
 
-# UTILS FOR extractmanifest TASK
+# UTILS
 ################################################################################
 
 def name_matches(texnode, names):
@@ -898,10 +907,6 @@ def process_includegraphics(sourcedir, includegraphics):
     return imagerelpath
 
 
-
-# UTILS FOR transform TASK
-################################################################################
-
 def ensure_containing_dir_exists(destdir, relpath):
     dirname = os.path.dirname(relpath)
     destdirpath = os.path.join(destdir, dirname)
@@ -910,80 +915,3 @@ def ensure_containing_dir_exists(destdir, relpath):
 
 
 
-
-
-
-
-
-
-
-LATEX_TRANSFORMED_DOC_PREAMBLE = r"""
-\documentclass[10pt]{book}
-\title{Transformed test main file}
-\usepackage{etex}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% STEP 2: Set the boolean (true/false) values for the document custom variables
-\usepackage{ifthen}
-
-\newboolean{DRAFTMODE}				% if PROOFREADING=true:
-\setboolean{DRAFTMODE}{false}			%   10pt, dblspaced, source line nums, 8.5'' x 11'' paper
-
-\newboolean{SOLSINTHEBACK}      		% Controls answers and solutions for exercises and problems
-\setboolean{SOLSINTHEBACK}{true}    		% SOLSINTHEBACK=true for final print version
-
-\newboolean{IPAD}						% IPAD=true 12pt, sansserif, 6''x~8'' paper
-\setboolean{IPAD}{false}					% IPAD=false    10pt, cm, print, 5.5'' x 8.5''
-
-\newboolean{FORPRINT}					% FORPRINT=true 	     special pagebreaks for print version
-\setboolean{FORPRINT}{true}				% FORPRINT=false
-
-\newboolean{SYMMETRIC}				% SYMMETRIC=true	SYMMETRIC page margins (for screen version of PDF)
-\setboolean{SYMMETRIC}{true}			% SYMMETRIC=false
-
-\newboolean{PG13}						% PG13=true 	No swearwords please, no pot, vodka ok, humanist and anti-corporate propaganda ok.
-\setboolean{PG13}{false}					% PG13=false	Tell it like it is!
-
-\newboolean{TUTORIAL}					% for SYMPY tutorial Appendix
-\setboolean{TUTORIAL}{false}				% if TUTORIAL==true: show extra defs and repeats of explanations
-
-\newboolean{FORLA}					% if FORLA:  show extra content in SYMPY tutorial intended for LA book
-\setboolean{FORLA}{false}				% if not FORLA:  show only content for MathPhys book
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\input{00.minireference.hdr.tex}
-\input{00.exercises_problems.hdr.tex}
-\input{00.exercises.hdr.tex}
-
-
-\begin{document}
-\maketitle
-
-\cleardoublepage
-
-\setcounter{tocdepth}{1}
-\tableofcontents
-
-"""
-
-
-LATEX_MAINFILE_DOC_PREAMBLE = r"""
-\documentclass[10pt]{book}
-\usepackage{latex_styles/softcover}
-
-\title{%s}
-\subtitle{%s}
-\author{%s}
-\date{}
-
-
-\begin{document}
-
-\includepdf{images/cover.pdf}
-
-\maketitle
-
-\frontmatter
-\tableofcontents
-
-"""
