@@ -686,9 +686,12 @@ def load(transformedmanifest=TRANSFROMED_MANIFEST):
     with open(mainfilenametex, 'w') as mainf:
 
         title = book_info.get('title', mainfilename)
-        subtitle = book_info.get('subtitle', '')
+        subtitle = book_info.get('subtitle')
+        if not subtitle:
+            subtitle = '$\;$'
         author = book_info.get('author', '')
-        preamble = LATEX_MAINFILE_DOC_PREAMBLE % (title, subtitle, author)
+        date = datetime.now().strftime("%B %d, %Y")
+        preamble = LATEX_MAINFILE_DOC_PREAMBLE % (title, subtitle, author, date)
         mainf.write(preamble)
 
         for chapter in transformedmanifest['frontmatter']['chapters']:
@@ -730,7 +733,7 @@ LATEX_MAINFILE_DOC_PREAMBLE = r"""
 \title{%s}
 \subtitle{%s}
 \author{%s}
-\date{}
+\date{%s}
 
 
 \begin{document}
