@@ -29,7 +29,7 @@ Code
 ###### SOFTCOVER GITIGNORE #####################################################
 
 # Generated ebooks
-ebooks/
+# ebooks/
 
 # Media (likely to be huge)
 media/
@@ -47,8 +47,8 @@ generated_polytex/
 .softcover-book
 
 # Generated HTML files
-html/*.html
-html/*.xhtml
+#html/*.html
+#html/*.xhtml
 
 # Generated EPUB files
 epub/OEBPS/*.html
