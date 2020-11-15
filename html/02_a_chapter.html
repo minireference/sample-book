@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="stylesheets/pygments.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/softcover.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/custom.css" media="screen" rel="stylesheet" type="text/css" />
+    
+    <title>Chapter 2: The second chapter</title>
+    
+      <script type="text/x-mathjax-config">
+              MathJax.Hub.Config({
+        extensions: ["tex2jax.js", "MathMenu.js", "MathZoom.js", "fast-preview.js"],
+        "HTML-CSS": {
+          availableFonts: ["TeX"],
+          preferredFont: "TeX",
+          webFont: "TeX",
+          imageFont: null
+        },
+        SVG: {
+          font: "TeX"
+        },
+        TeX: {
+          extensions: ["AMSmath.js", "AMSsymbols.js", "color.js", "cancel.js", "mhchem.js"],
+          equationNumbers: {
+            autoNumber: "AMS",
+            formatNumber: function (n) { return "2" + '.' + n }
+          },
+          Macros: {
+            PolyTeX:    "Poly{\\TeX}",
+            PolyTeXnic: "Poly{\\TeX}nic",
+            emph: ["{#1}", 1],
+            // FROM MATH & PHYS BOOK
+            eqdef: "\\stackrel{\\scriptscriptstyle\\text{def}}{=}",
+            cotan: "\\textrm{cotan}",
+            sech: "\\textrm{sech}",
+            button: ["\\boxed{\\,#1\\phantom{\\small l}\\!}", 1],
+            scalebox: ["{#2}", 2],
+            octagon: "\\textrm{octagon}",
+            ds: "\\displaystyle",
+            efrac: ["\\frac{#1}{#2}", 2],
+            qedsymbol: "\\square",
+            // FROM LA BOOK
+            mathbbm: ["\\mathbb{#1}", 1],
+            sfT: "{\\mathsf{T}}",
+            colvec: ["\\left[\\begin{array}{c} #1 \\end{array}\\right]", 1],
+            Tr: "\\textrm{Tr}",
+            tensor: ["{\\vphantom{#2}#1\\!{#2}#3}", 3, ""],
+            lightning: "\\leadsto",
+            // PROB
+            psub: ["#1_{#2\\!}", 2, "p"],
+            musub: ["#1_{#2\\!}", 2, "\\mu"],
+            myepsdice: ["\\boxed{#1}", 1],
+            // QUANTUM
+            bra: ["\\langle #1|", 1],
+            ket: ["|#1 \\rangle", 1],
+            braket: ["\\langle #1 \\rangle", 1],
+            ketbra: ["\\ket{#1}\\bra{#2}", 2],
+            "softcover": "\\texttt{softcover}",
+"unitvec": ["{\\hat #1}", 1]
+          }
+        },
+        showProcessingMessages: false,
+        messageStyle: "none",
+        imageFont: null,
+        "AssistiveMML": { disabled: true }
+      });
+
+        if (/PhantomJS/.test(window.navigator.userAgent)) {
+          MathJax.Hub.Queue([alert, 'MathJax Done']);
+        }
+      </script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+    
+  </head>
+  <body>
+    
+    <div id="book">
+      <div id="cha-a_chapter" data-tralics-id="cid6" class="chapter" data-number="2" data-chapter="02_a_chapter"><h1><a href="02_a_chapter.html#cha-a_chapter" class="heading hyperref"><span class="number">Chapter 2 </span>The second chapter</a></h1>
+<p>This is the first paragraph of the Softcover Markdown template produced with the <code class="tt">softcover</code> command-line interface.<span class="intersentencespace"></span> It shows how to write a document in Markdown, a lightweight markup language, augmented with the <a href="http://kramdown.gettalong.org/" target="_blank" rel="noopener">kramdown</a> converter and some custom extensions, including support for embedded Poly<span class="texhtml">T<span class="texhtmlE">E</span>X</span>, a subset of the powerful <span class="texhtml">L<span class="texhtmlA">A</span>T<span class="texhtmlE">E</span>X</span> typesetting system.<sup id="cha-2_footnote-ref-1" class="footnote"><a href="#cha-2_footnote-1">1</a></sup><span class="intersentencespace"></span> For more information, see <a href="http://manual.softcover.io/book" target="_blank" rel="noopener"><em>The Softcover Book</em></a>.<span class="intersentencespace"></span> To learn how to easily publish (and optionally sell) documents produced with Softcover, visit <a href="http://softcover.io/" target="_blank" rel="noopener">Softcover.io</a>.</p>
+<p>This is the <em>second</em> paragraph, showing how to emphasize text.<sup id="cha-2_footnote-ref-2" class="footnote"><a href="#cha-2_footnote-2">2</a></sup><span class="intersentencespace"></span> You can also make text <strong>bold</strong> or <em>emphasize a second way</em>.<span class="intersentencespace"></span> Via embedded Poly<span class="texhtml">T<span class="texhtmlE">E</span>X</span>, Softcover also supports colored text, such as <span style="color: red">red</span>, <span style="color: CornflowerBlue">cornflower blue</span>, and <span style="color: #E8AB3A">arbitrary HTML colors</span>.</p>
+</div>
+<div id="sec-a_section" data-tralics-id="cid7" class="section" data-number="2.1"><h2><a href="02_a_chapter.html#sec-a_section" class="heading hyperref"><span class="number">2.1 </span>A section</a></h2>
+<p>This is a section.<span class="intersentencespace"></span> You can refer to it using the <span class="texhtml">L<span class="texhtmlA">A</span>T<span class="texhtmlE">E</span>X</span> cross-reference syntax, like so: <a href="02_a_chapter.html#sec-a_section" class="hyperref">Section <span class="ref">2.1</span></a>.</p>
+<div id="uid22" data-tralics-id="uid22" class="subsection" data-number="2.1.1"><h3><a href="#uid22" class="heading">Source code</a></h3>
+<p>This is a subsection.</p>
+<p>You can typeset code samples and other verbatim text using four spaces of indentation:</p>
+<pre class="verbatim">def hello
+  puts "hello, world"
+end</pre>
+<p>Softcover also comes with full support for syntax-highlighted source code using kramdown’s default syntax, which combines the language name with indentation:</p>
+<div class="code">def hello
+  puts "hello, world"
+end</div>
+<p>Softcover’s Markdown mode also extends kramdown to support so-called “code fencing” from GitHub-flavored Markdown:</p>
+<div class="code">def hello
+  puts "hello, world!"
+end</div>
+<p>The last of these can be combined with Poly<span class="texhtml">T<span class="texhtmlE">E</span>X</span>’s <code>codelisting</code> environment to make code listings with linked cross-references (<a href="02_a_chapter.html#code-hello" class="hyperref">Listing <span class="ref">2.1</span></a>).</p>
+<div class="codelisting" id="code-hello" data-tralics-id="uid23" data-number="2.1"><div class="heading"><span class="number">Listing 2.1:</span> <span class="description">Hello, world.</span>
+
+
+</div>
+
+<div class="code">def hello
+  puts "hello, world!"
+end</div></div></div>
+<div id="uid24" data-tralics-id="uid24" class="subsection" data-number="2.1.2"><h3><a href="#uid24" class="heading">Mathematics</a></h3>
+<p>Softcover’s Markdown mode supports mathematical typesetting using <span class="texhtml">L<span class="texhtmlA">A</span>T<span class="texhtmlE">E</span>X</span> syntax, including inline math, such as <span class="inline_math">\(  \phi^2 - \phi - 1 = 0,  \)</span> and centered math, such as</p>
+<div class="equation">\[  \phi = \frac{1+\sqrt{5}}{2}.  \]
+</div><p class="noindent">It also supports centered equations with linked cross-reference via embedded Poly<span class="texhtml">T<span class="texhtmlE">E</span>X</span> (<a href="02_a_chapter.html#eq-phi" class="hyperref">Eq. (<span class="ref">2.1</span>)</a>).</p>
+<div id="eq-phi" data-tralics-id="uid25" data-number="2.1" class="equation">\begin{equation}
+\label{eq:phi}
+\phi = \frac{1+\sqrt{5}}{2}
+\end{equation}
+</div><p class="noindent">Softcover also supports an alternate math syntax, such as <span class="inline_math">\( \phi^2 - \phi - 1 = 0 \)</span>, and centered math, such as</p>
+<div class="equation">\[ \phi = \frac{1+\sqrt{5}}{2}. \]
+</div><p class="noindent">The <span class="texhtml">L<span class="texhtmlA">A</span>T<span class="texhtmlE">E</span>X</span> syntax is strongly preferred, but the alternate syntax is included for maximum compatibility with other systems.</p>
+</div>
+<div id="uid26" data-tralics-id="uid26" class="subsection" data-number="2.1.3"><h3><a href="#uid26" class="heading">Exercises</a></h3>
+<div class="miniref-exercises">
+
+<div class="miniref-exercise" data-number="2.1"><span class="exercise number">E2.1 </span>
+Do the following vectors represent probability distributions?<span class="intersentencespace"></span>
+<ol class="exparts-star">
+<li><span class="inline_math">\( \left(\tfrac{1}{2}, \tfrac{1}{2}, \tfrac{1}{2} \right)^T \)</span>
+</li>
+<li><span class="inline_math">\( \left(\tfrac{1}{4}, \tfrac{1}{4}, \tfrac{1}{4}, \tfrac{1}{4} \right)^T \)</span>
+</li>
+<li><span class="inline_math">\( \left(0.3, 0.3, -0.1, 0.5  \right)^T \)</span>
+</li></ol>
+
+
+
+
+
+</div>
+
+</div>
+</div></div>
+<div id="cid8" data-tralics-id="cid8" class="section" data-number="2.2"><h2><a href="02_a_chapter.html#cid8" class="heading hyperref"><span class="number">2.2 </span>Images and tables</a></h2>
+<p>This is the second section.</p>
+<p>Softcover supports the inclusion of images, like this:</p>
+<div class="graphics image"><img src="images/figures/math/conic_sections_four-shapes.png" alt="images/figures/math/conic_sections_four-shapes" /></div>
+<p>Using <span class="texhtml">L<span class="texhtmlA">A</span>T<span class="texhtmlE">E</span>X</span> labels, you can also include a caption (as in <a href="02_a_chapter.html#fig-captioned_image" class="hyperref">Figure <span class="ref">2.1</span></a>) or just a figure number (as in <a href="02_a_chapter.html#fig-figure_number" class="hyperref">Figure <span class="ref">2.2</span></a>).</p>
+<div class="center figure" id="fig-captioned_image" data-tralics-id="uid33" data-number="2.1">
+<div class="graphics image"><img src="images/figures/math/conic_sections_four-shapes.png" alt="images/figures/math/conic_sections_four-shapes" /></div><div class="caption"><span class="header">Figure 2.1: </span><span class="description">The four conic sections.
+</span></div></div>
+<div class="center figure" id="fig-figure_number" data-tralics-id="uid34" data-number="2.2">
+<div class="graphics image"><img src="images/figures/math/conic_sections_four-shapes.png" alt="images/figures/math/conic_sections_four-shapes" /></div><div class="caption"><span class="header">Figure 2.2 </span><span class="description"></span></div></div>
+<div id="uid35" data-tralics-id="uid35" class="subsection" data-number="2.2.1"><h3><a href="#uid35" class="heading">Tables</a></h3>
+<p>Softcover supports raw tables via a simple table syntax:</p>
+<table class="tabular"><tr class="top_border"><td class="left_border align_left right_border"><strong>HTTP request</strong></td>
+<td class="align_left right_border"><strong>URL</strong></td>
+<td class="align_left right_border"><strong>Action</strong></td>
+<td class="align_left right_border"><strong>Purpose</strong></td>
+</tr><tr><td class="left_border align_left right_border"><code>GET</code></td>
+<td class="align_left right_border">/users</td>
+<td class="align_left right_border"><code>index</code></td>
+<td class="align_left right_border">page to list all users</td>
+</tr><tr><td class="left_border align_left right_border"><code>GET</code></td>
+<td class="align_left right_border">/users/1</td>
+<td class="align_left right_border"><code>show</code></td>
+<td class="align_left right_border">page to show user with id <code>1</code></td>
+</tr><tr><td class="left_border align_left right_border"><code>GET</code></td>
+<td class="align_left right_border">/users/new</td>
+<td class="align_left right_border"><code>new</code></td>
+<td class="align_left right_border">page to make a new user</td>
+</tr><tr><td class="left_border align_left right_border"><code>POST</code></td>
+<td class="align_left right_border">/users</td>
+<td class="align_left right_border"><code>create</code></td>
+<td class="align_left right_border">create a new user</td>
+</tr><tr><td class="left_border align_left right_border"><code>GET</code></td>
+<td class="align_left right_border">/users/1/edit</td>
+<td class="align_left right_border"><code>edit</code></td>
+<td class="align_left right_border">page to edit user with id <code>1</code></td>
+</tr><tr><td class="left_border align_left right_border"><code>PATCH</code></td>
+<td class="align_left right_border">/users/1</td>
+<td class="align_left right_border"><code>update</code></td>
+<td class="align_left right_border">update user with id <code>1</code></td>
+</tr><tr class="bottom_border"><td class="left_border align_left right_border"><code>DELETE</code></td>
+<td class="align_left right_border">/users/1</td>
+<td class="align_left right_border"><code>destroy</code></td>
+<td class="align_left right_border">delete user with id <code>1</code></td>
+</tr></table>
+<p>See <a href="http://manual.softcover.io/book/softcover_markdown#sec-embedded_tabular_and_tables" target="_blank" rel="noopener"><em>The Softcover Book</em></a> to learn how to make more complicated tables.</p>
+</div></div>
+<div id="cid9" data-tralics-id="cid9" class="section" data-number="2.3"><h2><a href="02_a_chapter.html#cid9" class="heading hyperref"><span class="number">2.3 </span>Command-line interface</a></h2>
+<p>Softcover comes with a command-line interface called <code>softcover</code>.<span class="intersentencespace"></span> To get more information, just run <code>softcover help</code>:</p>
+<div class="code">$ softcover help
+Commands:
+  softcover build, build:all           # Build all formats
+  softcover build:epub                 # Build EPUB
+  softcover build:html                 # Build HTML
+  softcover build:mobi                 # Build MOBI
+  softcover build:pdf                  # Build PDF
+  softcover build:preview              # Build book preview in all formats
+  .
+  .
+  .</div>
+<p class="noindent">You can run <code>softcover help &lt;command&gt;</code> to get additional help on a given command:</p>
+<div class="code">$ softcover help build
+Usage:
+  softcover build, build:all
+
+Options:
+  -q, [--quiet]   # Quiet output
+  -s, [--silent]  # Silent output
+
+Build all formats</div>
+</div>
+<div id="cid10" data-tralics-id="cid10" class="section" data-number="2.4"><h2><a href="02_a_chapter.html#cid10" class="heading hyperref"><span class="number">2.4 </span>Miscellanea</a></h2>
+<p>This is the end of the template—apart from two mostly empty chapters.<span class="intersentencespace"></span> In fact, let’s include the last chapter in its entirety, just to see how mostly empty it is:</p>
+<p>Visit <a href="http://manual.softcover.io" target="_blank" rel="noopener"><em>The Softcover Book</em></a> to learn more about what Softcover can do.</p>
+</div>
+<div id="cid11" data-tralics-id="cid11" class="section" data-number="2.5"><h2><a href="02_a_chapter.html#cid11" class="heading hyperref"><span class="number">2.5 </span>Probability problems</a></h2>
+<div class="miniref-problems">
+
+<div class="miniref-problem" id="problem-geometric_distr_biased_coin_until_heads" data-tralics-id="problem-geometric_distr_biased_coin_until_heads" data-number="2.1"><span class="problem number">P2.1 </span> 
+
+You have a biased coin which lands on <code class="tt">heads</code> with probability <span class="inline_math">\( p \)</span>,
+and consequently lands on <code class="tt">tails</code> with probability <span class="inline_math">\( (1-p) \)</span>.<span class="intersentencespace"></span> Suppose you want to flip the coin until you get <code class="tt">heads</code>.<span class="intersentencespace"></span> Define the random variable <span class="inline_math">\( N \)</span> as the number of tosses required until the first <code class="tt">heads</code> outcome.<span class="intersentencespace"></span> What is the probability mass function <span class="inline_math">\( P_N(n) \)</span> for success on the <span class="inline_math">\( n \)</span><sup class="footnote">th</sup> toss?<span class="intersentencespace"></span> Confirm that the formula is a valid probability distribution by showing <span class="inline_math">\( \sum_{n=1}^\infty P_N(n) = 1 \)</span>.
+
+<div class="miniref-hint">
+Find the probabilities for cases <span class="inline_math">\( n=1,2,3,\ldots \)</span> and look for a pattern.<span class="intersentencespace"></span> </div>
+
+
+
+
+</div>
+
+
+</div>
+</div>
+<div id="cha-2_footnotes">
+  <div class="footnotes">
+    <div id="cha-2_footnote-1" class="footnote"><a class="footnote-link" href="#cha-2_footnote-ref-1">1.</a> Pronunciations of “LaTeX” differ, but <em>lay</em>-tech is the one I prefer.</div>
+    <div id="cha-2_footnote-2" class="footnote"><a class="footnote-link" href="#cha-2_footnote-ref-2">2.</a> This is a footnote.<span class="intersentencespace"></span> It is numbered automatically.</div>
+  </div>
+</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="stylesheets/pygments.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/softcover.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/custom.css" media="screen" rel="stylesheet" type="text/css" />
+    
+    <title>Chapter 3: Vectors</title>
+    
+      <script type="text/x-mathjax-config">
+              MathJax.Hub.Config({
+        extensions: ["tex2jax.js", "MathMenu.js", "MathZoom.js", "fast-preview.js"],
+        "HTML-CSS": {
+          availableFonts: ["TeX"],
+          preferredFont: "TeX",
+          webFont: "TeX",
+          imageFont: null
+        },
+        SVG: {
+          font: "TeX"
+        },
+        TeX: {
+          extensions: ["AMSmath.js", "AMSsymbols.js", "color.js", "cancel.js", "mhchem.js"],
+          equationNumbers: {
+            autoNumber: "AMS",
+            formatNumber: function (n) { return "3" + '.' + n }
+          },
+          Macros: {
+            PolyTeX:    "Poly{\\TeX}",
+            PolyTeXnic: "Poly{\\TeX}nic",
+            emph: ["{#1}", 1],
+            // FROM MATH & PHYS BOOK
+            eqdef: "\\stackrel{\\scriptscriptstyle\\text{def}}{=}",
+            cotan: "\\textrm{cotan}",
+            sech: "\\textrm{sech}",
+            button: ["\\boxed{\\,#1\\phantom{\\small l}\\!}", 1],
+            scalebox: ["{#2}", 2],
+            octagon: "\\textrm{octagon}",
+            ds: "\\displaystyle",
+            efrac: ["\\frac{#1}{#2}", 2],
+            qedsymbol: "\\square",
+            // FROM LA BOOK
+            mathbbm: ["\\mathbb{#1}", 1],
+            sfT: "{\\mathsf{T}}",
+            colvec: ["\\left[\\begin{array}{c} #1 \\end{array}\\right]", 1],
+            Tr: "\\textrm{Tr}",
+            tensor: ["{\\vphantom{#2}#1\\!{#2}#3}", 3, ""],
+            lightning: "\\leadsto",
+            // PROB
+            psub: ["#1_{#2\\!}", 2, "p"],
+            musub: ["#1_{#2\\!}", 2, "\\mu"],
+            myepsdice: ["\\boxed{#1}", 1],
+            // QUANTUM
+            bra: ["\\langle #1|", 1],
+            ket: ["|#1 \\rangle", 1],
+            braket: ["\\langle #1 \\rangle", 1],
+            ketbra: ["\\ket{#1}\\bra{#2}", 2],
+            "softcover": "\\texttt{softcover}",
+"unitvec": ["{\\hat #1}", 1]
+          }
+        },
+        showProcessingMessages: false,
+        messageStyle: "none",
+        imageFont: null,
+        "AssistiveMML": { disabled: true }
+      });
+
+        if (/PhantomJS/.test(window.navigator.userAgent)) {
+          MathJax.Hub.Queue([alert, 'MathJax Done']);
+        }
+      </script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+    
+  </head>
+  <body>
+    
+    <div id="book">
+      <div id="chapter-vectors" data-tralics-id="cid12" class="chapter" data-number="3" data-chapter="03_vectors"><h1><a href="03_vectors.html#chapter-vectors" class="heading hyperref"><span class="number">Chapter 3 </span>Vectors</a></h1>
+<p>In this chapter we’ll learn how to manipulate multi-dimensional objects called vectors.<span class="intersentencespace"></span> Vectors are the precise way to describe directions in space.<span class="intersentencespace"></span> We need vectors in order to describe physical quantities like forces, velocities, and accelerations.</p>
+<p>Vectors are built from ordinary numbers,
+which form the <em>components</em> of the vector.<span class="intersentencespace"></span> You can think of a vector as a list of numbers,
+and <em>vector algebra</em> as operations
+performed on the numbers in the list.<span class="intersentencespace"></span> Vectors can also be manipulated as geometric objects,
+represented by arrows in space.<span class="intersentencespace"></span> For instance, the arrow that corresponds to the vector <span class="inline_math">\( \vec{v}=(v_x,v_y) \)</span> starts at the origin <span class="inline_math">\( (0,0) \)</span>
+and ends at the point <span class="inline_math">\( (v_x,v_y) \)</span>.<span class="intersentencespace"></span> The word vector comes from the Latin <em>vehere</em>,
+which means <em>to carry</em>.<span class="intersentencespace"></span> Indeed, the vector <span class="inline_math">\( \vec{v} \)</span> takes the point <span class="inline_math">\( (0,0) \)</span> and carries it to the point <span class="inline_math">\( (v_x,v_y) \)</span>.</p>
+<div class="center figure" id="fig-vector_components" data-tralics-id="uid36" data-number="3.1"><span class="graphics"><img src="images/figures/vectors/vector_components.png" alt="vector_components" style="width:47.999268%;" /></span>
+<div class="caption"><span class="header">Figure 3.1: </span><span class="description">The vector <span class="inline_math">\( \vec{v}=(3,2) \)</span> is an arrow in the Cartesian plane.<span class="intersentencespace"></span> The horizontal component of <span class="inline_math">\( \vec{v} \)</span> is <span class="inline_math">\( v_x=3 \)</span>
+and the vertical component is <span class="inline_math">\( v_y=2 \)</span>.
+</span></div></div>
+</div>
+<div id="sec-vectors" data-tralics-id="cid13" class="section" data-number="3.1"><h2><a href="03_vectors.html#sec-vectors" class="heading hyperref"><span class="number">3.1 </span>Vectors</a></h2>
+<p>Vectors are extremely useful in all areas of life.<span class="intersentencespace"></span> In physics, for example, we use a vector to describe the velocity of an object.<span class="intersentencespace"></span> It is not sufficient to say that the speed of a tennis ball is 200 kilometres per hour:
+we must also specify the direction in which the ball is moving.<span class="intersentencespace"></span> Both of the two velocities</p>
+<div class="equation">\[ 
+	 \vec{v}_1 = (200,0) 
+	 \qquad \textrm{and}
+	 \qquad \vec{v}_2=(0,200)
+	 \]
+</div><p class="noindent">describe motion at the speed of <span class="inline_math">\( 200 \)</span> kilometres per hour;
+but since one velocity points along the <span class="inline_math">\( x \)</span>-axis, and the other points along the <span class="inline_math">\( y \)</span>-axis,
+they are <em>completely</em> different velocities.<span class="intersentencespace"></span> The velocity vector contains information about the object’s speed <em>and</em> its direction.<span class="intersentencespace"></span> The direction makes a big difference.<span class="intersentencespace"></span> If it turns out the tennis ball is hurtling toward you, you’d better get out of the way!</p>
+<p>The main idea in this chapter is that <strong>vectors are not the same as numbers</strong>.<span class="intersentencespace"></span> We’ll start by defining what vectors are.<span class="intersentencespace"></span> Then we’ll describe all the mathematical operations we can perform with vectors,
+which include
+vector addition <span class="inline_math">\( \vec{u}+\vec{v} \)</span>,
+vector subtraction <span class="inline_math">\( \vec{u}-\vec{v} \)</span>,
+vector scaling <span class="inline_math">\( \alpha\vec{v} \)</span>,
+and other operations.</p>
+<div id="vectors-definitions" data-tralics-id="uid37" class="subsection" data-number="3.1.1"><h3><a href="#vectors-definitions" class="heading">Definitions</a></h3>
+<p>A two-dimensional vector <span class="inline_math">\( \vec{v} \)</span> corresponds to a <em>pair of numbers</em>:</p>
+<div class="equation">\[ 
+			\vec{v} = (v_x, v_y),
+		 \]
+</div><p class="noindent">where <span class="inline_math">\( v_x \)</span> is the <em><span class="inline_math">\( x \)</span>-component</em> of the vector and <span class="inline_math">\( v_y \)</span> is its <em><span class="inline_math">\( y \)</span>-component</em>.<span class="intersentencespace"></span> We denote the set of two-dimensional vectors as <span class="inline_math">\( \mathbb{R}^2 \)</span>,
+since the components of a two-dimensional vector are specified by two real numbers.<span class="intersentencespace"></span> We’ll use the mathematical shorthand <span class="inline_math">\( \vec{v} \in \mathbb{R}^2 \)</span> to define a two-dimensional vector <span class="inline_math">\( \vec{v} \)</span>.<span class="intersentencespace"></span> Vectors in <span class="inline_math">\( \mathbb{R}^2 \)</span> can be represented as arrows in the Cartesian plane.<span class="intersentencespace"></span> See the vector <span class="inline_math">\( \vec{v}=(3,2) \)</span> illustrated in <a href="03_vectors.html#fig-vector_components" class="hyperref">Figure <span class="ref">3.1</span></a>.</p>
+<p>We can also define three-dimensional vectors like the vector <span class="inline_math">\( \vec{v} = (v_x, v_y, v_z) \in \mathbb{R}^3 \)</span>,
+which has three components.<span class="intersentencespace"></span> A three-dimensional coordinate system is similar to the Cartesian coordinate system you’re familiar with,
+and includes the additional <span class="inline_math">\( z \)</span>-axis that measures the height above the plane.<span class="intersentencespace"></span> In fact,
+there’s no limit to the number of dimensions for vectors.<span class="intersentencespace"></span> We can define vectors in an <span class="inline_math">\( n \)</span>-dimensional space: <span class="inline_math">\( \vec{v} = (v_1, v_2, \ldots, v_n) \in \mathbb{R}^n \)</span>.<span class="intersentencespace"></span> For the sake of simplicity,
+we’ll define all the vector operation formulas using two-dimensional vectors.<span class="intersentencespace"></span> Unless otherwise indicated in the text,
+all the formulas we give for two-dimensional vectors <span class="inline_math">\( \vec{v} \in \mathbb{R}^2 \)</span>
+also apply to <span class="inline_math">\( n \)</span>-dimensional vectors <span class="inline_math">\( \vec{v} \in \mathbb{R}^n \)</span>.</p>
+<div id="uid38" data-tralics-id="uid38" class="subsubsection" data-number="3.1.1.1"><h4><a href="#uid38" class="heading">Vector operations</a></h4>
+<p>Consider two vectors,
+<span class="inline_math">\( \vec{u}=(u_x,u_y)  \)</span> and <span class="inline_math">\( \vec{v}=(v_x,v_y) \)</span>,
+and assume that <span class="inline_math">\( \alpha \in \mathbb{R} \)</span> is an arbitrary constant.<span class="intersentencespace"></span> The following operations are defined for these vectors:</p>
+<ul>
+<li><strong>Addition:</strong> <span class="inline_math">\( \vec{u} + \vec{v} = (u_x+v_x,\, u_y+v_y) \)</span>
+</li>
+<li><strong>Subtraction:</strong> <span class="inline_math">\( \vec{u} - \vec{v} = (u_x-v_x,\, u_y-v_y) \)</span>
+</li>
+<li><strong>Scaling:</strong> <span class="inline_math">\( \alpha \vec{u} = (\alpha u_x,\, \alpha u_y) \)</span>
+</li>
+<li><strong>Dot product:</strong> <span class="inline_math">\( \vec{u} \cdot \vec{v}  = u_xv_x+u_yv_y \)</span>
+</li>
+<li><strong>Length:</strong> <span class="inline_math">\( \|\vec{u}\| = \sqrt{\vec{u}\cdot\vec{u}} = \sqrt{u_x^2+u_y^2} \)</span>.<span class="intersentencespace"></span> The vector’s length is also called the <em>norm</em> of the vector.<span class="intersentencespace"></span> We sometimes use the letter <span class="inline_math">\( u \)</span> to denote the length of the vector <span class="inline_math">\( \vec{u} \)</span>.<span class="intersentencespace"></span>
+</li></ul>
+<p class="noindent">Note there is no vector division operation.</p>
+<p>For vectors in a three-dimensional space <span class="inline_math">\( \vec{u}=(u_x,u_y,u_z) \in \mathbb{R}^3 \)</span>
+and <span class="inline_math">\( \vec{v}=(v_x,v_y,v_z) \in \mathbb{R}^3 \)</span>,
+we can also define the <strong>cross product</strong> operation <span class="inline_math">\( \vec{u} \times \vec{v} = (u_yv_z-u_zv_y,\; u_zv_x-u_xv_z,\; u_xv_y-u_yv_x) \)</span>.<span class="intersentencespace"></span> The dot product and the cross product are new operations that you probably haven’t seen before.</p>
+</div>
+<div id="uid44" data-tralics-id="uid44" class="subsubsection" data-number="3.1.1.2"><h4><a href="#uid44" class="heading">Vector representations</a></h4>
+<p>We’ll use three equivalent ways to denote vectors in two dimensions:</p>
+<ul>
+<li><span class="inline_math">\( \vec{v} =(v_x, v_y) \)</span>: component notation.<span class="intersentencespace"></span> The vector is written as a pair of numbers called the <em>components</em> or <em>coordinates</em> of the vector.<span class="intersentencespace"></span>
+</li>
+<li><span class="inline_math">\( \vec{v} =v_x\hat{\imath}+ v_y\hat{\jmath} \)</span>: unit vector notation.<span class="intersentencespace"></span> The vector is expressed as a combination of the unit vectors
+<span class="inline_math">\( \hat{\imath} = (1,0) \)</span> and <span class="inline_math">\(  \hat{\jmath} = (0,1) \)</span>.<span class="intersentencespace"></span>
+</li>
+<li><span class="inline_math">\( \vec{v}=\|\vec{v}\|\angle \theta \)</span>: length-and-direction notation (polar coordinates).<span class="intersentencespace"></span> The vector is expressed in terms of its <em>length</em> <span class="inline_math">\( \|\vec{v}\| \)</span>
+and the angle <span class="inline_math">\( \theta \)</span> that the vector makes with the <span class="inline_math">\( x \)</span>-axis.<span class="intersentencespace"></span>
+</li></ul>
+<div class="center figure" id="fig-vector_components_annotated" data-tralics-id="uid48" data-number="3.2"><span class="graphics"><img src="images/figures/vectors/vector_components_annotated.png" alt="vector_components_annotated" style="width:72.000732%;" /></span>
+<div class="caption"><span class="header">Figure 3.2: </span><span class="description">The vector <span class="inline_math">\( \vec{v}=(v_x,v_y) = v_x\hat{\imath}+ v_y\hat{\jmath} = \|\vec{v}\|\angle \theta \)</span>.
+</span></div></div>
+<p class="noindent">We use the component notation for doing vector algebra calculations since it is most compact.<span class="intersentencespace"></span> The unit vector notation shows explicitly that the vector <span class="inline_math">\( \vec{v} \)</span> corresponds to the sum of
+<span class="inline_math">\( v_x\hat{\imath} \)</span> (a displacement of <span class="inline_math">\( v_x \)</span> steps in the direction of the <span class="inline_math">\( x \)</span>-axis)
+and <span class="inline_math">\( v_y\hat{\jmath} \)</span> (a displacement of <span class="inline_math">\( v_y \)</span> steps in the direction of the <span class="inline_math">\( y \)</span>-axis).<span class="intersentencespace"></span> The length-and-direction notation describes the vector <span class="inline_math">\( \vec{v} \)</span>
+as a displacement of <span class="inline_math">\( \|\vec{v}\| \)</span> steps in the direction of the angle <span class="inline_math">\( \theta \)</span>.<span class="intersentencespace"></span> We’ll use all three ways of denoting vectors throughout the rest of the book,
+and we’ll learn how to convert between them.</p>
+</div></div>
+<div id="basis-exercises" data-tralics-id="uid49" class="subsection" data-number="3.1.2"><h3><a href="#basis-exercises" class="heading">Exercises</a></h3>
+<div class="miniref-exercises">
+
+<div class="miniref-exercise" data-number="3.1"><span class="exercise number">E3.1 </span>
+Given the vectors <span class="inline_math">\( \vec{v}_1=(2,1) \)</span>, <span class="inline_math">\( \vec{v}_2=(2,-1) \)</span>, and <span class="inline_math">\( \vec{v}_3=(3,3) \)</span>,
+calculate the following expressions:
+<div class="multicols"><strong>a)</strong> <span class="inline_math">\( \vec{v}_1 + \vec{v}_2 \)</span>
+
+<strong>b)</strong> <span class="inline_math">\( \vec{v}_2 - 2\vec{v}_1 \)</span>
+
+<strong>c)</strong> <span class="inline_math">\( \vec{v}_1 + \vec{v}_2 + \vec{v}_3 \)</span>
+</div>
+
+</div>
+
+<div class="miniref-exercise" id="exercise-vector-polar-to-cartesian-conversion" data-tralics-id="exercise-vector-polar-to-cartesian-conversion" data-number="3.2"><span class="exercise number">E3.2 </span> 
+
+Express the following vectors as components:
+<div class="multicols"><strong>a)</strong> <span class="inline_math">\( \vec{v}_1 =10\angle30^\circ \)</span>
+
+<strong>b)</strong> <span class="inline_math">\( \vec{v}_2 = 12\angle\!-\!90^\circ \)</span>
+
+<strong>c)</strong> <span class="inline_math">\( \vec{v}_3 = 3\angle170^\circ \)</span>
+</div>
+
+</div>
+
+
+<div class="miniref-exercise" id="exercise-vector-cartesian-to-polar-conversion" data-tralics-id="exercise-vector-cartesian-to-polar-conversion" data-number="3.3"><span class="exercise number">E3.3 </span> 
+
+Express the following vectors in length-and-direction notation:
+<div class="multicols"><strong>a)</strong> <span class="inline_math">\( \vec{u}_1 = (4,0) \)</span>
+
+<strong>b)</strong> <span class="inline_math">\( \vec{u}_2 = (1,1) \)</span>
+
+<strong>c)</strong> <span class="inline_math">\( \vec{u}_3 = (-1,3) \)</span>
+</div>
+
+</div>
+
+
+
+
+
+
+
+</div>
+</div></div>
+<div id="sec-vec_problems" data-tralics-id="cid14" class="section" data-number="3.2"><h2><a href="03_vectors.html#sec-vec_problems" class="heading hyperref"><span class="number">3.2 </span>Vectors problems</a></h2>
+<p style="margin-top: -5.69054pt"></p>
+<p>You learned a bunch of vector formulas and you saw some vector diagrams,
+but did you really learn how to solve problems with vectors?<span class="intersentencespace"></span> There is only one way to find out: test yourself by solving problems.</p>
+<p>I’ve said it before and I don’t want to repeat myself too much,
+but it’s worth saying again: the more problems you solve, the better you’ll understand the material.<span class="intersentencespace"></span> It’s now time for you to try the following vector problems to make sure you’re on top of things.</p>
+<p style="margin-top: 6.0pt"><small><div class="miniref-problems">
+
+<div class="miniref-problem" data-number="3.1"><span class="problem number">P3.1 </span>
+Given the vectors <span class="inline_math">\( \vec{u}=(1,1,1) \)</span>, <span class="inline_math">\( \vec{v} = (2,3,1) \)</span>, and <span class="inline_math">\( \vec{w}=(-1,-1,2) \)</span>,
+compute the following products:
+
+<div class="multicols"><small><strong>a)</strong></small><small> <span class="inline_math">\( \vec{u} \cdot \vec{v} \)</span>
+</small>
+<small><strong>b)</strong></small><small> <span class="inline_math">\( \vec{u} \cdot \vec{w} \)</span>
+</small>
+<small><strong>c)</strong></small><small> <span class="inline_math">\( \vec{v} \cdot \vec{w} \)</span>
+</small></div>
+<div class="multicols"><small><strong>d)</strong></small><small> <span class="inline_math">\( \vec{u} \times \vec{v} \)</span>
+</small>
+<small><strong>e)</strong></small><small> <span class="inline_math">\( \vec{u} \times \vec{w} \)</span>
+</small>
+<small><strong>f)</strong></small><small> <span class="inline_math">\( \vec{v} \times \vec{w} \)</span>
+</small></div>
+
+</div>
+
+
+<div class="miniref-problem" data-number="3.2"><span class="problem number">P3.2 </span>
+Given the vectors <span class="inline_math">\( \vec{p} =(1,1,0,3,3) \)</span> and <span class="inline_math">\( \vec{q}=(1,2,3,4,5) \)</span>, calculate the following expressions:
+<div class="multicols"><small><strong>a)</strong></small><small> <span class="inline_math">\( \vec{p}+\vec{q} \)</span>
+</small>
+<small><strong>b)</strong></small><small> <span class="inline_math">\( \vec{p}-\vec{q} \)</span>
+</small>
+<small><strong>c)</strong></small><small> <span class="inline_math">\( \vec{p} \cdot \vec{q} \)</span>
+</small></div>
+
+</div>
+
+
+<div class="miniref-problem" data-number="3.3"><span class="problem number">P3.3 </span>
+Find a unit vector that is perpendicular to both <span class="inline_math">\( \vec{u}=(1, 0, 1) \)</span> and <span class="inline_math">\( \vec{v} =(1, 2, 0) \)</span>.<span class="intersentencespace"></span> <div class="miniref-hint">
+Use the cross product.<span class="intersentencespace"></span> </div>
+
+
+</div>
+
+<div class="miniref-problem" data-number="3.4"><span class="problem number">P3.4 </span>
+Find a vector that is orthogonal to both <span class="inline_math">\( \vec{u}_1 = (1, 0, 1) \)</span> and <span class="inline_math">\( \vec{u}_2 =(1, 3, 0) \)</span>,
+and whose dot product with the vector <span class="inline_math">\( \vec{v}= (1, 1, 0) \)</span> is equal to <span class="inline_math">\( 8 \)</span>.<span class="intersentencespace"></span> 
+
+</div>
+
+
+</div></small></p>
+</div>
+    </div>
+  </body>
+</html>

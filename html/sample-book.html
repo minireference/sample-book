@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="stylesheets/pygments.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/softcover.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="stylesheets/custom.css" media="screen" rel="stylesheet" type="text/css" />
+    
+    <title>sample-book</title>
+    
+      <script type="text/x-mathjax-config">
+              MathJax.Hub.Config({
+        extensions: ["tex2jax.js", "MathMenu.js", "MathZoom.js", "fast-preview.js"],
+        "HTML-CSS": {
+          availableFonts: ["TeX"],
+          preferredFont: "TeX",
+          webFont: "TeX",
+          imageFont: null
+        },
+        SVG: {
+          font: "TeX"
+        },
+        TeX: {
+          extensions: ["AMSmath.js", "AMSsymbols.js", "color.js", "cancel.js", "mhchem.js"],
+          equationNumbers: {
+            autoNumber: "AMS",
+            
+          },
+          Macros: {
+            PolyTeX:    "Poly{\\TeX}",
+            PolyTeXnic: "Poly{\\TeX}nic",
+            emph: ["{#1}", 1],
+            // FROM MATH & PHYS BOOK
+            eqdef: "\\stackrel{\\scriptscriptstyle\\text{def}}{=}",
+            cotan: "\\textrm{cotan}",
+            sech: "\\textrm{sech}",
+            button: ["\\boxed{\\,#1\\phantom{\\small l}\\!}", 1],
+            scalebox: ["{#2}", 2],
+            octagon: "\\textrm{octagon}",
+            ds: "\\displaystyle",
+            efrac: ["\\frac{#1}{#2}", 2],
+            qedsymbol: "\\square",
+            // FROM LA BOOK
+            mathbbm: ["\\mathbb{#1}", 1],
+            sfT: "{\\mathsf{T}}",
+            colvec: ["\\left[\\begin{array}{c} #1 \\end{array}\\right]", 1],
+            Tr: "\\textrm{Tr}",
+            tensor: ["{\\vphantom{#2}#1\\!{#2}#3}", 3, ""],
+            lightning: "\\leadsto",
+            // PROB
+            psub: ["#1_{#2\\!}", 2, "p"],
+            musub: ["#1_{#2\\!}", 2, "\\mu"],
+            myepsdice: ["\\boxed{#1}", 1],
+            // QUANTUM
+            bra: ["\\langle #1|", 1],
+            ket: ["|#1 \\rangle", 1],
+            braket: ["\\langle #1 \\rangle", 1],
+            ketbra: ["\\ket{#1}\\bra{#2}", 2],
+            "softcover": "\\texttt{softcover}",
+"unitvec": ["{\\hat #1}", 1]
+          }
+        },
+        showProcessingMessages: false,
+        messageStyle: "none",
+        imageFont: null,
+        "AssistiveMML": { disabled: true }
+      });
+
+        if (/PhantomJS/.test(window.navigator.userAgent)) {
+          MathJax.Hub.Queue([alert, 'MathJax Done']);
+        }
+      </script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_SVG"></script>
+    
+  </head>
+  <body>
+    
+    <div id="book">
+      <div id="title_page">
+    <h1 class="title">Sample Book</h1>
+    <h1 class="subtitle">An example of using softcover with Minireference Co.<span class="intersentencespace"></span> customizations</h1>
+    <h2 class="author">Ivan Savov</h2>
+    <h2 class="date">November 15, 2020</h2>
+  </div>
+
+<div id="frontmatter" data-number="0"><h1 class="contents">Contents</h1><div id="table_of_contents"><ul><li class="chapter-star"><a href="#concept_map" class="heading hyperref">Concept map</a></li><li class="chapter-star"><a href="#preface" class="heading hyperref">Preface</a></li><li class="chapter-star"><a href="#introduction" class="heading hyperref">Introduction</a></li><li class="chapter"><a href="#chapter-math_fundamentals" class="heading hyperref"><span class="number">Chapter 1 </span>Math fundamentals</a></li><li><ul><li class="section"><a href="#sec-solving_equations" class="heading hyperref"><span class="number">1.1 </span>Solving equations</a></li><li class="section"><a href="#sec-numbers" class="heading hyperref"><span class="number">1.2 </span>Numbers</a></li><li class="section"><a href="#sec-hyperbola" class="heading hyperref"><span class="number">1.3 </span>Hyperbola</a></li><li class="section"><a href="#sec-math_problems" class="heading hyperref"><span class="number">1.4 </span>Math problems</a></li></ul></li><li class="chapter"><a href="#cha-a_chapter" class="heading hyperref"><span class="number">Chapter 2 </span>The second chapter</a></li><li><ul><li class="section"><a href="#sec-a_section" class="heading hyperref"><span class="number">2.1 </span>A section</a></li><li class="section"><a href="#cid8" class="heading hyperref"><span class="number">2.2 </span>Images and tables</a></li><li class="section"><a href="#cid9" class="heading hyperref"><span class="number">2.3 </span>Command-line interface</a></li><li class="section"><a href="#cid10" class="heading hyperref"><span class="number">2.4 </span>Miscellanea</a></li><li class="section"><a href="#cid11" class="heading hyperref"><span class="number">2.5 </span>Probability problems</a></li></ul></li><li class="chapter"><a href="#chapter-vectors" class="heading hyperref"><span class="number">Chapter 3 </span>Vectors</a></li><li><ul><li class="section"><a href="#sec-vectors" class="heading hyperref"><span class="number">3.1 </span>Vectors</a></li><li class="section"><a href="#sec-vec_problems" class="heading hyperref"><span class="number">3.2 </span>Vectors problems</a></li></ul></li><li class="chapter-star backmatter-start backmatter"><a href="#end_matter" class="heading hyperref">End matter</a></li><li class="chapter-star backmatter"><a href="#answers_and_solutions" class="heading hyperref">Answers and solutions</a></li><li class="chapter-star backmatter"><a href="#notation" class="heading hyperref">Notation</a></li></ul></div><cleardoublepage></cleardoublepage><p><pagestyle this-style="plain"></pagestyle></p>
+<div data-tralics-id="fig-big_concept_map" class="chapter-star" id="concept_map" data-number=""><h1><a href="#concept_map" class="heading hyperref">Concept map</a></h1>
+<div class="center figure" id="uid1" data-tralics-id="uid1" data-number="1"><span class="graphics"><img src="images/figures/concept_maps/concept_map_full3.jpg" alt="concept_map_full3" style="width:100%;" /></span>
+<div class="caption"><span class="header">Figure 1: </span><span class="description">This diagram shows the connections between the concepts, topics, and subjects covered in the book.<span class="intersentencespace"></span> Seeing the connections between concepts is key to understanding math and physics.
+</span></div></div>
+<clearpage></clearpage><p style="margin-top: 14.22636pt"></p>
+<p class="noindent">You can annotate the concept map with your current knowledge of each concept to keep track of your progress through the book.<span class="intersentencespace"></span></p>
+<ul>
+<li>Add a single dot (<span class="inline_math">\( \bullet \)</span>) next to all concepts you’ve heard of.<span class="intersentencespace"></span>
+</li>
+<li>Add two dots (<span class="inline_math">\( \bullet\bullet \)</span>) next to concepts you think you know.<span class="intersentencespace"></span>
+</li>
+<li>Add three dots (<span class="inline_math">\( \bullet\!\bullet\!\bullet \)</span>) next to concepts you’ve used in exercises and problems.<span class="intersentencespace"></span>
+</li></ul>
+<p>By collecting some dots every week,
+you’ll be able to move through the material in no time at all.</p>
+<p style="margin-top: 12.0pt">If you don’t want to mark up your book,
+you can download a printable version of the concept map here:
+<a href="https://bit.ly/mathphyscmap" target="_blank" rel="noopener"><code class="tt">bit.ly/mathphyscmap</code></a>.</p>
+<clearpage></clearpage><p><pagestyle this-style="plain"></pagestyle></p>
+</div>
+<div data-tralics-id="sec-preface" class="chapter-star" id="preface" data-number=""><h1><a href="#preface" class="heading hyperref">Preface</a></h1>
+<p>This is a sample book project that showcases all the features and capabilities of the softcover eBook build system.</p>
+<div id="uid5" data-tralics-id="uid5" class="subsection" data-number="1"><h3><a href="#uid5" class="heading">Why?</a></h3>
+<p>We should have a simple book example to show how the scripts work.</p>
+</div></div>
+<div data-tralics-id="sec-introduction" class="chapter-star" id="introduction" data-number=""><h1><a href="#introduction" class="heading hyperref">Introduction</a></h1>
+<p>This is where the intro text would go.</p>
+<p>Below is an example figure.</p>
+<div class="center figure" id="fig-chap_prereqs" data-tralics-id="uid6" data-number="2"><span class="graphics"><img src="images/figures/dot/chap_prereqs.png" alt="chap_prereqs" style="width:69.60022000000001%;" /></span>
+<div class="caption"><span class="header">Figure 2: </span><span class="description">The prerequisite structure for the chapters in this book.
+</span></div></div>
+<p>Are you ready for this?<span class="intersentencespace"></span> Let’s dig in!</p>
+</div></div>
+
+
+<div id="chapter-math_fundamentals" data-tralics-id="cid1" class="chapter" data-number="1"><h1><a href="#chapter-math_fundamentals" class="heading hyperref"><span class="number">Chapter 1 </span>Math fundamentals</a></h1>
+<p>In this chapter we’ll review the fundamental ideas of mathematics, including numbers, equations, and functions.<span class="intersentencespace"></span> To understand college-level textbooks, you need to be comfortable with mathematical calculations.<span class="intersentencespace"></span> Many people have trouble with math, however.<span class="intersentencespace"></span> Some people say they <em>hate</em> math, or could never learn it.<span class="intersentencespace"></span> It’s not uncommon for children who score poorly on their school math exams to develop math complexes in their grown lives.<span class="intersentencespace"></span> If you are carrying any such emotional baggage, you can drop it right here and right now.</p>
+<p>Do NOT worry about math!<span class="intersentencespace"></span> You are an adult, and you can learn math much more easily than when you were a kid.<span class="intersentencespace"></span> We’ll review <em>everything</em> you need to know about high school math, and by the end of this chapter,
+you’ll see that math is nothing to worry about.</p>
+<div class="center figure" id="uid7" data-tralics-id="uid7" data-number="1.1"><span class="graphics"><img src="images/figures/concept_maps/precalculus.jpg" alt="precalculus" style="width:100%;" /></span><span class="intersentencespace"></span><div class="caption"><span class="header">Figure 1.1</span></div></div>
+</div>
+<div id="sec-solving_equations" data-tralics-id="cid2" class="section" data-number="1.1"><h2><a href="#sec-solving_equations" class="heading hyperref"><span class="number">1.1 </span>Solving equations</a></h2>
+<p>Most math skills boil down to being able to manipulate and solve equations.<span class="intersentencespace"></span> Solving an equation means finding the value of the unknown in the equation.</p>
+<p>Check this  out:</p>
+<div class="equation">\[ 
+	 x^2-4=45.
+	 \]
+</div><p class="noindent">To solve the above equation is to answer
+the question “What is <span class="inline_math">\( x \)</span>?”<span class="intersentencespace"></span> More precisely, we want to find the number that can take the
+place of <span class="inline_math">\( x \)</span> in the equation so that the equality holds.<span class="intersentencespace"></span> In other words, we’re asking,</p>
+<div class="equation">\[ 
+	  \text{``Which number times itself minus four gives 45?''}
+	 \]
+</div><p class="noindent">That is quite a mouthful, don’t you think?<span class="intersentencespace"></span> To remedy this verbosity, mathematicians often use specialized symbols to describe math operations.<span class="intersentencespace"></span> The problem is that these specialized symbols can be very confusing.<span class="intersentencespace"></span> Sometimes even the simplest math concepts are inaccessible if you don’t know what the symbols mean.</p>
+<p>What are your feelings about math, dear reader?<span class="intersentencespace"></span> Are you afraid of it?<span class="intersentencespace"></span> Do you have anxiety attacks because you think it will be too difficult for you?<span class="intersentencespace"></span> Chill!<span class="intersentencespace"></span> Relax, my brothers and sisters.<span class="intersentencespace"></span> There’s nothing to it.<span class="intersentencespace"></span> Nobody can magically guess the solution to an equation immediately.<span class="intersentencespace"></span> To find the solution, you must break the problem into simpler steps.<span class="intersentencespace"></span> Let’s walk through this one together.</p>
+<p>To find <span class="inline_math">\( x \)</span>, we can manipulate the original equation,
+transforming it into a different equation (as true as the first) that looks like this:</p>
+<div class="equation">\[ 
+	  x \; = \textrm{ only numbers.}
+	 \]
+</div><p class="noindent">That’s what it means to <em>solve</em> an equation:
+the equation is solved because the unknown is isolated on one side,
+while the constants are grouped on the other side.<span class="intersentencespace"></span> You can type the numbers on the right-hand side into a calculator and obtain the numerical value of <span class="inline_math">\( x \)</span>.</p>
+<p>By the way, before we continue our discussion,
+let it be noted: the equality symbol (<span class="inline_math">\( = \)</span>) means that all that is to the left of <span class="inline_math">\( = \)</span>
+is equal to
+all that is to the right of <span class="inline_math">\( = \)</span>.<span class="intersentencespace"></span> To keep this equality statement true,
+<strong>for every change you apply to the left side of the equation,
+you must apply the same change to the right side of the equation</strong>.</p>
+<p>To find <span class="inline_math">\( x \)</span>,
+we need to manipulate the original equation into its final form,
+simplifying it step by step until it can’t be simplified any further.<span class="intersentencespace"></span> The only requirement is that the manipulations we make transform one true equation into another true equation.<span class="intersentencespace"></span> In this example,
+the first simplifying step is to add the number four to both sides of the equation:</p>
+<div class="equation">\[ 
+	 	x^2-4  \; + 4  	=	45    \; + 4, 	    \\
+	 \]
+</div><p class="noindent">which simplifies to</p>
+<div class="equation">\[ 
+		x^2 	 		=	49.
+	 \]
+</div><p class="noindent">Now the expression looks simpler, yes?<span class="intersentencespace"></span> How did I know to perform this operation?<span class="intersentencespace"></span> I wanted to “undo” the effects of the operation <span class="inline_math">\( -4 \)</span>.<span class="intersentencespace"></span> We undo an operation by applying its <em>inverse</em>.<span class="intersentencespace"></span> In the case where the operation is the subtraction of some amount,
+the inverse operation is the addition of the same amount.</p>
+<p>We’re getting closer to our goal of <em>isolating</em> <span class="inline_math">\( x \)</span> on one side of the equation, leaving only numbers on the other side.<span class="intersentencespace"></span> The next step is to undo the square <span class="inline_math">\( x^2 \)</span> operation.<span class="intersentencespace"></span> The inverse operation of squaring a number <span class="inline_math">\( x^2 \)</span> is to take its square root <span class="inline_math">\( \sqrt{\phantom{a}\; } \)</span>,
+so that’s what we’ll do next.<span class="intersentencespace"></span> We obtain</p>
+<div class="equation">\[  
+	   \sqrt{x^2} 		= 	\sqrt{49}.
+	 \]
+</div><p class="noindent">Notice how we applied the square root to both sides of the equation?<span class="intersentencespace"></span> If we don’t apply the same operation to both sides, we’ll break the equality!</p>
+<p>The equation <span class="inline_math">\( \sqrt{x^2}= \sqrt{49} \)</span> simplifies to</p>
+<div class="equation">\[ 
+	 	|x|	= 	7.
+	  \]
+</div><p class="noindent">What’s up with the vertical bars around <span class="inline_math">\( x \)</span>?<span class="intersentencespace"></span> The notation <span class="inline_math">\( |x| \)</span> stands for the <em>absolute value</em> of <span class="inline_math">\( x \)</span>, which is the same as <span class="inline_math">\( x \)</span> except we ignore the sign that indicates whether <span class="inline_math">\( x \)</span> is positive or negative.<span class="intersentencespace"></span> For example <span class="inline_math">\( |5|=5 \)</span> and <span class="inline_math">\( |-5|=5 \)</span>, too.<span class="intersentencespace"></span> The equation <span class="inline_math">\( |x|=7 \)</span> indicates that both <span class="inline_math">\( x=7 \)</span> and <span class="inline_math">\( x=-7 \)</span> satisfy the equation <span class="inline_math">\( x^2 = 49 \)</span>.<span class="intersentencespace"></span> Seven squared is 49, <span class="inline_math">\( 7^2=49 \)</span>, and negative seven squared is also 49, <span class="inline_math">\( (-7)^2 = 49 \)</span>,
+because the two negative signs cancel each other out.</p>
+<p>The final solutions to the equation <span class="inline_math">\( x^2-4=45 \)</span> are</p>
+<div class="equation">\[ 
+	 x  = 7 \qquad \textrm{and} \qquad   x=  - 7.
+	 \]
+</div><p class="noindent">Yes, there are <em>two</em> possible answers.<span class="intersentencespace"></span> You can check that both of the above values of <span class="inline_math">\( x \)</span> satisfy the initial equation <span class="inline_math">\( x^2-4=45 \)</span>.</p>
+<p style="margin-top: 12.0pt">If you are comfortable with all the notions of high school math
+and you feel you could have solved the equation <span class="inline_math">\( x^2-4=45 \)</span> on your own, then you can skim through this chapter quickly.<span class="intersentencespace"></span> If on the other hand you are wondering how the squiggle killed the power two,
+then this chapter is for you!<span class="intersentencespace"></span> In the following sections we will review all the essential concepts from
+high school math that you will need to power through the rest of this book.<span class="intersentencespace"></span> First, let me tell you about the different kinds of numbers.</p>
+</div>
+<div id="sec-numbers" data-tralics-id="cid3" class="section" data-number="1.2"><h2><a href="#sec-numbers" class="heading hyperref"><span class="number">1.2 </span>Numbers</a></h2>
+<p>In the beginning, we must define the main players in the world of math: numbers.</p>
+<div id="numbers-definitions" data-tralics-id="uid8" class="subsection" data-number="1.2.1"><h3><a href="#numbers-definitions" class="heading">Definitions</a></h3>
+<p>Numbers are the basic objects we use to count, measure, quantify, and calculate things.<span class="intersentencespace"></span> Mathematicians like to classify the different kinds of number-like objects into categories called <em>sets</em>:</p>
+<ul>
+<li>The natural numbers: <span class="inline_math">\( \mathbb{N} = \{0,1,2,3,4,5,6,7, \ldots \, \} \)</span>
+</li>
+<li>The integers: <span class="inline_math">\( \mathbb{Z} = \{\ldots, -3,-2,-1,0,1,2,3 , \ldots  \, \} \)</span>
+</li>
+<li>The rational numbers: <span class="inline_math">\( \mathbb{Q} = \{\frac{5}{3}, \frac{22}{7}, 1.5, 0.125,  -7, \, \ldots \, \} \)</span>
+</li>
+<li>The real numbers: <span class="inline_math">\( \mathbb{R} = \{-1,0,1, \sqrt{2}, e,\pi, \;  4.94\ldots, \; \ldots \, \} \)</span>
+</li>
+<li>The complex numbers: <span class="inline_math">\( \mathbb{C} = \{ -1, 0, 1, i,  1+i, 2+3i,  \ldots \, \} \)</span>
+</li></ul>
+<p>These categories of numbers should be somewhat familiar to you.<span class="intersentencespace"></span> Think of them as neat classification labels for everything that you would normally call a number.<span class="intersentencespace"></span> Each group in the above list is a <em>set</em>.<span class="intersentencespace"></span> A set is a collection of items of the same kind.<span class="intersentencespace"></span> Each collection has a name and a precise definition for which items belong in that collection.<span class="intersentencespace"></span> Note also that each of the sets in the list contains all the sets above it, as illustrated in <a href="#fig-nested_sets" class="hyperref">Figure <span class="ref">1.2</span></a>.<span class="intersentencespace"></span> For now, we don’t need to go into the details of sets and set notation,
+but we do need to be aware of the different sets of numbers.</p>
+<div class="center figure" id="fig-nested_sets" data-tralics-id="uid14" data-number="1.2"><span class="graphics"><img src="images/figures/math/nested_sets.png" alt="nested_sets" style="width:100%;" /></span>
+<div class="caption"><span class="header">Figure 1.2: </span><span class="description">An illustration of the nested containment structure of the different number sets.<span class="intersentencespace"></span> The set of natural numbers is contained in the set of integers,
+which in turn is contained in the set of rational numbers.<span class="intersentencespace"></span> The set of rational numbers is contained in the set of real numbers,
+which is contained in the set of complex numbers.
+</span></div></div>
+<p class="noindent">Why do we need so many different sets of numbers?<span class="intersentencespace"></span> Each set of numbers is associated with more and more advanced mathematical problems.</p>
+<p>The simplest numbers are the natural numbers <span class="inline_math">\( \mathbb{N} \)</span>,
+which are sufficient for all your math needs if all you’re going to do is <em>count</em> things.<span class="intersentencespace"></span> How many goats?<span class="intersentencespace"></span> Five goats here and six goats there so the total is 11 goats.<span class="intersentencespace"></span> The sum of any two natural numbers is also a natural number.</p>
+<p>As soon as you start using <em>subtraction</em> (the inverse operation of addition),
+you start running into negative numbers,
+which are numbers outside the set of natural numbers.<span class="intersentencespace"></span> If the only mathematical operations you will ever use are <em>addition</em> and <em>subtraction</em>,
+then the set of integers <span class="inline_math">\( \mathbb{Z} = \{ \ldots, -2, -1, 0, 1, 2, \ldots \} \)</span> will be sufficient.<span class="intersentencespace"></span> Think about it.<span class="intersentencespace"></span> Any integer plus or minus any other integer is still an integer.</p>
+<p>You can do a lot of interesting math with integers.<span class="intersentencespace"></span> There is an entire field in math called <em>number theory</em> that deals with integers.<span class="intersentencespace"></span> However, to restrict yourself solely to integers is somewhat limiting—a rotisserie
+menu that offers <span class="inline_math">\( \frac{1}{2} \)</span> of a chicken would be totally confusing.</p>
+<p>If you want to use division in your mathematical calculations, you’ll need the rationals <span class="inline_math">\( \mathbb{Q} \)</span>.<span class="intersentencespace"></span> The set of rational numbers corresponds to all numbers that can be expressed as <em>fractions</em> of the form <span class="inline_math">\( \frac{m}{n} \)</span> where <span class="inline_math">\( m \)</span> and <span class="inline_math">\( n \)</span> are integers, and <span class="inline_math">\( n \neq 0 \)</span>.<span class="intersentencespace"></span> You can add, subtract, multiply, and divide rational numbers, and the result will always be a rational number.<span class="intersentencespace"></span> However, even the rationals are not enough for all of math!</p>
+<p>In geometry, we can obtain <em>irrational</em> quantities like <span class="inline_math">\( \sqrt{2} \)</span> (the diagonal of a square with side 1)
+and <span class="inline_math">\( \pi \)</span> (the ratio between a circle’s circumference and its diameter).<span class="intersentencespace"></span> There are no integers <span class="inline_math">\( x \)</span> and <span class="inline_math">\( y \)</span> such that <span class="inline_math">\( \sqrt{2}=\frac{x}{y} \)</span>,
+therefore we say that <span class="inline_math">\( \sqrt{2} \)</span> is <em>irrational</em> (not in the set <span class="inline_math">\( \mathbb{Q} \)</span>).<span class="intersentencespace"></span> An irrational number has an infinitely long decimal expansion that doesn’t repeat.<span class="intersentencespace"></span> For example, <span class="inline_math">\( \pi = 3.141592653589793\ldots \)</span> where the dots indicate
+that the decimal expansion of <span class="inline_math">\( \pi \)</span> continues all the way to infinity.</p>
+<p>Combining the irrational numbers with the rationals gives us all the useful numbers,
+which we call the set of real numbers <span class="inline_math">\( \mathbb{R} \)</span>.<span class="intersentencespace"></span> The set <span class="inline_math">\( \mathbb{R} \)</span> contains the integers,
+the rational numbers <span class="inline_math">\( \mathbb{Q} \)</span>,
+as well as irrational numbers like <span class="inline_math">\( \sqrt{2}=1.4142135\ldots \)</span>.<span class="intersentencespace"></span> By using the reals you can compute pretty much anything you want.<span class="intersentencespace"></span> From here on in the text, when I say <em>number</em>,
+I mean an element of the set of real numbers <span class="inline_math">\( \mathbb{R} \)</span>.</p>
+<p>The only thing you can’t do with the reals is to take the square root of a negative number—you need the complex numbers <span class="inline_math">\( \mathbb{C} \)</span> for that.<span class="intersentencespace"></span> We defer the discussion on <span class="inline_math">\( \mathbb{C} \)</span> until the end of <a href="#chapter-vectors" class="hyperref">Chapter <span class="ref">3</span></a>.</p>
+</div>
+<div id="numbers-exercises" data-tralics-id="uid15" class="subsection" data-number="1.2.2"><h3><a href="#numbers-exercises" class="heading">Exercises</a></h3>
+<div class="miniref-exercises"> 
+
+<div class="miniref-exercise" data-number="1.1"><span class="exercise number">E1.1 </span>
+Solve for the unknown <span class="inline_math">\( x \)</span> in the following equations:
+
+<div class="multicols"><strong>a)</strong> <span class="inline_math">\( 3x+2-5=4+2 \)</span>
+
+<strong>b)</strong> <span class="inline_math">\( \frac{1}{2}x-3=\sqrt{3}+12-\sqrt{3} \)</span>
+</div>
+<div class="multicols"><strong>c)</strong> <span class="inline_math">\( \frac{7x-4}{2} +1 = 8-2 \)</span>
+
+<strong>d)</strong> <span class="inline_math">\( 5x-2+3=3x-5 \)</span>
+</div>
+
+</div>
+
+
+<div class="miniref-exercise" data-number="1.2"><span class="exercise number">E1.2 </span>
+Indicate all the number sets the following numbers belong to.
+
+<div class="multicols"><strong>a)</strong> <span class="inline_math">\( -2 \)</span>
+
+<strong>b)</strong> <span class="inline_math">\( \sqrt{-3} \)</span>
+
+<strong>c)</strong> <span class="inline_math">\( 8 \div 4 \)</span>
+
+<strong>d)</strong> <span class="inline_math">\( \frac{5}{3} \)</span>
+
+<strong>e)</strong> <span class="inline_math">\( \frac{\pi}{2} \)</span>
+
+</div>
+
+</div>
+
+
+
+<div class="miniref-exercise" data-number="1.3"><span class="exercise number">E1.3 </span>
+Calculate the values of the following expressions:
+
+<div class="multicols"><strong>a)</strong> <span class="inline_math">\( 2^33-3 \)</span>
+
+<strong>b)</strong> <span class="inline_math">\( 2^3(3-3) \)</span>
+
+<strong>c)</strong> <span class="inline_math">\( \frac{4-2}{3^3}(6\cdot 7- 41) \)</span>
+</div>
+
+</div> 
+
+
+</div>
+</div></div>
+<div id="sec-hyperbola" data-tralics-id="cid4" class="section" data-number="1.3"><h2><a href="#sec-hyperbola" class="heading hyperref"><span class="number">1.3 </span>Hyperbola</a></h2>
+<p>The <em>hyperbola</em> is another fundamental shape of nature.</p>
+<div id="uid16" data-tralics-id="uid16" class="subsection" data-number="1.3.1"><h3><a href="#uid16" class="heading">The conic sections</a></h3>
+<p>There is a deep connection between the geometric shapes of the circle,
+the ellipse, the parabola, and the hyperbola.<span class="intersentencespace"></span> These seemingly different shapes can be obtained, geometrically speaking,
+from a single object: the cone.<span class="intersentencespace"></span> We can obtain the four curves by slicing the cone at different angles,
+as illustrated in <a href="#fig-conic_sections_four-shapes" class="hyperref">Figure <span class="ref">1.3</span></a>.</p>
+<div class="center figure" id="fig-conic_sections_four-shapes" data-tralics-id="uid17" data-number="1.3"><span class="graphics"><img src="images/figures/math/conic_sections_four-shapes.png" alt="conic_sections_four-shapes" style="width:96.000368%;" /></span>
+<div class="caption"><span class="header">Figure 1.3: </span><span class="description">Taking slices through a cone at different angles produces different geometric shapes:
+a circle, an ellipse, a parabola, or a hyperbola.
+</span></div></div>
+</div>
+<div id="uid18" data-tralics-id="uid18" class="subsection" data-number="1.3.2"><h3><a href="#uid18" class="heading">Conic sections in polar coordinates</a></h3>
+<p>All four conic sections can be described by the same function in polar coordinates:</p>
+<div class="equation">\[ 
+		  r(\theta) = \frac{q(1+\varepsilon)}{1 + \varepsilon\cos(\theta)}\,,
+		 \]
+</div><p class="noindent">where <span class="inline_math">\( q \)</span> is the curve’s closest distance to a focal point
+and <span class="inline_math">\( \varepsilon \)</span> is the curve’s eccentricity.<span class="intersentencespace"></span> For a circle, <span class="inline_math">\( q=R \)</span> (the radius) and the eccentricity parameter is <span class="inline_math">\( \varepsilon=0 \)</span>.<span class="intersentencespace"></span> For an ellipse, <span class="inline_math">\( q=a(1-\varepsilon) \)</span> and the eccentricity parameter varies between <span class="inline_math">\( 0 \)</span> and <span class="inline_math">\( 1 \)</span> (<span class="inline_math">\( 0\leq \varepsilon &lt; 1 \)</span>).<span class="intersentencespace"></span> Note we include the case <span class="inline_math">\( \varepsilon=0 \)</span> since a circle is a special case of an ellipse.<span class="intersentencespace"></span> For a parabola, <span class="inline_math">\( q=f \)</span> (the focal length) and the eccentricity is <span class="inline_math">\( \varepsilon=1 \)</span>.<span class="intersentencespace"></span> For a hyperbola, <span class="inline_math">\( q = a(\varepsilon-1) \)</span> and the eccentricity is <span class="inline_math">\( \varepsilon&gt;1 \)</span>.</p>
+<p>We can use the eccentricity parameter <span class="inline_math">\( \varepsilon \)</span> to classify all four curves.<span class="intersentencespace"></span> Depending on the value of <span class="inline_math">\( \varepsilon \)</span>,
+the equation <span class="inline_math">\( r(\theta) \)</span> defines either a circle, an ellipse, a parabola, or a hyperbola.<span class="intersentencespace"></span> <a href="#table-conics" class="hyperref">Table <span class="ref">1.1</span></a> summarizes all our observations regarding conic sections.</p>
+<div id="table-conics" place="htb" data-tralics-id="uid19" data-number="1.1" class="table"><table class="tabular">
+<tr><td class="align_left">Conic section <span class="intersentencespace"></span></td>
+<td class="align_left">Equation <span class="intersentencespace"></span></td>
+<td class="align_left">Polar function</td>
+<td class="align_left">Eccentricity <span class="intersentencespace"></span></td>
+</tr><tr><td class="align_left">Circle</td>
+<td class="align_left"><span class="inline_math">\( x^2+y^2=R^2 \)</span> </td>
+<td class="align_left"><span class="inline_math">\( r(\theta)=R \)</span></td>
+<td class="align_left"><span class="inline_math">\( \varepsilon = 0 \)</span></td>
+</tr><tr><td class="align_left">Ellipse</td>
+<td class="align_left"><span class="inline_math">\( \frac{x^2}{a^2}+\frac{y^2}{b^2}=1 \)</span></td>
+<td class="align_left"><span class="inline_math">\( r(\theta)=\frac{a(1-\varepsilon^2)}{1 + \varepsilon\cos(\theta)} \)</span></td>
+<td class="align_left"><span class="inline_math">\( \varepsilon\!=\!\sqrt{1\!-\!\frac{b^2}{a^2}}\,, \; 0\!\leq\!\varepsilon\!&lt;\!1 \)</span><span class="intersentencespace"></span></td>
+</tr><tr><td class="align_left">Parabola</td>
+<td class="align_left"><span class="inline_math">\( y^2=4fx \)</span></td>
+<td class="align_left"><span class="inline_math">\( r(\theta)=\frac{2f}{1 + \cos(\theta)} \)</span></td>
+<td class="align_left"><span class="inline_math">\( \varepsilon=1 \)</span></td>
+</tr><tr><td class="align_left">Hyperbola</td>
+<td class="align_left"><span class="inline_math">\( \frac{x^2}{a^2}-\frac{y^2}{b^2}=1 \)</span></td>
+<td class="align_left"><span class="inline_math">\( r(\theta)=\frac{a(\varepsilon^2-1)}{1 + \varepsilon\cos(\theta)} \)</span></td>
+<td class="align_left"><span class="inline_math">\( \varepsilon\!=\!\sqrt{1\!+\!\frac{b^2}{a^2}}\,, \; 1\!&lt;\!\varepsilon\!&lt;\!\infty \)</span></td>
+</tr></table><div class="caption"><span class="header">Table 1.1: </span><span class="description">The four conic sections and their eccentricity parameters.<span class="intersentencespace"></span> 
+</span></div></div>
+<p>The motion of the planets is explained by Newton’s law of gravitation.<span class="intersentencespace"></span> The gravitational interaction between two bodies always leads one of the two bodies to follow a trajectory described by one of the conic sections
+for which the other body is the focal point.</p>
+</div></div>
+<div id="sec-math_problems" data-tralics-id="cid5" class="section" data-number="1.4"><h2><a href="#sec-math_problems" class="heading hyperref"><span class="number">1.4 </span>Math problems</a></h2>
+<p>We’ve now reached the first section of problems in this book.<span class="intersentencespace"></span> The purpose of these problems is to give you a way to comprehensively practice your math fundamentals.</p>
+<p><small><div class="miniref-problems">
+
+
+
+
+
+<div class="miniref-problem" data-number="1.1"><span class="problem number">P1.1 </span>
+Solve for <span class="inline_math">\( x \)</span> in the equation <span class="inline_math">\( x^2-9=7 \)</span>.<span class="intersentencespace"></span> 
+</div>
+
+<div class="miniref-problem" data-number="1.2"><span class="problem number">P1.2 </span>
+Solve for <span class="inline_math">\( x \)</span> in the equation <span class="inline_math">\( \cos^{-1}\!\left( \frac{x}{A} \right) - \phi = \omega t \)</span>.<span class="intersentencespace"></span> 
+</div>
+
+<div class="miniref-problem" id="mathprob-ch1-fractions2" data-tralics-id="mathprob-ch1-fractions2" data-number="1.3"><span class="problem number">P1.3 </span> 
+
+Solve for <span class="inline_math">\( x \)</span> in the equation <span class="inline_math">\( \frac{1}{x}=\frac{1}{a}+\frac{1}{b} \)</span>.<span class="intersentencespace"></span> 
+</div>
+
+<div class="miniref-problem" data-number="1.4"><span class="problem number">P1.4 </span>
+Use a calculator to find the values of the following expressions:
+<div class="multicols"><small><strong>a)</strong></small><small> <span class="inline_math">\( \sqrt[4]{3^3} \)</span>
+</small>
+<small><strong>b)</strong></small><small> <span class="inline_math">\( 2^{10} \)</span>
+</small>
+<small><strong>c)</strong></small><small> <span class="inline_math">\( 7^{^{\frac{1}{4}}}-10 \)</span>
+</small>
+<small><strong>d)</strong></small><small> <span class="inline_math">\( \frac{1}{2}\ln(e^{22}) \)</span>
+</small></div>
+</div>
+
+
+
+<div class="miniref-problem" data-number="1.5"><span class="problem number">P1.5 </span>
+Compute the following expressions involving fractions:
+<div class="multicols"><small><strong>a)</strong></small><small> <span class="inline_math">\( \dfrac{1}{2} + \dfrac{1}{4} \)</span>
+</small>
+<small><strong>b)</strong></small><small> <span class="inline_math">\( \dfrac{4}{7} - \dfrac{23}{5} \)</span>
+</small>
+<small><strong>c)</strong></small><small> <span class="inline_math">\( 1\frac{3}{4} + 1\frac{31}{32} \)</span>
+</small></div>
+
+</div>
+
+
+</div></small></p>
+</div>
+<div id="cha-a_chapter" data-tralics-id="cid6" class="chapter" data-number="2"><h1><a href="#cha-a_chapter" class="heading hyperref"><span class="number">Chapter 2 </span>The second chapter</a></h1>
+<p>This is the first paragraph of the Softcover Markdown template produced with the <code class="tt">softcover</code> command-line interface.<span class="intersentencespace"></span> It shows how to write a document in Markdown, a lightweight markup language, augmented with the <a href="http://kramdown.gettalong.org/" target="_blank" rel="noopener">kramdown</a> converter and some custom extensions, including support for embedded Poly<span class="texhtml">T<span class="texhtmlE">E</span>X</span>, a subset of the powerful <span class="texhtml">L<span class="texhtmlA">A</span>T<span class="texhtmlE">E</span>X</span> typesetting system.<sup id="cha-2_footnote-ref-1" class="footnote"><a href="#cha-2_footnote-1">1</a></sup><span class="intersentencespace"></span> For more information, see <a href="http://manual.softcover.io/book" target="_blank" rel="noopener"><em>The Softcover Book</em></a>.<span class="intersentencespace"></span> To learn how to easily publish (and optionally sell) documents produced with Softcover, visit <a href="http://softcover.io/" target="_blank" rel="noopener">Softcover.io</a>.</p>
+<p>This is the <em>second</em> paragraph, showing how to emphasize text.<sup id="cha-2_footnote-ref-2" class="footnote"><a href="#cha-2_footnote-2">2</a></sup><span class="intersentencespace"></span> You can also make text <strong>bold</strong> or <em>emphasize a second way</em>.<span class="intersentencespace"></span> Via embedded Poly<span class="texhtml">T<span class="texhtmlE">E</span>X</span>, Softcover also supports colored text, such as <span style="color: red">red</span>, <span style="color: CornflowerBlue">cornflower blue</span>, and <span style="color: #E8AB3A">arbitrary HTML colors</span>.</p>
+</div>
+<div id="sec-a_section" data-tralics-id="cid7" class="section" data-number="2.1"><h2><a href="#sec-a_section" class="heading hyperref"><span class="number">2.1 </span>A section</a></h2>
+<p>This is a section.<span class="intersentencespace"></span> You can refer to it using the <span class="texhtml">L<span class="texhtmlA">A</span>T<span class="texhtmlE">E</span>X</span> cross-reference syntax, like so: <a href="#sec-a_section" class="hyperref">Section <span class="ref">2.1</span></a>.</p>
+<div id="uid22" data-tralics-id="uid22" class="subsection" data-number="2.1.1"><h3><a href="#uid22" class="heading">Source code</a></h3>
+<p>This is a subsection.</p>
+<p>You can typeset code samples and other verbatim text using four spaces of indentation:</p>
+<pre class="verbatim">def hello
+  puts "hello, world"
+end</pre>
+<p>Softcover also comes with full support for syntax-highlighted source code using kramdown’s default syntax, which combines the language name with indentation:</p>
+<div class="code">def hello
+  puts "hello, world"
+end</div>
+<p>Softcover’s Markdown mode also extends kramdown to support so-called “code fencing” from GitHub-flavored Markdown:</p>
+<div class="code">def hello
+  puts "hello, world!"
+end</div>
+<p>The last of these can be combined with Poly<span class="texhtml">T<span class="texhtmlE">E</span>X</span>’s <code>codelisting</code> environment to make code listings with linked cross-references (<a href="#code-hello" class="hyperref">Listing <span class="ref">2.1</span></a>).</p>
+<div class="codelisting" id="code-hello" data-tralics-id="uid23" data-number="2.1"><div class="heading"><span class="number">Listing 2.1:</span> <span class="description">Hello, world.</span>
+
+
+</div>
+
+<div class="code">def hello
+  puts "hello, world!"
+end</div></div></div>
+<div id="uid24" data-tralics-id="uid24" class="subsection" data-number="2.1.2"><h3><a href="#uid24" class="heading">Mathematics</a></h3>
+<p>Softcover’s Markdown mode supports mathematical typesetting using <span class="texhtml">L<span class="texhtmlA">A</span>T<span class="texhtmlE">E</span>X</span> syntax, including inline math, such as <span class="inline_math">\(  \phi^2 - \phi - 1 = 0,  \)</span> and centered math, such as</p>
+<div class="equation">\[  \phi = \frac{1+\sqrt{5}}{2}.  \]
+</div><p class="noindent">It also supports centered equations with linked cross-reference via embedded Poly<span class="texhtml">T<span class="texhtmlE">E</span>X</span> (<a href="#eq-phi" class="hyperref">Eq. (<span class="ref">2.1</span>)</a>).</p>
+<div id="eq-phi" data-tralics-id="uid25" data-number="2.1" class="equation">\begin{equation}
+\label{eq:phi}
+\phi = \frac{1+\sqrt{5}}{2}
+\end{equation}
+</div><p class="noindent">Softcover also supports an alternate math syntax, such as <span class="inline_math">\( \phi^2 - \phi - 1 = 0 \)</span>, and centered math, such as</p>
+<div class="equation">\[ \phi = \frac{1+\sqrt{5}}{2}. \]
+</div><p class="noindent">The <span class="texhtml">L<span class="texhtmlA">A</span>T<span class="texhtmlE">E</span>X</span> syntax is strongly preferred, but the alternate syntax is included for maximum compatibility with other systems.</p>
+</div>
+<div id="uid26" data-tralics-id="uid26" class="subsection" data-number="2.1.3"><h3><a href="#uid26" class="heading">Exercises</a></h3>
+<div class="miniref-exercises">
+
+<div class="miniref-exercise" data-number="2.1"><span class="exercise number">E2.1 </span>
+Do the following vectors represent probability distributions?<span class="intersentencespace"></span>
+<ol class="exparts-star">
+<li><span class="inline_math">\( \left(\tfrac{1}{2}, \tfrac{1}{2}, \tfrac{1}{2} \right)^T \)</span>
+</li>
+<li><span class="inline_math">\( \left(\tfrac{1}{4}, \tfrac{1}{4}, \tfrac{1}{4}, \tfrac{1}{4} \right)^T \)</span>
+</li>
+<li><span class="inline_math">\( \left(0.3, 0.3, -0.1, 0.5  \right)^T \)</span>
+</li></ol>
+
+
+
+
+
+</div>
+
+</div>
+</div></div>
+<div id="cid8" data-tralics-id="cid8" class="section" data-number="2.2"><h2><a href="#cid8" class="heading hyperref"><span class="number">2.2 </span>Images and tables</a></h2>
+<p>This is the second section.</p>
+<p>Softcover supports the inclusion of images, like this:</p>
+<div class="graphics image"><img src="images/figures/math/conic_sections_four-shapes.png" alt="images/figures/math/conic_sections_four-shapes" /></div>
+<p>Using <span class="texhtml">L<span class="texhtmlA">A</span>T<span class="texhtmlE">E</span>X</span> labels, you can also include a caption (as in <a href="#fig-captioned_image" class="hyperref">Figure <span class="ref">2.1</span></a>) or just a figure number (as in <a href="#fig-figure_number" class="hyperref">Figure <span class="ref">2.2</span></a>).</p>
+<div class="center figure" id="fig-captioned_image" data-tralics-id="uid33" data-number="2.1">
+<div class="graphics image"><img src="images/figures/math/conic_sections_four-shapes.png" alt="images/figures/math/conic_sections_four-shapes" /></div><div class="caption"><span class="header">Figure 2.1: </span><span class="description">The four conic sections.
+</span></div></div>
+<div class="center figure" id="fig-figure_number" data-tralics-id="uid34" data-number="2.2">
+<div class="graphics image"><img src="images/figures/math/conic_sections_four-shapes.png" alt="images/figures/math/conic_sections_four-shapes" /></div><div class="caption"><span class="header">Figure 2.2 </span><span class="description"></span></div></div>
+<div id="uid35" data-tralics-id="uid35" class="subsection" data-number="2.2.1"><h3><a href="#uid35" class="heading">Tables</a></h3>
+<p>Softcover supports raw tables via a simple table syntax:</p>
+<table class="tabular"><tr class="top_border"><td class="left_border align_left right_border"><strong>HTTP request</strong></td>
+<td class="align_left right_border"><strong>URL</strong></td>
+<td class="align_left right_border"><strong>Action</strong></td>
+<td class="align_left right_border"><strong>Purpose</strong></td>
+</tr><tr><td class="left_border align_left right_border"><code>GET</code></td>
+<td class="align_left right_border">/users</td>
+<td class="align_left right_border"><code>index</code></td>
+<td class="align_left right_border">page to list all users</td>
+</tr><tr><td class="left_border align_left right_border"><code>GET</code></td>
+<td class="align_left right_border">/users/1</td>
+<td class="align_left right_border"><code>show</code></td>
+<td class="align_left right_border">page to show user with id <code>1</code></td>
+</tr><tr><td class="left_border align_left right_border"><code>GET</code></td>
+<td class="align_left right_border">/users/new</td>
+<td class="align_left right_border"><code>new</code></td>
+<td class="align_left right_border">page to make a new user</td>
+</tr><tr><td class="left_border align_left right_border"><code>POST</code></td>
+<td class="align_left right_border">/users</td>
+<td class="align_left right_border"><code>create</code></td>
+<td class="align_left right_border">create a new user</td>
+</tr><tr><td class="left_border align_left right_border"><code>GET</code></td>
+<td class="align_left right_border">/users/1/edit</td>
+<td class="align_left right_border"><code>edit</code></td>
+<td class="align_left right_border">page to edit user with id <code>1</code></td>
+</tr><tr><td class="left_border align_left right_border"><code>PATCH</code></td>
+<td class="align_left right_border">/users/1</td>
+<td class="align_left right_border"><code>update</code></td>
+<td class="align_left right_border">update user with id <code>1</code></td>
+</tr><tr class="bottom_border"><td class="left_border align_left right_border"><code>DELETE</code></td>
+<td class="align_left right_border">/users/1</td>
+<td class="align_left right_border"><code>destroy</code></td>
+<td class="align_left right_border">delete user with id <code>1</code></td>
+</tr></table>
+<p>See <a href="http://manual.softcover.io/book/softcover_markdown#sec-embedded_tabular_and_tables" target="_blank" rel="noopener"><em>The Softcover Book</em></a> to learn how to make more complicated tables.</p>
+</div></div>
+<div id="cid9" data-tralics-id="cid9" class="section" data-number="2.3"><h2><a href="#cid9" class="heading hyperref"><span class="number">2.3 </span>Command-line interface</a></h2>
+<p>Softcover comes with a command-line interface called <code>softcover</code>.<span class="intersentencespace"></span> To get more information, just run <code>softcover help</code>:</p>
+<div class="code">$ softcover help
+Commands:
+  softcover build, build:all           # Build all formats
+  softcover build:epub                 # Build EPUB
+  softcover build:html                 # Build HTML
+  softcover build:mobi                 # Build MOBI
+  softcover build:pdf                  # Build PDF
+  softcover build:preview              # Build book preview in all formats
+  .
+  .
+  .</div>
+<p class="noindent">You can run <code>softcover help &lt;command&gt;</code> to get additional help on a given command:</p>
+<div class="code">$ softcover help build
+Usage:
+  softcover build, build:all
+
+Options:
+  -q, [--quiet]   # Quiet output
+  -s, [--silent]  # Silent output
+
+Build all formats</div>
+</div>
+<div id="cid10" data-tralics-id="cid10" class="section" data-number="2.4"><h2><a href="#cid10" class="heading hyperref"><span class="number">2.4 </span>Miscellanea</a></h2>
+<p>This is the end of the template—apart from two mostly empty chapters.<span class="intersentencespace"></span> In fact, let’s include the last chapter in its entirety, just to see how mostly empty it is:</p>
+<p>Visit <a href="http://manual.softcover.io" target="_blank" rel="noopener"><em>The Softcover Book</em></a> to learn more about what Softcover can do.</p>
+</div>
+<div id="cid11" data-tralics-id="cid11" class="section" data-number="2.5"><h2><a href="#cid11" class="heading hyperref"><span class="number">2.5 </span>Probability problems</a></h2>
+<div class="miniref-problems">
+
+<div class="miniref-problem" id="problem-geometric_distr_biased_coin_until_heads" data-tralics-id="problem-geometric_distr_biased_coin_until_heads" data-number="2.1"><span class="problem number">P2.1 </span> 
+
+You have a biased coin which lands on <code class="tt">heads</code> with probability <span class="inline_math">\( p \)</span>,
+and consequently lands on <code class="tt">tails</code> with probability <span class="inline_math">\( (1-p) \)</span>.<span class="intersentencespace"></span> Suppose you want to flip the coin until you get <code class="tt">heads</code>.<span class="intersentencespace"></span> Define the random variable <span class="inline_math">\( N \)</span> as the number of tosses required until the first <code class="tt">heads</code> outcome.<span class="intersentencespace"></span> What is the probability mass function <span class="inline_math">\( P_N(n) \)</span> for success on the <span class="inline_math">\( n \)</span><sup class="footnote">th</sup> toss?<span class="intersentencespace"></span> Confirm that the formula is a valid probability distribution by showing <span class="inline_math">\( \sum_{n=1}^\infty P_N(n) = 1 \)</span>.
+
+<div class="miniref-hint">
+Find the probabilities for cases <span class="inline_math">\( n=1,2,3,\ldots \)</span> and look for a pattern.<span class="intersentencespace"></span> </div>
+
+
+
+
+</div>
+
+
+</div>
+</div>
+<div id="cha-2_footnotes">
+  <div class="footnotes">
+    <div id="cha-2_footnote-1" class="footnote"><a class="footnote-link" href="#cha-2_footnote-ref-1">1.</a> Pronunciations of “LaTeX” differ, but <em>lay</em>-tech is the one I prefer.</div>
+    <div id="cha-2_footnote-2" class="footnote"><a class="footnote-link" href="#cha-2_footnote-ref-2">2.</a> This is a footnote.<span class="intersentencespace"></span> It is numbered automatically.</div>
+  </div>
+</div><div id="chapter-vectors" data-tralics-id="cid12" class="chapter" data-number="3"><h1><a href="#chapter-vectors" class="heading hyperref"><span class="number">Chapter 3 </span>Vectors</a></h1>
+<p>In this chapter we’ll learn how to manipulate multi-dimensional objects called vectors.<span class="intersentencespace"></span> Vectors are the precise way to describe directions in space.<span class="intersentencespace"></span> We need vectors in order to describe physical quantities like forces, velocities, and accelerations.</p>
+<p>Vectors are built from ordinary numbers,
+which form the <em>components</em> of the vector.<span class="intersentencespace"></span> You can think of a vector as a list of numbers,
+and <em>vector algebra</em> as operations
+performed on the numbers in the list.<span class="intersentencespace"></span> Vectors can also be manipulated as geometric objects,
+represented by arrows in space.<span class="intersentencespace"></span> For instance, the arrow that corresponds to the vector <span class="inline_math">\( \vec{v}=(v_x,v_y) \)</span> starts at the origin <span class="inline_math">\( (0,0) \)</span>
+and ends at the point <span class="inline_math">\( (v_x,v_y) \)</span>.<span class="intersentencespace"></span> The word vector comes from the Latin <em>vehere</em>,
+which means <em>to carry</em>.<span class="intersentencespace"></span> Indeed, the vector <span class="inline_math">\( \vec{v} \)</span> takes the point <span class="inline_math">\( (0,0) \)</span> and carries it to the point <span class="inline_math">\( (v_x,v_y) \)</span>.</p>
+<div class="center figure" id="fig-vector_components" data-tralics-id="uid36" data-number="3.1"><span class="graphics"><img src="images/figures/vectors/vector_components.png" alt="vector_components" style="width:47.999268%;" /></span>
+<div class="caption"><span class="header">Figure 3.1: </span><span class="description">The vector <span class="inline_math">\( \vec{v}=(3,2) \)</span> is an arrow in the Cartesian plane.<span class="intersentencespace"></span> The horizontal component of <span class="inline_math">\( \vec{v} \)</span> is <span class="inline_math">\( v_x=3 \)</span>
+and the vertical component is <span class="inline_math">\( v_y=2 \)</span>.
+</span></div></div>
+</div>
+<div id="sec-vectors" data-tralics-id="cid13" class="section" data-number="3.1"><h2><a href="#sec-vectors" class="heading hyperref"><span class="number">3.1 </span>Vectors</a></h2>
+<p>Vectors are extremely useful in all areas of life.<span class="intersentencespace"></span> In physics, for example, we use a vector to describe the velocity of an object.<span class="intersentencespace"></span> It is not sufficient to say that the speed of a tennis ball is 200 kilometres per hour:
+we must also specify the direction in which the ball is moving.<span class="intersentencespace"></span> Both of the two velocities</p>
+<div class="equation">\[ 
+	 \vec{v}_1 = (200,0) 
+	 \qquad \textrm{and}
+	 \qquad \vec{v}_2=(0,200)
+	 \]
+</div><p class="noindent">describe motion at the speed of <span class="inline_math">\( 200 \)</span> kilometres per hour;
+but since one velocity points along the <span class="inline_math">\( x \)</span>-axis, and the other points along the <span class="inline_math">\( y \)</span>-axis,
+they are <em>completely</em> different velocities.<span class="intersentencespace"></span> The velocity vector contains information about the object’s speed <em>and</em> its direction.<span class="intersentencespace"></span> The direction makes a big difference.<span class="intersentencespace"></span> If it turns out the tennis ball is hurtling toward you, you’d better get out of the way!</p>
+<p>The main idea in this chapter is that <strong>vectors are not the same as numbers</strong>.<span class="intersentencespace"></span> We’ll start by defining what vectors are.<span class="intersentencespace"></span> Then we’ll describe all the mathematical operations we can perform with vectors,
+which include
+vector addition <span class="inline_math">\( \vec{u}+\vec{v} \)</span>,
+vector subtraction <span class="inline_math">\( \vec{u}-\vec{v} \)</span>,
+vector scaling <span class="inline_math">\( \alpha\vec{v} \)</span>,
+and other operations.</p>
+<div id="vectors-definitions" data-tralics-id="uid37" class="subsection" data-number="3.1.1"><h3><a href="#vectors-definitions" class="heading">Definitions</a></h3>
+<p>A two-dimensional vector <span class="inline_math">\( \vec{v} \)</span> corresponds to a <em>pair of numbers</em>:</p>
+<div class="equation">\[ 
+			\vec{v} = (v_x, v_y),
+		 \]
+</div><p class="noindent">where <span class="inline_math">\( v_x \)</span> is the <em><span class="inline_math">\( x \)</span>-component</em> of the vector and <span class="inline_math">\( v_y \)</span> is its <em><span class="inline_math">\( y \)</span>-component</em>.<span class="intersentencespace"></span> We denote the set of two-dimensional vectors as <span class="inline_math">\( \mathbb{R}^2 \)</span>,
+since the components of a two-dimensional vector are specified by two real numbers.<span class="intersentencespace"></span> We’ll use the mathematical shorthand <span class="inline_math">\( \vec{v} \in \mathbb{R}^2 \)</span> to define a two-dimensional vector <span class="inline_math">\( \vec{v} \)</span>.<span class="intersentencespace"></span> Vectors in <span class="inline_math">\( \mathbb{R}^2 \)</span> can be represented as arrows in the Cartesian plane.<span class="intersentencespace"></span> See the vector <span class="inline_math">\( \vec{v}=(3,2) \)</span> illustrated in <a href="#fig-vector_components" class="hyperref">Figure <span class="ref">3.1</span></a>.</p>
+<p>We can also define three-dimensional vectors like the vector <span class="inline_math">\( \vec{v} = (v_x, v_y, v_z) \in \mathbb{R}^3 \)</span>,
+which has three components.<span class="intersentencespace"></span> A three-dimensional coordinate system is similar to the Cartesian coordinate system you’re familiar with,
+and includes the additional <span class="inline_math">\( z \)</span>-axis that measures the height above the plane.<span class="intersentencespace"></span> In fact,
+there’s no limit to the number of dimensions for vectors.<span class="intersentencespace"></span> We can define vectors in an <span class="inline_math">\( n \)</span>-dimensional space: <span class="inline_math">\( \vec{v} = (v_1, v_2, \ldots, v_n) \in \mathbb{R}^n \)</span>.<span class="intersentencespace"></span> For the sake of simplicity,
+we’ll define all the vector operation formulas using two-dimensional vectors.<span class="intersentencespace"></span> Unless otherwise indicated in the text,
+all the formulas we give for two-dimensional vectors <span class="inline_math">\( \vec{v} \in \mathbb{R}^2 \)</span>
+also apply to <span class="inline_math">\( n \)</span>-dimensional vectors <span class="inline_math">\( \vec{v} \in \mathbb{R}^n \)</span>.</p>
+<div id="uid38" data-tralics-id="uid38" class="subsubsection" data-number="3.1.1.1"><h4><a href="#uid38" class="heading">Vector operations</a></h4>
+<p>Consider two vectors,
+<span class="inline_math">\( \vec{u}=(u_x,u_y)  \)</span> and <span class="inline_math">\( \vec{v}=(v_x,v_y) \)</span>,
+and assume that <span class="inline_math">\( \alpha \in \mathbb{R} \)</span> is an arbitrary constant.<span class="intersentencespace"></span> The following operations are defined for these vectors:</p>
+<ul>
+<li><strong>Addition:</strong> <span class="inline_math">\( \vec{u} + \vec{v} = (u_x+v_x,\, u_y+v_y) \)</span>
+</li>
+<li><strong>Subtraction:</strong> <span class="inline_math">\( \vec{u} - \vec{v} = (u_x-v_x,\, u_y-v_y) \)</span>
+</li>
+<li><strong>Scaling:</strong> <span class="inline_math">\( \alpha \vec{u} = (\alpha u_x,\, \alpha u_y) \)</span>
+</li>
+<li><strong>Dot product:</strong> <span class="inline_math">\( \vec{u} \cdot \vec{v}  = u_xv_x+u_yv_y \)</span>
+</li>
+<li><strong>Length:</strong> <span class="inline_math">\( \|\vec{u}\| = \sqrt{\vec{u}\cdot\vec{u}} = \sqrt{u_x^2+u_y^2} \)</span>.<span class="intersentencespace"></span> The vector’s length is also called the <em>norm</em> of the vector.<span class="intersentencespace"></span> We sometimes use the letter <span class="inline_math">\( u \)</span> to denote the length of the vector <span class="inline_math">\( \vec{u} \)</span>.<span class="intersentencespace"></span>
+</li></ul>
+<p class="noindent">Note there is no vector division operation.</p>
+<p>For vectors in a three-dimensional space <span class="inline_math">\( \vec{u}=(u_x,u_y,u_z) \in \mathbb{R}^3 \)</span>
+and <span class="inline_math">\( \vec{v}=(v_x,v_y,v_z) \in \mathbb{R}^3 \)</span>,
+we can also define the <strong>cross product</strong> operation <span class="inline_math">\( \vec{u} \times \vec{v} = (u_yv_z-u_zv_y,\; u_zv_x-u_xv_z,\; u_xv_y-u_yv_x) \)</span>.<span class="intersentencespace"></span> The dot product and the cross product are new operations that you probably haven’t seen before.</p>
+</div>
+<div id="uid44" data-tralics-id="uid44" class="subsubsection" data-number="3.1.1.2"><h4><a href="#uid44" class="heading">Vector representations</a></h4>
+<p>We’ll use three equivalent ways to denote vectors in two dimensions:</p>
+<ul>
+<li><span class="inline_math">\( \vec{v} =(v_x, v_y) \)</span>: component notation.<span class="intersentencespace"></span> The vector is written as a pair of numbers called the <em>components</em> or <em>coordinates</em> of the vector.<span class="intersentencespace"></span>
+</li>
+<li><span class="inline_math">\( \vec{v} =v_x\hat{\imath}+ v_y\hat{\jmath} \)</span>: unit vector notation.<span class="intersentencespace"></span> The vector is expressed as a combination of the unit vectors
+<span class="inline_math">\( \hat{\imath} = (1,0) \)</span> and <span class="inline_math">\(  \hat{\jmath} = (0,1) \)</span>.<span class="intersentencespace"></span>
+</li>
+<li><span class="inline_math">\( \vec{v}=\|\vec{v}\|\angle \theta \)</span>: length-and-direction notation (polar coordinates).<span class="intersentencespace"></span> The vector is expressed in terms of its <em>length</em> <span class="inline_math">\( \|\vec{v}\| \)</span>
+and the angle <span class="inline_math">\( \theta \)</span> that the vector makes with the <span class="inline_math">\( x \)</span>-axis.<span class="intersentencespace"></span>
+</li></ul>
+<div class="center figure" id="fig-vector_components_annotated" data-tralics-id="uid48" data-number="3.2"><span class="graphics"><img src="images/figures/vectors/vector_components_annotated.png" alt="vector_components_annotated" style="width:72.000732%;" /></span>
+<div class="caption"><span class="header">Figure 3.2: </span><span class="description">The vector <span class="inline_math">\( \vec{v}=(v_x,v_y) = v_x\hat{\imath}+ v_y\hat{\jmath} = \|\vec{v}\|\angle \theta \)</span>.
+</span></div></div>
+<p class="noindent">We use the component notation for doing vector algebra calculations since it is most compact.<span class="intersentencespace"></span> The unit vector notation shows explicitly that the vector <span class="inline_math">\( \vec{v} \)</span> corresponds to the sum of
+<span class="inline_math">\( v_x\hat{\imath} \)</span> (a displacement of <span class="inline_math">\( v_x \)</span> steps in the direction of the <span class="inline_math">\( x \)</span>-axis)
+and <span class="inline_math">\( v_y\hat{\jmath} \)</span> (a displacement of <span class="inline_math">\( v_y \)</span> steps in the direction of the <span class="inline_math">\( y \)</span>-axis).<span class="intersentencespace"></span> The length-and-direction notation describes the vector <span class="inline_math">\( \vec{v} \)</span>
+as a displacement of <span class="inline_math">\( \|\vec{v}\| \)</span> steps in the direction of the angle <span class="inline_math">\( \theta \)</span>.<span class="intersentencespace"></span> We’ll use all three ways of denoting vectors throughout the rest of the book,
+and we’ll learn how to convert between them.</p>
+</div></div>
+<div id="basis-exercises" data-tralics-id="uid49" class="subsection" data-number="3.1.2"><h3><a href="#basis-exercises" class="heading">Exercises</a></h3>
+<div class="miniref-exercises">
+
+<div class="miniref-exercise" data-number="3.1"><span class="exercise number">E3.1 </span>
+Given the vectors <span class="inline_math">\( \vec{v}_1=(2,1) \)</span>, <span class="inline_math">\( \vec{v}_2=(2,-1) \)</span>, and <span class="inline_math">\( \vec{v}_3=(3,3) \)</span>,
+calculate the following expressions:
+<div class="multicols"><strong>a)</strong> <span class="inline_math">\( \vec{v}_1 + \vec{v}_2 \)</span>
+
+<strong>b)</strong> <span class="inline_math">\( \vec{v}_2 - 2\vec{v}_1 \)</span>
+
+<strong>c)</strong> <span class="inline_math">\( \vec{v}_1 + \vec{v}_2 + \vec{v}_3 \)</span>
+</div>
+
+</div>
+
+<div class="miniref-exercise" id="exercise-vector-polar-to-cartesian-conversion" data-tralics-id="exercise-vector-polar-to-cartesian-conversion" data-number="3.2"><span class="exercise number">E3.2 </span> 
+
+Express the following vectors as components:
+<div class="multicols"><strong>a)</strong> <span class="inline_math">\( \vec{v}_1 =10\angle30^\circ \)</span>
+
+<strong>b)</strong> <span class="inline_math">\( \vec{v}_2 = 12\angle\!-\!90^\circ \)</span>
+
+<strong>c)</strong> <span class="inline_math">\( \vec{v}_3 = 3\angle170^\circ \)</span>
+</div>
+
+</div>
+
+
+<div class="miniref-exercise" id="exercise-vector-cartesian-to-polar-conversion" data-tralics-id="exercise-vector-cartesian-to-polar-conversion" data-number="3.3"><span class="exercise number">E3.3 </span> 
+
+Express the following vectors in length-and-direction notation:
+<div class="multicols"><strong>a)</strong> <span class="inline_math">\( \vec{u}_1 = (4,0) \)</span>
+
+<strong>b)</strong> <span class="inline_math">\( \vec{u}_2 = (1,1) \)</span>
+
+<strong>c)</strong> <span class="inline_math">\( \vec{u}_3 = (-1,3) \)</span>
+</div>
+
+</div>
+
+
+
+
+
+
+
+</div>
+</div></div>
+<div id="sec-vec_problems" data-tralics-id="cid14" class="section" data-number="3.2"><h2><a href="#sec-vec_problems" class="heading hyperref"><span class="number">3.2 </span>Vectors problems</a></h2>
+<p style="margin-top: -5.69054pt"></p>
+<p>You learned a bunch of vector formulas and you saw some vector diagrams,
+but did you really learn how to solve problems with vectors?<span class="intersentencespace"></span> There is only one way to find out: test yourself by solving problems.</p>
+<p>I’ve said it before and I don’t want to repeat myself too much,
+but it’s worth saying again: the more problems you solve, the better you’ll understand the material.<span class="intersentencespace"></span> It’s now time for you to try the following vector problems to make sure you’re on top of things.</p>
+<p style="margin-top: 6.0pt"><small><div class="miniref-problems">
+
+<div class="miniref-problem" data-number="3.1"><span class="problem number">P3.1 </span>
+Given the vectors <span class="inline_math">\( \vec{u}=(1,1,1) \)</span>, <span class="inline_math">\( \vec{v} = (2,3,1) \)</span>, and <span class="inline_math">\( \vec{w}=(-1,-1,2) \)</span>,
+compute the following products:
+
+<div class="multicols"><small><strong>a)</strong></small><small> <span class="inline_math">\( \vec{u} \cdot \vec{v} \)</span>
+</small>
+<small><strong>b)</strong></small><small> <span class="inline_math">\( \vec{u} \cdot \vec{w} \)</span>
+</small>
+<small><strong>c)</strong></small><small> <span class="inline_math">\( \vec{v} \cdot \vec{w} \)</span>
+</small></div>
+<div class="multicols"><small><strong>d)</strong></small><small> <span class="inline_math">\( \vec{u} \times \vec{v} \)</span>
+</small>
+<small><strong>e)</strong></small><small> <span class="inline_math">\( \vec{u} \times \vec{w} \)</span>
+</small>
+<small><strong>f)</strong></small><small> <span class="inline_math">\( \vec{v} \times \vec{w} \)</span>
+</small></div>
+
+</div>
+
+
+<div class="miniref-problem" data-number="3.2"><span class="problem number">P3.2 </span>
+Given the vectors <span class="inline_math">\( \vec{p} =(1,1,0,3,3) \)</span> and <span class="inline_math">\( \vec{q}=(1,2,3,4,5) \)</span>, calculate the following expressions:
+<div class="multicols"><small><strong>a)</strong></small><small> <span class="inline_math">\( \vec{p}+\vec{q} \)</span>
+</small>
+<small><strong>b)</strong></small><small> <span class="inline_math">\( \vec{p}-\vec{q} \)</span>
+</small>
+<small><strong>c)</strong></small><small> <span class="inline_math">\( \vec{p} \cdot \vec{q} \)</span>
+</small></div>
+
+</div>
+
+
+<div class="miniref-problem" data-number="3.3"><span class="problem number">P3.3 </span>
+Find a unit vector that is perpendicular to both <span class="inline_math">\( \vec{u}=(1, 0, 1) \)</span> and <span class="inline_math">\( \vec{v} =(1, 2, 0) \)</span>.<span class="intersentencespace"></span> <div class="miniref-hint">
+Use the cross product.<span class="intersentencespace"></span> </div>
+
+
+</div>
+
+<div class="miniref-problem" data-number="3.4"><span class="problem number">P3.4 </span>
+Find a vector that is orthogonal to both <span class="inline_math">\( \vec{u}_1 = (1, 0, 1) \)</span> and <span class="inline_math">\( \vec{u}_2 =(1, 3, 0) \)</span>,
+and whose dot product with the vector <span class="inline_math">\( \vec{v}= (1, 1, 0) \)</span> is equal to <span class="inline_math">\( 8 \)</span>.<span class="intersentencespace"></span> 
+
+</div>
+
+
+</div></small></p>
+</div><div id="backmatter" data-number="99999">
+<div data-tralics-id="chaptxer-end_matter" class="chapter-star backmatter-start backmatter" id="end_matter" data-number=""><h1><a href="#end_matter" class="heading hyperref">End matter</a></h1>
+</div>
+<div data-tralics-id="sec-conclusion" class="section-star" id="conclusion" data-number=""><h2><a href="#conclusion" class="heading">Conclusion</a></h2>
+<p>This is where the conclusion would go.</p>
+</div>
+<div data-tralics-id="sec-acknowledgments" class="section-star" id="acknowledgments" data-number=""><h2><a href="#acknowledgments" class="heading">Acknowledgments</a></h2>
+<p>This book would not have been possible without the support and encouragement of the people around me.<span class="intersentencespace"></span> I am fortunate to have grown up surrounded by good people who knew the value of math
+and encouraged me in my studies and with this project.<span class="intersentencespace"></span> In this section, I want to <em>big up</em> all the people who deserve it.</p>
+</div>
+<div data-tralics-id="sec-further_reading" class="section-star" id="further_reading" data-number=""><h2><a href="#further_reading" class="heading">Further reading</a></h2>
+<p>You have reached the end of this book,
+but you’re only at the beginning of the journey of scientific discovery.<span class="intersentencespace"></span> There are a lot of cool things left for you to learn about.<span class="intersentencespace"></span> Below are some recommendation of subjects you might find interesting.</p>
+</div>
+<div data-tralics-id="appendix-ans_and_solutions" class="chapter-star backmatter" id="answers_and_solutions" data-number=""><h1><a href="#answers_and_solutions" class="heading hyperref">Answers and solutions</a></h1>
+</div>
+<div data-tralics-id="sec-chapter1sols" class="section-star" id="chapter_1_solutions" data-number=""><h2><a href="#chapter_1_solutions" class="heading">Chapter 1 solutions</a></h2>
+
+<div class="subsection-star"><h3><a class="heading">Answers to exercises</a></h3>
+<p><small><strong>E1.1</strong></small><small>
+</small><small><strong>a)</strong></small><small> <span class="inline_math">\( x=3 \)</span>; </small><small><strong>b)</strong></small><small> <span class="inline_math">\( x=30 \)</span>; </small><small><strong>c)</strong></small><small> <span class="inline_math">\( x=2 \)</span>; </small><small><strong>d)</strong></small><small> <span class="inline_math">\( x=-3 \)</span>.<span class="intersentencespace"></span> 
+</small><small><strong>E1.2</strong></small><small>
+</small><small><strong>a)</strong></small><small> <span class="inline_math">\( \mathbb{Z}, \mathbb{Q}, \mathbb{R},\mathbb{C} \)</span>;
+</small><small><strong>b)</strong></small><small> <span class="inline_math">\( \mathbb{C} \)</span>;
+</small><small><strong>c)</strong></small><small> <span class="inline_math">\( \mathbb{N},\mathbb{Z}, \mathbb{Q}, \mathbb{R},\mathbb{C} \)</span>;
+</small><small><strong>d)</strong></small><small> <span class="inline_math">\( \mathbb{Q}, \mathbb{R},\mathbb{C} \)</span>;
+</small><small><strong>e)</strong></small><small> <span class="inline_math">\( \mathbb{R},\mathbb{C} \)</span>.<span class="intersentencespace"></span> 
+</small><small><strong>E1.3</strong></small><small>
+</small><small><strong>a)</strong></small><small> <span class="inline_math">\( 21 \)</span>; </small><small><strong>b)</strong></small><small> <span class="inline_math">\( 0 \)</span>; </small><small><strong>c)</strong></small><small> <span class="inline_math">\( \frac{2}{27} \)</span>.<span class="intersentencespace"></span></small></p>
+</div>
+<div class="subsection-star"><h3><a class="heading">Solutions to selected exercises</a></h3>
+</div>
+<div class="subsection-star"><h3><a class="heading">Answers to problems</a></h3>
+<p><small><strong>P1.1</strong></small><small>
+<span class="inline_math">\( x=\pm 4 \)</span>.<span class="intersentencespace"></span> 
+</small><small><strong>P1.2</strong></small><small>
+<span class="inline_math">\( x=A\cos(\omega t+\phi) \)</span>.<span class="intersentencespace"></span> 
+</small><small><strong>P1.3</strong></small><small>
+<span class="inline_math">\( x=\frac{ab}{a+b} \)</span>.<span class="intersentencespace"></span> 
+</small><small><strong>P1.4</strong></small><small>
+</small><small><strong>a)</strong></small><small> <span class="inline_math">\( 2.2795 \)</span>.<span class="intersentencespace"></span> </small><small><strong>b)</strong></small><small> <span class="inline_math">\( 1024 \)</span>.<span class="intersentencespace"></span> </small><small><strong>c)</strong></small><small> <span class="inline_math">\( -8.373 \)</span>.<span class="intersentencespace"></span> </small><small><strong>d)</strong></small><small> <span class="inline_math">\( 11 \)</span>.<span class="intersentencespace"></span> 
+</small><small><strong>P1.5</strong></small><small>
+</small><small><strong>a)</strong></small><small> <span class="inline_math">\( \frac{3}{4} \)</span>.<span class="intersentencespace"></span> </small><small><strong>b)</strong></small><small> <span class="inline_math">\( \frac{-141}{35} \)</span>.<span class="intersentencespace"></span> </small><small><strong>c)</strong></small><small> <span class="inline_math">\( 3\frac{23}{32} \)</span>.<span class="intersentencespace"></span></small></p>
+</div>
+<div class="subsection-star"><h3><a class="heading">Solutions to selected problems</a></h3>
+<p><small><strong>P1.5</strong></small><small>
+For </small><small><strong>c)</strong></small><small>,
+<span class="inline_math">\( 1\frac{3}{4} + 1\frac{31}{32}
+				= \frac{7}{4} + \frac{63}{32}
+				= \frac{56}{32} + \frac{63}{32} = \frac{119}{32}=3\frac{23}{32} \)</span>.</small></p>
+</div></div>
+<div data-tralics-id="sec-chapter1sols" class="section-star" id="chapter_2_solutions" data-number=""><h2><a href="#chapter_2_solutions" class="heading">Chapter 2 solutions</a></h2>
+
+<div class="subsection-star"><h3><a class="heading">Answers to exercises</a></h3>
+<p><small><strong>E2.1</strong></small><small></small></p>
+<ol class="ansparts-star">
+<li><small>No; weights don’t add to one.<span class="intersentencespace"></span></small>
+</li>
+<li><small>Yes.<span class="intersentencespace"></span></small>
+</li>
+<li><small>No; contains a negative number.<span class="intersentencespace"></span></small>
+</li></ol>
+</div>
+<div class="subsection-star"><h3><a class="heading">Solutions to selected exercises</a></h3>
+<p><small><strong>E2.1</strong></small><small>
+In each case we check if each probability weight is positive and
+the total probability sums to one.</small></p>
+</div>
+<div class="subsection-star"><h3><a class="heading">Answers to problems</a></h3>
+<p><small><strong>P2.1</strong></small><small>
+<span class="inline_math">\( P_N(n) = (1-p)^{n-1}p \)</span></small></p>
+</div>
+<div class="subsection-star"><h3><a class="heading">Solutions to selected problems</a></h3>
+<p><small><strong>P2.1</strong></small><small>
+The biased coin flip is modelled by a random variable <span class="inline_math">\( Y \)</span>,
+and different coin flips correspond to random variables <span class="inline_math">\( Y_1 \)</span>, <span class="inline_math">\( Y_2 \)</span>, <span class="inline_math">\( Y_3 \)</span>, …which are independent copies of <span class="inline_math">\( Y \)</span>.<span class="intersentencespace"></span> The probability of getting </small><small><code class="tt">heads</code></small><small> on the first flip is <span class="inline_math">\( P_N(1)=\textrm{Pr}\!\left( \{ Y_1=\texttt{heads} \} \right)\! =p \)</span>.<span class="intersentencespace"></span> The probability of getting </small><small><code class="tt">heads</code></small><small> on the second flip corresponds
+to the event <span class="inline_math">\( \{Y_1=\texttt{tails}\} \; \texttt{AND} \; \{Y_2=\texttt{heads} \} \)</span>.<span class="intersentencespace"></span> We assumed the coin flips are independent so <span class="inline_math">\( P_N(2)=(1-p)p \)</span>.<span class="intersentencespace"></span> Similarly <span class="inline_math">\( P_N(3) = (1-p)^2p \)</span>.<span class="intersentencespace"></span> The general formula is <span class="inline_math">\( P_N(n) = (1-p)^{n-1}p \)</span>.</small></p>
+</div></div>
+<div data-tralics-id="sec-chapter3sols" class="section-star" id="chapter_3_solutions" data-number=""><h2><a href="#chapter_3_solutions" class="heading">Chapter 3 solutions</a></h2>
+
+<div class="subsection-star"><h3><a class="heading">Answers to problems</a></h3>
+<p><small><strong>P3.1</strong></small><small>
+</small><small><strong>a)</strong></small><small> <span class="inline_math">\( 6 \)</span>.<span class="intersentencespace"></span> </small><small><strong>b)</strong></small><small> <span class="inline_math">\( 0 \)</span>.<span class="intersentencespace"></span> </small><small><strong>c)</strong></small><small> <span class="inline_math">\( -3 \)</span>.<span class="intersentencespace"></span> </small><small><strong>d)</strong></small><small> <span class="inline_math">\( (-2, 1, 1) \)</span>.<span class="intersentencespace"></span> </small><small><strong>e)</strong></small><small> <span class="inline_math">\( (3, -3, 0) \)</span>.<span class="intersentencespace"></span> </small><small><strong>f)</strong></small><small> <span class="inline_math">\( (7, -5, 1) \)</span>.<span class="intersentencespace"></span> 
+</small><small><strong>P3.2</strong></small><small>
+</small><small><strong>a)</strong></small><small> <span class="inline_math">\( (2,3,3,7,8) \)</span>.<span class="intersentencespace"></span> </small><small><strong>b)</strong></small><small> <span class="inline_math">\( (0,-1,-3,-1,-2) \)</span>.<span class="intersentencespace"></span> </small><small><strong>c)</strong></small><small> <span class="inline_math">\( 30 \)</span>.<span class="intersentencespace"></span> 
+</small><small><strong>P3.3</strong></small><small>
+<span class="inline_math">\( (-\frac{2}{3}, \frac{1}{3}, \frac{2}{3}) \)</span> or <span class="inline_math">\( (\frac{2}{3}, -\frac{1}{3}, -\frac{2}{3}) \)</span>.<span class="intersentencespace"></span> 
+</small><small><strong>P3.4</strong></small><small>
+<span class="inline_math">\( (12, -4, -12) \)</span>.<span class="intersentencespace"></span></small></p>
+</div>
+<div class="subsection-star"><h3><a class="heading">Solutions to selected problems</a></h3>
+<p><small><strong>P3.3</strong></small><small>
+See <a href="http://bit.ly/1cOa8yo" target="_blank" rel="noopener"><small><code class="tt">bit.ly/1cOa8yo</code></small><small></small></a> for calculations.</small></p>
+<p><small><strong>P3.4</strong></small><small>
+Any multiple of the vector <span class="inline_math">\( \vec{u}_1 \times \vec{u}_2 = (-3,1,3) \)</span>
+is perpendicular to both <span class="inline_math">\( \vec{u}_1 \)</span> and <span class="inline_math">\( \vec{u}_2 \)</span>.<span class="intersentencespace"></span> We must find a multiplier <span class="inline_math">\( t \in \mathbb{R} \)</span> such that
+<span class="inline_math">\( t(-3,1,3) \cdot (1, 1, 0) = 8 \)</span>.<span class="intersentencespace"></span> Computing the dot product we find <span class="inline_math">\( -3t + t = 8 \)</span>, so <span class="inline_math">\( t=-4 \)</span>.<span class="intersentencespace"></span> The vector we’re looking for is <span class="inline_math">\( (12, -4, -12) \)</span>.<span class="intersentencespace"></span> See <a href="http://bit.ly/1nmYH8T" target="_blank" rel="noopener"><small><code class="tt">bit.ly/1nmYH8T</code></small><small></small></a> for calculations.</small></p>
+</div></div>
+<div data-tralics-id="appendix-notation" class="chapter-star backmatter" id="notation" data-number=""><h1><a href="#notation" class="heading hyperref">Notation</a></h1>
+<p style="margin-top: -19.91692pt"></p>
+<p>This appendix contains a summary of the notation used in this book.</p>
+</div>
+<div class="section-star" id="math_notation"><h2><a href="#math_notation" class="heading">Math notation</a></h2>
+<table class="tabular"><tr><td class="align_right">Expression</td>
+<td class="align_left">Read as</td>
+<td class="align_left">Used to denote</td>
+</tr><tr><td class="align_right"><span class="inline_math">\( a,b,x,y \)</span></td>
+<td class="align_left"></td>
+<td class="align_left">variables</td>
+</tr><tr><td class="align_right"><span class="inline_math">\( = \)</span></td>
+<td class="align_left">is equal to</td>
+<td class="align_left">expressions that have the same value</td>
+</tr><tr><td class="align_right"><span class="inline_math">\( \eqdef \)</span></td>
+<td class="align_left">is defined as</td>
+<td class="align_left">a new variable definition</td>
+</tr><tr><td class="align_right"><span class="inline_math">\( a+b \)</span></td>
+<td class="align_left"><span class="inline_math">\( a \)</span> plus <span class="inline_math">\( b \)</span></td>
+<td class="align_left">the combined lengths of <span class="inline_math">\( a \)</span> and <span class="inline_math">\( b \)</span></td>
+</tr><tr><td class="align_right"><span class="inline_math">\( a-b \)</span></td>
+<td class="align_left"><span class="inline_math">\( a \)</span> minus <span class="inline_math">\( b \)</span></td>
+<td class="align_left">the difference in lengths between <span class="inline_math">\( a \)</span> and <span class="inline_math">\( b \)</span></td>
+</tr><tr><td class="align_right"><span class="inline_math">\( a\times b = ab \)</span></td>
+<td class="align_left"><span class="inline_math">\( a \)</span> times <span class="inline_math">\( b \)</span></td>
+<td class="align_left">the area of a rectangle</td>
+</tr><tr><td class="align_right"><span class="inline_math">\( a^2= aa \)</span></td>
+<td class="align_left"><span class="inline_math">\( a \)</span> squared</td>
+<td class="align_left">the area of a square of side length <span class="inline_math">\( a \)</span></td>
+</tr><tr><td class="align_right"><span class="inline_math">\( a^3= aaa \)</span></td>
+<td class="align_left"><span class="inline_math">\( a \)</span> cubed</td>
+<td class="align_left">the volume of a cube of side length <span class="inline_math">\( a \)</span></td>
+</tr><tr><td class="align_right"><span class="inline_math">\( a^n \)</span></td>
+<td class="align_left"><span class="inline_math">\( a \)</span> to the <span class="inline_math">\( n \)</span></td>
+<td class="align_left"><span class="inline_math">\( a \)</span> multiplied by itself <span class="inline_math">\( n \)</span> times</td>
+</tr><tr><td class="align_right"><span class="inline_math">\( \sqrt{a} = a^{\frac{1}{2}} \)</span></td>
+<td class="align_left">square root of <span class="inline_math">\( a \)</span></td>
+<td class="align_left">the side length of a square of area <span class="inline_math">\( a \)</span></td>
+</tr><tr><td class="align_right"><span class="inline_math">\( \sqrt[3]{a}= a^{\frac{1}{3}} \)</span></td>
+<td class="align_left">cube root of <span class="inline_math">\( a \)</span></td>
+<td class="align_left">the side length of a cube with volume <span class="inline_math">\( a \)</span></td>
+</tr><tr><td class="align_right"><span class="inline_math">\( a/b = \frac{a}{b} \)</span></td>
+<td class="align_left"><span class="inline_math">\( a \)</span> divided by <span class="inline_math">\( b \)</span></td>
+<td class="align_left"><span class="inline_math">\( a \)</span> parts of a whole split into <span class="inline_math">\( b \)</span> parts</td>
+</tr><tr><td class="align_right"><span class="inline_math">\( a^{-1}= \frac{1}{a} \)</span></td>
+<td class="align_left">one over <span class="inline_math">\( a \)</span></td>
+<td class="align_left">division by <span class="inline_math">\( a \)</span></td>
+</tr><tr><td class="align_right"><span class="inline_math">\( f(x) \)</span></td>
+<td class="align_left"><span class="inline_math">\( f \)</span> of <span class="inline_math">\( x \)</span></td>
+<td class="align_left">the function <span class="inline_math">\( f \)</span> applied to input <span class="inline_math">\( x \)</span></td>
+</tr><tr><td class="align_right"><span class="inline_math">\( f^{-1} \)</span></td>
+<td class="align_left"><span class="inline_math">\( f \)</span> inverse</td>
+<td class="align_left">the inverse function of <span class="inline_math">\( f(x) \)</span></td>
+</tr><tr><td class="align_right"><span class="inline_math">\( f \circ g \)</span></td>
+<td class="align_left"><span class="inline_math">\( f \)</span> compose <span class="inline_math">\( g \)</span></td>
+<td class="align_left">function composition; <span class="inline_math">\( f \circ g(x) = f(g(x)) \)</span></td>
+</tr><tr><td class="align_right"><span class="inline_math">\( e^x \)</span></td>
+<td class="align_left"><span class="inline_math">\( e \)</span> to the <span class="inline_math">\( x \)</span></td>
+<td class="align_left">the exponential function base <span class="inline_math">\( e \)</span></td>
+</tr><tr><td class="align_right"><span class="inline_math">\( \ln(x) \)</span></td>
+<td class="align_left">natural log of <span class="inline_math">\( x \)</span></td>
+<td class="align_left">the logarithm base <span class="inline_math">\( e \)</span></td>
+</tr><tr><td class="align_right"><span class="inline_math">\( a^x \)</span></td>
+<td class="align_left"><span class="inline_math">\( a \)</span> to the <span class="inline_math">\( x \)</span></td>
+<td class="align_left">the exponential function base <span class="inline_math">\( a \)</span></td>
+</tr><tr><td class="align_right"><span class="inline_math">\( \log_a(x) \)</span></td>
+<td class="align_left">log base <span class="inline_math">\( a \)</span> of <span class="inline_math">\( x \)</span></td>
+<td class="align_left">the logarithm base <span class="inline_math">\( a \)</span></td>
+</tr><tr><td class="align_right"><span class="inline_math">\( \theta,\phi \)</span></td>
+<td class="align_left"><em>theta</em>, <em>phi</em></td>
+<td class="align_left">angles</td>
+</tr><tr><td class="align_right"><span class="inline_math">\( \sin,\cos,\tan \)</span></td>
+<td class="align_left">sin, cos, tan</td>
+<td class="align_left">trigonometric ratios</td>
+</tr><tr><td class="align_right"><span class="inline_math">\( \% \)</span></td>
+<td class="align_left">percent</td>
+<td class="align_left">proportions of a total; <span class="inline_math">\( a\%=\frac{a}{100} \)</span></td>
+</tr></table>
+</div></div>
+    </div>
+  </body>
+</html>
