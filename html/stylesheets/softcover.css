@@ -380,10 +380,6 @@ body #book {
   line-height: 1;
 }
 
-#book a:hover.heading {
-  text-decoration: underline;
-}
-
 #book .aside {
   border: 1px solid #999;
   padding: 0.5em;
@@ -433,6 +429,10 @@ body #book {
   padding-top: 1.2em;
 }
 
+#book #table_of_contents li.chapter-star.backmatter-start {
+  padding-top: 1.2em;
+}
+
 #book #table_of_contents ul li {
   padding-left: 3.6em;
 }
@@ -458,7 +458,7 @@ body #book {
   color: red;
 }
 
-#book .sc {
+#book .smallcaps {
   font-variant: small-caps;
 }
 
@@ -497,15 +497,36 @@ body #book {
 
 
 
-/* MINIREF EXERCISES STYLING */
 
-#book div.miniref-exercise > div.multicols > strong {
-  margin-left: 1.3em;
+/* MINIREF PROBLEMS AND EXERCISES STYLING */
+
+#book div.miniref-hint {
+  margin-top: 0.4em;
+}
+
+#book div.miniref-hint:before {
+  content:"Hint: ";
+}
+
+#book ol.ansparts-star {
+  list-style-type: lower-latin;
+}
+
+
+/* EXERCISES */
+
+#book div.miniref-exercise div.multicols strong {
+  margin-left: 2em;
+  margin-right: 0.4em;
 }
 
 #book div.miniref-exercise {
   margin-top: 0.7em;
   margin-bottom: 0.7em;
+}
+
+#book div.miniref-exercise > ol {
+  list-style-type: lower-latin;
 }
 
 #book div.miniref-exercise > ul {
@@ -523,16 +544,20 @@ body #book {
 }
 
 
+/* ROBLEMS */
 
-/* MINIREF ROBLEMS STYLING */
-
-#book div.miniref-problem > div.multicols > strong {
-  margin-left: 1.3em;
+#book div.miniref-problem div.multicols strong {
+  margin-left: 2em;
+  margin-right: 0.4em;
 }
 
 #book div.miniref-problem {
-  margin-top: 0.7em;
-  margin-bottom: 0.7em;
+  margin-top: 1.3em;
+  margin-bottom: 1.3em;
+}
+
+#book div.miniref-problem > ol {
+  list-style-type: lower-latin;
 }
 
 #book div.miniref-problem > ul {
@@ -548,4 +573,3 @@ body #book {
 #book div.miniref-problem > ul > li {
   list-style: none;
 }
-

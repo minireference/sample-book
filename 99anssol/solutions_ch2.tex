@@ -1,0 +1,11 @@
+\begin{Solution}{2.1}
+			The biased coin flip is modelled by a random variable $Y$,
+			and different coin flips correspond to random variables $Y_1$, $Y_2$, $Y_3$, \ldots which are independent copies of $Y$.
+			The probability of getting \texttt{heads} on the first flip is $P_N(1)=\textrm{Pr}\!\left( \{ Y_1=\texttt{heads} \} \right)\! =p$.
+			The probability of getting \texttt{heads} on the second flip corresponds
+			to the event $\{Y_1=\texttt{tails}\} \; \texttt{AND} \; \{Y_2=\texttt{heads} \}$.
+			We assumed the coin flips are independent so 			$P_N(2)=(1-p)p$.
+			Similarly $P_N(3) = (1-p)^2p$.
+			The general formula is $P_N(n) = (1-p)^{n-1}p$.
+		
+\end{Solution}

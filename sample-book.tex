@@ -1,0 +1,37 @@
+
+\documentclass[10pt]{book}
+\usepackage{latex_styles/softcover}
+
+\title{Sample Book}
+\subtitle{An example of using softcover with Minireference Co. customizations}
+\author{Ivan Savov}
+\date{November 15, 2020}
+
+
+\begin{document}
+
+\includepdf{images/cover.pdf}
+
+\maketitle
+
+\frontmatter
+\tableofcontents
+
+\include{chapters/00_01_concept_map}
+\include{chapters/00_02_preface}
+\include{chapters/00_03_introduction}
+
+
+\mainmatter
+
+\include{chapters/01_math_fundamentals}
+\include{chapters/02_a_chapter}
+\include{chapters/03_vectors}
+
+\backmatter
+
+\include{chapters/99_01_end_matter}
+\include{chapters/99_02_ans_and_solutions}
+\include{chapters/99_03_notation}
+
+\end{document}
