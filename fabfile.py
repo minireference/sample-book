@@ -792,7 +792,7 @@ def dbuildimage():
     dlocal('docker build -t {} .'.format(DOCKER_IMAGE_NAME))
 
 @task
-def dbuild(format=None):
+def dbuild(format=None, options=''):
     if format is None:
         format = 'all'
     if 'DOCKER_HOST' in env:
@@ -801,8 +801,8 @@ def dbuild(format=None):
         host_path = remote_host_path
     else:
         host_path = os.path.abspath(os.path.curdir)
-    cmd = 'docker run -v {host_path}:/book {image} sc build:{format}'.format(
-        host_path=host_path, image=DOCKER_IMAGE_NAME, format=format)
+    cmd = 'docker run -v {host_path}:/book {image} sc build:{format} {options}'.format(
+        host_path=host_path, image=DOCKER_IMAGE_NAME, format=format, options=options)
     dlocal(cmd)
     print(green('Build successful'))
     if 'DOCKER_HOST' in env:

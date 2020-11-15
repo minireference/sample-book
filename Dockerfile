@@ -31,6 +31,8 @@ RUN wget https://softcover-static.s3.amazonaws.com/Bodoni%2072%20Smallcaps%20Boo
   cp 'Bodoni 72 Smallcaps Book.ttf' /usr/share/fonts/truetype/bodoni-classic \
   && fc-cache -fs
 
+# TODO install optipng
+RUN echo "TODO apt install optipng and make use of it..."
 
 # ==============================================================================
 # Install miniref versions of softcover and polytexnic
@@ -40,15 +42,15 @@ RUN cd /root \
   && cd softcover \
   && git checkout miniref \
   && bundle install \
-  && bundle exec rake install \
-  && echo "miniref softcover insalled" \
+  && bundle exec rake install  \
+  && echo "Softcover insalled from miniref branch" \
   && cd /root \
   && git clone https://github.com/minireference/polytexnic.git \
   && cd polytexnic \
   && git checkout miniref \
   && bundle install \
   && bundle exec rake install \
-  && echo "miniref polytexnic installed"
+  && echo "PolyTeXnic installed from miniref branch"
 
 # ==============================================================================
 # Health check

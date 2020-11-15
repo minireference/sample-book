@@ -3,9 +3,12 @@ config/marketing.yml
 images/cover-web.png
 latex_styles/applekeys.sty
 
-99anssol/*tex
+# WIP
+cut_material.py
 
 # Not ready to add these yet...
+chapters
+99anssol/*tex
 problems
 images/figures/calculus/
 images/figures/concept_maps/
@@ -21,6 +24,9 @@ images/figures/x-question.*
 # source dirs
 sources/extracted
 sources/transformed
+
+# Dev notebooks
+*.ipynb
 
 
 # Code symlink
@@ -39,7 +45,6 @@ media/
 *.log
 *.toc
 *.out
-/*.tex
 *.tmp.*
 tmp/
 generated_polytex/
