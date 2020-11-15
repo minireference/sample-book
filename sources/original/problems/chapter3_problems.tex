@@ -1,0 +1,98 @@
+%!TEX root = ../main.tex
+
+\section{Vectors problems}
+\label{sec:vec_problems}
+
+\vspace{-2mm}
+
+You learned a bunch of vector formulas and you saw some vector diagrams,
+but did you really learn how to solve problems with vectors?
+There is only one way to find out: test yourself by solving problems.
+
+I've said it before and I don't want to repeat myself too much,
+but it's worth saying again: the more problems you solve, the better you'll understand the material.
+It's now time for you to try the following vector problems to make sure you're on top of things.
+
+\medskip
+
+{ \small
+
+\begin{problems}{ch3}
+
+	\begin{problem}
+		Given the vectors $\vec{u}=(1,1,1)$, $\vec{v} = (2,3,1)$, and $\vec{w}=(-1,-1,2)$,
+		compute the following products:
+		
+		\threecol
+			\textbf{a)}~$\vec{u} \cdot \vec{v}$
+
+			\textbf{b)}~$\vec{u} \cdot \vec{w}$
+			
+			\textbf{c)}~$\vec{v} \cdot \vec{w}$
+		\endthreecol
+		
+		\threecol
+			\textbf{d)}~$\vec{u} \times \vec{v}$
+
+			\textbf{e)}~$\vec{u} \times \vec{w}$
+			
+			\textbf{f)}~$\vec{v} \times \vec{w}$
+		\endthreecol
+		
+		\begin{answer}\textbf{a)}~$6$.
+					\textbf{b)}~$0$.
+					\textbf{c)}~$-3$.
+					\textbf{d)}~$(-2, 1, 1)$.
+					\textbf{e)}~$(3, -3, 0)$.
+					\textbf{f)}~$(7, -5, 1)$.\end{answer}
+	\end{problem}
+
+
+	\begin{problem}
+		Given the vectors $\vec{p} =(1,1,0,3,3)$ and $\vec{q}=(1,2,3,4,5)$, calculate the following expressions:
+		\threecol
+			\textbf{a)}~$\vec{p}+\vec{q}$
+			
+			\textbf{b)}~$\vec{p}-\vec{q}$
+			
+			\textbf{c)}~$\vec{p} \cdot \vec{q}$
+		\endthreecol
+		
+		\begin{answer}\textbf{a)}~$(2,3,3,7,8)$.
+					\textbf{b)}~$(0,-1,-3,-1,-2)$.
+					\textbf{c)}~$30$.\end{answer}
+	\end{problem}
+
+
+	\begin{problem}
+		Find a unit vector that is perpendicular to both  $\vec{u}=(1, 0, 1)$ and $\vec{v} =(1, 2, 0)$.
+		\begin{hint}
+			Use the cross product.
+		\end{hint}
+		\begin{answer}$(-\frac{2}{3}, \frac{1}{3}, \frac{2}{3})$ or $(\frac{2}{3}, -\frac{1}{3}, -\frac{2}{3})$.\end{answer}
+		\begin{solution}See \href{http://bit.ly/1cOa8yo}{\texttt{bit.ly/1cOa8yo}} for calculations.
+		\end{solution}
+	\end{problem}
+
+	\begin{problem}
+		Find a vector that is orthogonal to both $\vec{u}_1 = (1, 0, 1)$ and $\vec{u}_2 =(1, 3, 0)$, 
+		 and whose dot product with the vector  $\vec{v}= (1, 1, 0)$ is equal to $8$.
+		%	\begin{hint}
+		%	\end{hint}
+		\begin{answer}$(12, -4, -12)$.\end{answer}
+		\begin{solution}
+			Any multiple of the vector $\vec{u}_1 \times \vec{u}_2 = (-3,1,3)$ 
+			is perpendicular to both $\vec{u}_1$ and 	$\vec{u}_2$.
+			We must find a multiplier $t \in \mathbb{R}$ such that 
+			$t(-3,1,3) \cdot (1, 1, 0) = 8$.
+			Computing the dot product we find $-3t + t = 8$, so $t=-4$.
+			The vector we're looking for is $(12, -4, -12)$.
+			See \href{http://bit.ly/1nmYH8T}{\texttt{bit.ly/1nmYH8T}} for calculations.
+		\end{solution}
+	\end{problem}
+
+
+\end{problems}
+
+} % /small
+

@@ -1,0 +1,131 @@
+%!TEX root = ../main.tex
+
+%=======================================================================  vectors
+\section{Vectors}
+\label{sec:vectors}
+
+	Vectors are extremely useful in all areas of life.
+	In physics, for example, we use a vector to describe the velocity of an object.
+	It is not sufficient to say that the speed of a tennis ball is 200 kilometres per hour:
+	we must also specify the direction in which the ball is moving.
+	Both of the two velocities 
+	\[
+	 \vec{v}_1 = (200,0) 
+	 \qquad \textrm{and}
+	 \qquad \vec{v}_2=(0,200)
+	\]
+	describe motion at the speed of $200$ kilometres per hour;
+	but since one velocity points along the $x$-axis, and the other points along the $y$-axis,
+	they are \emph{completely} different velocities. 
+	The velocity vector contains information about the object's speed \emph{and} its direction.
+	The direction makes a big difference.
+	If it turns out the tennis ball is hurtling toward you, you'd better get out of the way!
+
+	The main idea in this chapter is that \textbf{vectors are not the same as numbers}.
+	We'll start by defining what vectors are.
+	Then we'll describe all the mathematical operations we can perform with vectors,
+	which include
+		vector addition $\vec{u}+\vec{v}$, 
+		vector subtraction $\vec{u}-\vec{v}$,
+		vector scaling $\alpha\vec{v}$,
+		and other operations.
+	In Section~\ref{sec:vector_products} we'll also talk about two different kinds of vector products.
+
+
+	\subsection{Definitions}
+	\label{vectors:definitions}
+
+		A two-dimensional vector $\vec{v}$ corresponds to a \emph{pair of numbers}:
+		\[
+			\vec{v} = (v_x, v_y),
+		\]
+		where $v_x$ is the \emph{$x$-component} of the vector and $v_y$ is its \emph{$y$-component}.					\index{components}
+		We denote the set of two-dimensional vectors as $\mathbb{R}^2$,
+		since the components of a two-dimensional vector are specified by two real numbers.
+		We'll use the mathematical shorthand $\vec{v} \in \mathbb{R}^2$ to define a two-dimensional vector $\vec{v}$.
+		Vectors in $\mathbb{R}^2$ can be represented as arrows in the Cartesian plane.
+		See the vector $\vec{v}=(3,2)$ illustrated in Figure~\ref{fig:vector_components}.
+
+		We can also define three-dimensional vectors like the vector $\vec{v} = (v_x, v_y, v_z) \in \mathbb{R}^3$,
+		which has three components.
+		Three-dimensional vectors can be represented as arrows in a coordinate system that has three axes,				\index{coordinate system!Cartesian}
+		like the one shown in Figure~\ref{fig:empty_coordinate_system_3D} on page~\pageref{fig:empty_coordinate_system_3D}.
+		A three-dimensional coordinate system is similar to the Cartesian coordinate system you're familiar with,
+		and includes the additional $z$-axis that measures the height above the plane.
+		In fact,
+		there's no limit to the number of dimensions for vectors.
+		We can define vectors in an $n$-dimensional space:								\index{dimension}
+		$\vec{v} = (v_1, v_2, \ldots, v_n) \in \mathbb{R}^n$.
+		For the sake of simplicity,
+		we'll define all the vector operation formulas using two-dimensional vectors.
+		Unless otherwise indicated in the text,
+		all the formulas we give for two-dimensional vectors $\vec{v} \in \mathbb{R}^2$
+		also apply to $n$-dimensional vectors $\vec{v} \in \mathbb{R}^n$.
+
+
+		\subsubsection{Vector operations}
+
+			Consider two vectors,
+			$\vec{u}=(u_x,u_y) $ and $\vec{v}=(v_x,v_y)$,
+			and assume that $\alpha \in \mathbb{R}$ is an arbitrary constant. 
+			The following operations are defined for these vectors:
+			\begin{itemize}
+				\item 	\textbf{Addition:}	$\vec{u} + \vec{v} = (u_x+v_x,\, u_y+v_y)$
+				\item 	\textbf{Subtraction:}	$\vec{u} - \vec{v} = (u_x-v_x,\, u_y-v_y)$
+				\item 	\textbf{Scaling:}		$\alpha \vec{u} = (\alpha u_x,\, \alpha u_y)$
+				\item 	\textbf{Dot product:}	$\vec{u} \cdot \vec{v}  = u_xv_x+u_yv_y$								\index{dot product}
+				\item 	\textbf{Length:}		$\|\vec{u}\| = \sqrt{\vec{u}\cdot\vec{u}} = \sqrt{u_x^2+u_y^2}$.
+						The vector's length is also called the \emph{norm} of the vector.
+						We sometimes use the letter $u$ to denote the length of the vector $\vec{u}$.
+			\end{itemize}
+
+			\noindent
+			Note there is no vector division operation.
+
+			For vectors in a three-dimensional space $\vec{u}=(u_x,u_y,u_z) \in \mathbb{R}^3$
+			and $\vec{v}=(v_x,v_y,v_z) \in \mathbb{R}^3$,
+			we can also define the \textbf{cross product} operation												\index{cross product}
+			$\vec{u} \times \vec{v} = (u_yv_z-u_zv_y,\; u_zv_x-u_xv_z,\; u_xv_y-u_yv_x)$.
+			The dot product and the cross product are new operations that you probably haven't seen before.
+			We'll talk more about dot products and the cross products in Section~\ref{sec:vector_products}.
+			For now let's start with the basics.
+
+
+		\subsubsection{Vector representations}
+
+			We'll use three equivalent ways to denote vectors in two dimensions:
+			\begin{itemize}
+			    \item   	$\vec{v} =(v_x, v_y)$: component notation.
+					The vector is written as a pair of numbers called the \emph{components} or \emph{coordinates} of the vector.	\index{coordinates}
+			    \item 	$\vec{v} =v_x\hat{\imath}+ v_y\hat{\jmath}$: unit vector notation.
+					The vector is expressed as a combination of the unit vectors
+					$\hat{\imath} = (1,0)$ and $ \hat{\jmath} = (0,1)$.
+			    \item   	$\vec{v}=\|\vec{v}\|\angle \theta$: length-and-direction notation (polar coordinates).
+					The vector is expressed in terms of its \emph{length} $\|\vec{v}\|$
+					and the angle $\theta$ that the vector makes with the $x$-axis.
+			\end{itemize}
+
+			\begin{figure}[htb]
+				\centering
+				\includegraphics[width=0.6\textwidth]{figures/vectors/vector_components_annotated.pdf}
+				\vspace{-2mm}
+				\caption{The vector $\vec{v}=(v_x,v_y) = v_x\hat{\imath}+ v_y\hat{\jmath} = \|\vec{v}\|\angle \theta$.}
+				\label{fig:vector_components_annotated}
+			\end{figure}
+
+			\noindent
+			We use the component notation for doing vector algebra calculations since it is most compact.
+			The unit vector notation shows explicitly that the vector $\vec{v}$ corresponds to the sum of
+			$v_x\hat{\imath}$ (a displacement of $v_x$ steps in the direction of the $x$-axis)
+			and $v_y\hat{\jmath}$ (a displacement of $v_y$ steps in the direction of the $y$-axis).
+			The length-and-direction notation describes the vector $\vec{v}$
+			as a displacement of $\|\vec{v}\|$ steps in the direction of the angle $\theta$.
+			We'll use all three ways of denoting vectors throughout the rest of the book,
+			and we'll learn how to convert between them.
+
+
+	\subsection{Exercises}
+	\label{basis:exercises}
+
+		\input{problems/chapter3_exercises_vectors.tex}
+

@@ -1,0 +1,145 @@
+% Sample book original
+% Developed by Ivan Savov, Minireference Co., Montreal, QC, CANADA
+%
+% The customizations in this file involve two steps.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% STEP 1: Choose one of the following:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \documentclass[11pt,oneside]{book}		% IPAD
+\documentclass[10pt]{book}				% PRINT     5.5"x8.5"  or  6"x9"
+% \documentclass[10pt, oneside]{book}		% PROOFREADING
+% \documentclass[9pt]{extbook} 			% PRINT 9pt
+% Only one of the above lines should be uncommented.
+\usepackage{etex}
+\title{Sample Book}
+\author{Ivan Savov}
+%\date{August  1, 2014}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% STEP 2: Set the boolean (true/false) values for the document custom variables
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{ifthen}
+
+\newboolean{DRAFTMODE}				% if PROOFREADING=true:
+\setboolean{DRAFTMODE}{false}			%   10pt, dblspaced, source line nums, 8.5'' x 11'' paper
+
+\newboolean{SOLSINTHEBACK}      		% Controls answers and solutions for exercises and problems
+\setboolean{SOLSINTHEBACK}{true}    		% SOLSINTHEBACK=true for final print version
+
+\newboolean{IPAD}						% IPAD=true 12pt, sansserif, 6''x~8'' paper
+\setboolean{IPAD}{false}					% IPAD=false    10pt, cm, print, 5.5'' x 8.5''  
+
+\newboolean{FORPRINT}					% FORPRINT=true		special pagebreaks for print version 
+\setboolean{FORPRINT}{true}				% FORPRINT=false
+
+\newboolean{SYMMETRIC}				% SYMMETRIC=true	SYMMETRIC page margins (for screen version of PDF)
+\setboolean{SYMMETRIC}{true}			% SYMMETRIC=false
+
+\newboolean{PG13}						% PG13=true 			No swearwords, no pot, humanist and anti-corporate propaganda ok.
+\setboolean{PG13}{false}					% PG13=false			Tell it like it is!
+
+\newboolean{TUTORIAL}					% for SYMPY tutorial Appendix  
+\setboolean{TUTORIAL}{false}				% if TUTORIAL==true: show extra defs and repeats of explanations 
+
+\newboolean{FORLA}					% if FORLA:  show extra content in SYMPY tutorial intended for LA book
+\setboolean{FORLA}{false}				% if not FORLA:  show only content for MathPhys book
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%    HEADERS AND MACROS     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{00.minireference.hdr.tex}				% contains all the packages, macros, and style settings.
+\input{00.exercises_problems.hdr.tex}
+\input{00.exercises.hdr.tex}
+\usepackage{etoolbox}
+\csundef{listing}\csundef{endlisting}
+\csundef{listing*}\csundef{endlisting*}
+\input{00.softcover.hdr.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%    PDF METADATA      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hypersetup{
+	pdftitle={Sample book original},
+	pdfauthor={Ivan Savov},
+	pdfkeywords={equations, functions},
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{document}
+
+
+%%%    COVER PAGE    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\thispagestyle{plain}
+% NO COVER FOR PRODUCTION
+\maketitle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%   FRONT MATTER   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frontmatter
+\setcounter{tocdepth}{1}
+\tableofcontents
+% \enlargethispage{\baselineskip}				% squeeze-in an extra line on a given page
+\pagestyle{fancy}
+\input{00_frontmatter/concept_map.tex}
+\input{00_frontmatter/preface.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%   MAIN CONTENT    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mainmatter																			% start roman page numbering 
+\input{00_frontmatter/introduction.tex}
+
+
+\input{01_math/00.math_fundamentals.tex}
+	\beforeFirstExercises{ch1}
+	\input{01_math/01.solving_equations.tex}
+	\input{01_math/02.numbers.tex}
+	\input{01_math/22.hyperbola.tex}
+	\afterLastExercises{ch1}
+	\input{problems/chapter1_problems.tex}
+
+% The sample chapter from the original softcover book
+\input{02_sample/a_chapter.tex}
+
+
+\input{03_vecs/00.vectors.tex}
+	\beforeFirstExercises{ch3}
+	\input{03_vecs/02.vectors.tex}
+	\afterLastExercises{ch3}
+	\input{problems/chapter3_problems.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%   END MATTER   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{99_endmatter/end_matter.tex}
+\appendix 
+\input{99_endmatter/appendix_ans_and_sols_to_probs.tex}
+\input{99_endmatter/appendix_notation.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%   INDEX   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+{ \small
+	\indexprologue{
+		\label{thebookindex}
+		\noindent
+		The page numbers shown in \textbf{bold} point to the concept definitions.
+	}
+	\printindex
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+    
+        
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
