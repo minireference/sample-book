@@ -1,0 +1,64 @@
+sourcedir: sources/extracted
+frontmatter:
+  chapters:
+  - title: Concept map
+    label: concept_map
+    sourcefiles:
+    - 00_01_concept_map.tex
+  - title: Preface
+    label: sec:preface
+    sourcefiles:
+    - 00_02_preface.tex
+  - title: Introduction
+    label: sec:introduction
+    sourcefiles:
+    - 00_03_introduction.tex
+mainmatter:
+  chapters:
+  - title: Math fundamentals
+    label: chapter:math_fundamentals
+    sourcefiles:
+    - 01_math_fundamentals.tex
+  - title: The second chapter
+    label: cha:a_chapter
+    sourcefiles:
+    - 02_a_chapter.tex
+  - title: Vectors
+    label: chapter:vectors
+    sourcefiles:
+    - 03_vectors.tex
+backmatter:
+  chapters:
+  - title: End matter
+    label: chaptxer:end_matter
+    sourcefiles:
+    - 99_01_end_matter.tex
+  - title: Answers and solutions
+    label: appendix:ans_and_solutions
+    sourcefiles:
+    - 99_02_ans_and_solutions.tex
+  - title: Notation
+    label: appendix:notation
+    sourcefiles:
+    - 99_03_notation.tex
+includes:
+- problems/chapter1_numbers_exercises.tex
+- problems/chapter3_exercises_vectors.tex
+- 99anssol/eanswers_ch1.tex
+- 99anssol/esolutions_ch1.tex
+- 99anssol/answers_ch1.tex
+- 99anssol/solutions_ch1.tex
+- 99anssol/eanswers_ch2.tex
+- 99anssol/esolutions_ch2.tex
+- 99anssol/answers_ch2.tex
+- 99anssol/solutions_ch2.tex
+- 99anssol/answers_ch3.tex
+- 99anssol/solutions_ch3.tex
+graphics:
+- figures/concept_maps/concept_map_full3.pdf
+- figures/dot/chap_prereqs.png
+- figures/concept_maps/precalculus.pdf
+- figures/math/nested_sets.png
+- figures/math/conic_sections_four-shapes.png
+- figures/vectors/vector_components.png
+- figures/vectors/vector_components_annotated.png
