@@ -1,90 +1,42 @@
-sourcedir: /Users/ivan/Projects/Minireference/MATHPHYSbook
+sourcedir: sources/original
 frontmatter:
   chapters:
-  - title: Concept maps
-    label: concept_maps
+  - title: Concept map
+    label: concept_map
     sourcefiles:
     - 00_frontmatter/concept_map.tex
   - title: Preface
     label: sec:preface
     sourcefiles:
-    - preface.tex
+    - 00_frontmatter/preface.tex
   - title: Introduction
     label: sec:introduction
     sourcefiles:
-    - introduction.tex
+    - 00_frontmatter/introduction.tex
 mainmatter:
   chapters:
-  - title: Numbers, variables, and equations
-    label: chapter:equations
+  - title: Math fundamentals
+    label: chapter:math_fundamentals
     sourcefiles:
-    - noBSmath_intros/01_00_equations.tex
+    - 01_math/00.math_fundamentals.tex
     - 01_math/01.solving_equations.tex
     - 01_math/02.numbers.tex
-    - 01_math/02x.number_representations.tex
-    - 01_math/03.variables.tex
-    - 01_math/04.functions_and_their_inverses.tex
-  - title: Algebra
-    label: chapter:algebra
-    sourcefiles:
-    - noBSmath_intros/02_00_algebra.tex
-    - 01_math/05.basic_rules_of_algebra.tex
-    - 01_math/06.solving_quadratic_equations.tex
-  - title: Exponents and logarithms
-    label: chapter:exponents_and_logarithms
-    sourcefiles:
-    - noBSmath_intros/03_00_exponents_and_logarithms.tex
-    - 01_math/07.exponents.tex
-    - 01_math/08.logarithms.tex
-  - title: Coordinate systems
-    label: chapter:coordinate_systems
-    sourcefiles:
-    - noBSmath_intros/04_00_coordinate_systems.tex
-    - 01_math/12.cartesian_plane.tex
-  - title: Functions
-    label: chapter:functions
-    sourcefiles:
-    - noBSmath_intros/05_00_functions.tex
-    - 01_math/13.functions.tex
-    - 01_math/14.function_reference.tex
-    - 01_math/15.function_transformations.tex
-  - title: Geometry
-    label: chapter:geometry
-    sourcefiles:
-    - noBSmath_intros/06_00_geometry.tex
-    - 01_math/19.geometry.tex
-    - 01_math/17.trigonometry.tex
-    - 01_math/18.trigonometric_identities.tex
-    - 01_math/20.circle.tex
-    - 01_math/21.ellipse.tex
-    - 01_math/21x.parabola.tex
     - 01_math/22.hyperbola.tex
+    - problems/chapter1_problems.tex
+  - title: The second chapter
+    label: cha:a_chapter
+    sourcefiles:
+    - 02_sample/a_chapter.tex
   - title: Vectors
     label: chapter:vectors
     sourcefiles:
     - 03_vecs/00.vectors.tex
-    - 03_vecs/01.great_outdoors.tex
     - 03_vecs/02.vectors.tex
-    - 03_vecs/03.basis.tex
-    - 03_vecs/04.vector_products.tex
-    - problems/chapter3_exercises_vectors_extra.tex
-    - 03_vecs/05.complex_numbers.tex
-  - title: Extra topics
-    label: chapter:extra_topics
-    sourcefiles:
-    - noBSmath_intros/08_00_extra_topics.tex
-    - 01_math/23.solving_systems_of_linear_equations.tex
-    - 01_math/24.compound_interest.tex
-    - 01_math/25.set_notation.tex
-  - title: Practice problems
-    label: chapter:problems
-    sourcefiles:
-    - noBSmath_intros/09_00_problems.tex
-    - problems/chapter1_problems.tex
+    - problems/chapter3_problems.tex
 backmatter:
   chapters:
   - title: End matter
-    label: chapter:end_matter
+    label: chaptxer:end_matter
     sourcefiles:
     - 99_endmatter/end_matter.tex
   - title: Answers and solutions
@@ -95,171 +47,24 @@ backmatter:
     label: appendix:notation
     sourcefiles:
     - 99_endmatter/appendix_notation.tex
-  - title: SymPy tutorial
-    label: appendix:sympy_tutorial
-    sourcefiles:
-    - 99_endmatter/appendix_sympy_tutorial.tex
-    - versions/series_description.tex
 includes:
 - problems/chapter1_numbers_exercises.tex
-- problems/chapter1_fractions.tex
-- problems/chapter1_functions_and_their_inverses.tex
-- problems/chapter1_basic_rules_of_algebra.tex
-- problems/chapter1_solving_quadratic_equations.tex
-- problems/chapter1_exponents.tex
-- problems/chapter1_logarithms.tex
-- problems/chapter1_function_reference.tex
-- problems/chapter1_polynomials.tex
-- problems/chapter1_function_transformations.tex
-- problems/chapter1_geometry.tex
-- problems/chapter1_trigonometry.tex
-- problems/chapter1_trigonometric_identities.tex
-- problems/chapter1_circle.tex
-- problems/chapter1_ellipse.tex
-- problems/chapter1_parabola.tex
 - problems/chapter3_exercises_vectors.tex
-- problems/chapter1_solving_systems_of_lin_eqns_exercises.tex
-- problems/chapter1_compound_interest.tex
-- problems/chapter1_set_notation.tex
-- problems/chapter1_inequalities.tex
-- problems/chapter3_problems_simple_vectors.tex
-- problems/chapter3_problems.tex
-- problems/chapter3_problems_complex_numbers.tex
 - 99anssol/eanswers_ch1.tex
 - 99anssol/esolutions_ch1.tex
+- 99anssol/answers_ch1.tex
+- 99anssol/solutions_ch1.tex
 - 99anssol/eanswers_ch2.tex
-- 99anssol/eanswers_ch3.tex
-- 99anssol/eanswers_ch3.tex
-- 99anssol/eanswers_ch5.tex
-- 99anssol/esolutions_ch5.tex
-- 99anssol/eanswers_ch6.tex
-- 99anssol/esolutions_ch6.tex
-- 99anssol/eanswers_ch7.tex
-- 99anssol/eanswers_ch8.tex
-- 99anssol/esolutions_ch8.tex
-- 99anssol/answers_ch9.tex
-- 99anssol/solutions_ch9.tex
+- 99anssol/esolutions_ch2.tex
+- 99anssol/answers_ch2.tex
+- 99anssol/solutions_ch2.tex
+- 99anssol/answers_ch3.tex
+- 99anssol/solutions_ch3.tex
 graphics:
-- figures/concept_maps/noBSmath_1_equations_and_functions.pdf
-- figures/concept_maps/noBSmath_2_algebra.pdf
-- figures/concept_maps/noBSmath_3_geometry.pdf
-- figures/concept_maps/noBSmath_4_applications.pdf
+- figures/concept_maps/concept_map_full3.pdf
+- figures/dot/chap_prereqs.png
+- figures/concept_maps/precalculus.pdf
 - figures/math/nested_sets.png
-- figures/math/number_line_addition.png
-- figures/math/number_line_multiplication.png
-- figures/math/number_line_exponentiation.png
-- figures/math/exponents_prime_factorizations.png
-- figures/math/number_repr_numeral.png
-- figures/math/number_repr_decimal_leq_one.png
-- figures/math/number_repr_decimal.png
-- figures/math/fractions_3_8_pie_chart.png
-- figures/math/number_line_naturals.png
-- figures/math/number_line_integers.png
-- figures/math/number_line_rationals_and_reals.png
-- figures/math/anatomy_of_an_eqn.png
-- figures/math/algebra__completing_the_square.png
-- figures/math/number_line.png
-- figures/math/empty_coordinate_system.png
-- figures/math/vectors_and_point_in_cartesian_plane.png
-- figures/math/graph_of_quadratic_func.png
-- figures/math/functions-definition.png
-- figures/math/functions_sets_domain_image.png
-- figures/math/functions_sets_domain_image-sqrt_x.png
-- figures/math/functions_sets_domain_image-x_squared.png
-- figures/math/functions_sets_domain_image-x_cubed.png
-- figures/math/functions-inverse.png
-- figures/math/functions-composition.png
-- figures/math/empty_coordinate_system.png
-- figures/math/functions/3x3_functions_miniplots.png
-- figures/math/graph_of_2x_plus_3.png
-- figures/math/quadratic_func.png
-- figures/math/sqrt_of_x.png
-- figures/math/absolute_value_of_x.png
-- figures/math/sin_of_x.png
-- figures/math/the_numer_pi.png
-- figures/math/sin_of_x_many_cycles.png
-- figures/math/cos_of_x.png
-- figures/math/tan_of_x.png
-- figures/math/exp_x.png
-- figures/math/ln_of_x.png
-- figures/math/functions/function_transformation_none.png
-- figures/math/functions/function_transformation_k2.png
-- figures/math/functions/function_transformation_h2.png
-- figures/math/functions/function_transformation_avert2.png
-- figures/math/functions/function_transformation_a2.png
-- figures/math/quadratic_func_h1_k2.png
-- figures/math/sin_of_x_A2_and_shifted.png
-- figures/math/areas-triangle.png
-- figures/math/triangle-sine-and-cosine-law.png
-- figures/math/circle_arc_length_for_angle_57.png
-- figures/math/circle_arc_length_for_angle_theta.png
-- figures/math/volume-sphere.png
-- figures/math/cylinder_h_r.png
-- figures/math/geometry_pyramids_and_cone.png
-- problems/figures/geometry/cosine_rule_exercise.png
-- figures/math/rightangletriangle.jpg
-- figures/math/trigonometric_functions_as_point_or_as_triangle.png
-- figures/math/the_graph_of_sin_theta_as_the_vertical_component_of_P_on_unit_circle.png
-- figures/math/trigonometry--unit-circle-with-angles-and-cos-sin-first_quadrant.pdf
-- figures/math/trigonometry--unit-circle-with-angles-and-cos-sin.png
-- figures/math/decomposing_vector_r_into_two_parts.png
-- figures/math/circle-centered-at-h-k.png
-- figures/math/polar/empty_coordinate_system_polar.png
-- figures/math/polar/polar_coordinates_conversion.png
-- figures/math/polar/polar_coordinates_circle_and_line_plots.png
-- figures/math/polar/polar_coordinates_plots_examples.png
-- figures/math/polar/polar_coordinates_parallels.pdf
-- figures/math/conic_sections/conic-sections--ellipse.png
-- figures/math/conic_sections/ellipse_in_polar_coordinates.png
-- figures/math/conic_sections/diagram-sun-earth.png
-- figures/math/conic_sections/new-conic-sections--parabola.png
-- figures/math/conic_sections/conic-sections--parabola_in_polar_coords.png
-- figures/math/conic_sections/conic-sections--parabolic-antenna.png
-- figures/math/conic_sections/unit-hyperbola.png
-- figures/math/conic_sections/unit-hyperbola-coshmu-sinhmu.png
-- figures/math/conic_sections/hyperbolic-sin-and-cos.png
-- figures/math/conic_sections/conic_sections_four-shapes.png
-- figures/math/conic_sections/eccentricity_four_conics.pdf
+- figures/math/conic_sections_four-shapes.png
 - figures/vectors/vector_components.png
-- figures/concept_maps/vectors_concept_map.pdf
 - figures/vectors/vector_components_annotated.png
-- figures/vectors/vector_addition.png
-- figures/vectors/vector_subtraction.png
-- figures/vectors/vector_scaled_by_point_five.png
-- figures/vectors/polar_coordinates_conversion_for_vector_v.png
-- figures/vectors/vectors-boat-in-current-upstream.png
-- figures/vectors/vectors-boat-in-current.png
-- figures/vectors/empty_coordinate_system_3D.png
-- figures/vectors/rotated_coordinate_system.png
-- figures/vectors/Right_hand_rule_cross_product.png
-- figures/vectors/complex_number.png
-- figures/vectors/complex_number_example1.png
-- figures/math/systems_of_equations/systems_of_equations__examples.png
-- figures/math/systems_of_equations/systems_of_equations__ax_by_eq_c.png
-- figures/math/systems_of_equations/systems_of_equations__intersection_general.png
-- figures/math/systems_of_equations/systems_of_equations__intersection_example.png
-- figures/math/interval_2open_to_4open.png
-- figures/math/interval_-3_to_0_and_1_to_2_all_closed.png
-- figures/math/b_subset_a_contained.png
-- figures/math/set_operations_union_intersection_difference.png
-- figures/math/systems_of_equations/systems_of_equations__solution_sets_case_A.png
-- figures/math/systems_of_equations/systems_of_equations__solution_sets_case_B.png
-- figures/math/systems_of_equations/systems_of_equations__solution_sets_case_C.png
-- problems/figures/geometry/ladded_problem.png
-- problems/figures/geometry/trigonometry_integration_test.png
-- problems/figures/geometry/mountain-peak-angles.png
-- problems/figures/geometry/blimp_distance_from_angle.png
-- problems/figures/geometry/two_pythagoras_steps.png
-- problems/figures/geometry/triangle_inscribed_in_circle.png
-- problems/figures/geometry/octagon_inscribed_in_circle.png
-- problems/figures/geometry/triangle_sine_rule.png
-- problems/figures/geometry/an-obtuse-triangle.png
-- problems/figures/geometry/two_step_sine_rule.png
-- problems/figures/geometry/plane_speed_from_angles.png
-- problems/figures/geometry/quadrilateral_law_of_cosines.png
-- problems/figures/geometry/half_disk_with_hole.png
-- problems/figures/geometry/wrecking_ball_rope.png
-- problems/figures/geometry/twelve_circles.png
-- problems/figures/increasing_and_decreasing_exponential_function.png
-- problems/figures/geometry/rectangle_and_triangle_areas.png
-- problems/figures/vector_addition_problem.png
