@@ -1,0 +1,190 @@
+
+
+
+%
+%\usepackage{multicol}
+%\def\twocol{\begin{multicols}{2}}
+%\def\endtwocol{\end{multicols}}
+
+
+\usepackage{ifthen}
+\usepackage{multicol}
+
+
+
+% For Table of Standard Forms
+\newcommand{\ColumnHead}[1]{%
+  \multicolumn{3}{|c|}{\textbf{#1}}
+}
+
+
+\newcommand{\ds}{\displaystyle}
+\newcommand{\loosen}{\spaceskip0.5em plus 0.5em minus 0.25em}
+\setlength{\emergencystretch}{1.5em}
+
+
+%\DeclareInputText{176}{\ifmmode{{}^\circ}\else\textdegree\fi}
+%\DeclareInputText{183}{\ifmmode\cdot\else\textperiodcentered\fi}
+
+
+\newcommand{\Z}{\phantom{0}}
+\newcommand{\DStrut}{\rule[-12pt]{0pt}{32pt}}
+\newcommand{\Strut}{\rule{0pt}{16pt}}
+
+\newcommand{\First}[1]{\noindent\textsc{#1}}
+
+% "exponent fraction" factored out for special handling, if desired
+\newcommand{\efrac}[2]{\frac{#1}{#2}}
+
+
+\DeclareMathOperator{\cotan}{cotan}
+\DeclareMathOperator{\sech}{sech}
+
+
+
+
+% Cross-referencing: anchors
+\newcommand{\DPPageSep}[2]{ }
+
+\newcommand{\DPtypo}[2]{#2}% Corrections.
+\newcommand{\DPchg}[2]{#2}%  Stylistic tweaks
+\newcommand{\DPnote}[1]{}%   Notes to posterity
+
+
+
+
+\newcommand{\Pagelabel}[1]
+  {\phantomsection\label{#1}}
+
+
+
+% and links
+\newcommand{\Pageref}[2][p.]{%
+  \ifthenelse{\not\equal{#1}{}}{%
+    \hyperref[#2]{#1~\pageref{#2}}%
+  }{%
+    \hyperref[#2]{\pageref{#2}}%
+  }%
+}
+
+
+\newboolean{InMulticols}% true iff we're in a multicolumn envt
+
+% List item formatting
+\newcommand{\ListInit}{%
+  \setlength{\leftmargin}{0pt}%
+  \setlength{\labelwidth}{\parindent}%
+  \setlength{\labelsep}{0.5em}%
+  \setlength{\itemsep}{0pt}%
+  \setlength{\listparindent}{\parindent}
+  \setlength{\itemindent}{2\parindent}%
+}
+
+\newcommand{\SublistInit}{%
+  \setlength{\leftmargin}{\parindent}%
+  \setlength{\rightmargin}{3em}%
+  \setlength{\labelwidth}{1em}%
+  \setlength{\labelsep}{0.5em}%
+  \setlength{\itemsep}{0pt}%
+  \setlength{\listparindent}{\parindent}
+  \setlength{\itemindent}{2.5em}%
+}
+
+
+% List environment initializer for Answers section
+\newcommand{\ListInitAns}{%
+  \setlength{\leftmargin}{\parindent}%0pt
+  \setlength{\labelwidth}{\parindent}%
+  \setlength{\labelsep}{0.5em}%
+  \setlength{\itemsep}{2pt}%
+  \setlength{\listparindent}{\parindent}
+  \setlength{\itemindent}{0pt}%
+}
+
+% Reset number of columns *within a Problems or Answers environment*
+\newcommand{\ResetCols}[1]{%
+  \ifthenelse{\boolean{InMulticols}}{%
+  \end{multicols}%
+}{}
+\ifthenelse{\equal{#1}{1}}{%
+  \setboolean{InMulticols}{false}%
+}{%
+  \setboolean{InMulticols}{true}%
+  \begin{multicols}{#1}[\raggedcolumns]%
+  }%
+}
+
+
+% #1 = number of columns
+\newenvironment{Problems}[1][1]{%
+  \begin{list}{}{\ListInit}%
+  \ifthenelse{\equal{#1}{1}}{%
+    \setboolean{InMulticols}{false}%
+  }{%
+    \setboolean{InMulticols}{true}%
+    \begin{multicols}{#1}
+    }%
+  }{% End of envt code
+    \ifthenelse{\boolean{InMulticols}}{%
+    \end{multicols}%
+  }{}%
+  \setboolean{InMulticols}{false}
+\end{list}%
+}
+
+\newenvironment{SubProbs}{%
+  \begin{list}{}{\SublistInit}%
+  }{%
+  \end{list}%
+}
+
+
+
+% Thought break
+\newcommand{\tb}[1][1.5in]{%
+%  \pagebreak[0]\begin{center}\rule{#1}{0.5pt}\end{center}\pagebreak[3]%
+  \pagebreak[0]\par{\centering\rule{#1}{0.5pt}\pagebreak[3]\par}%
+}
+
+% Exercises section heading
+% \Exercises[Running Head]{I} (See p.~254 for Answers.)
+\newcommand{\Exercises}[2][]{%
+  \tb\textit{Exercises~#2.}\quad
+  \phantomsection\pdfbookmark[1]{Exercises #2}{Exercises #2}\label{Ex:#2}%
+  \ifthenelse{\not\equal{#1}{}}{\SetOddHead{#1}}{}%
+}
+
+
+
+\newenvironment{Answers}[4][1]{%
+  \ifthenelse{\not\equal{#2}{I}}{\vspace{12pt plus 24pt minus 12pt}\tb#4}{}%
+%
+  \section*{\centering\normalsize Exercises~#2.\quad\normalfont#3\label{AnsEx:#2}}%
+  \begin{list}{}{\ListInitAns}%
+    \ifthenelse{\equal{#1}{1}}{%
+      \setboolean{InMulticols}{false}% Update state; else
+    }{%
+      \setboolean{InMulticols}{true}%
+      \begin{multicols}{#1}[\raggedcolumns]%
+      }%
+    }{% End of envt code
+      \ifthenelse{\boolean{InMulticols}}{\end{multicols}}{}%
+  \end{list}%
+  \setboolean{InMulticols}{false}%
+}
+
+
+% Exercise and answer numbers
+\newcommand\Item[2][]{%
+   \item[#2]%
+   \ifthenelse{\not\equal{#1}{}}{\phantomsection\label{#1}}{}%
+}
+
+
+\newcommand{\tablesmallmultilinecol}[1]{ {\footnotesize #1} }
+
+
+%%%%   STANDARDIZE ON REFS TO EXERCISES AND PROBLEMS      %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\exeref}[1]{  \unskip E\ref{#1}}
+\newcommand{\probref}[1]{P\ref{#1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

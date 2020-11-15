@@ -1,0 +1,327 @@
+% (c) 2016--2020, Ivan Savov, Minireference Co., Montreal, QC, CANADA
+% These settings ensure consistent formatting for the NO BULLSHIT guide series of textbooks.
+% See an example include file for the boolean variables that control the conditional blocks below.
+
+
+%%%   PAGE GEOMETRY SETTINGS    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\raggedbottom
+\ifthenelse{\boolean{DRAFTMODE}} {
+
+
+	%%  PROOFREADING  SETTINGS	   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\usepackage[nosolutionfiles]{answers}		% inline answers for use when proofrading
+	\usepackage{setspace} 
+	\doublespacing
+	\usepackage[	papersize={8.5in,11in},verbose,tmargin=2.5cm,bmargin=2.5cm,lmargin=4cm,rmargin=4cm,
+				headsep=0.3cm,marginparwidth=1.2cm,marginparsep=0.6cm,footskip=0.7cm]{geometry}
+%	\usepackage[excludeor]{everyhook}
+%	\usepackage{marginnote}
+%	\newif\ifnotmarginhook
+%	\notmarginhooktrue
+%	\PushPostHook{par}{%
+%\ifnotmarginhook\notmarginhookfalse\marginnote{\hfill\tiny\raisebox{1.6mm}{\the\inputlineno}}\notmarginhooktrue\fi}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+}{
+
+	%%  NON-PROOFREADING  SETTINGS	   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	\ifthenelse{\boolean{SOLSINTHEBACK}}{
+		\usepackage{answers}          						% answers in the back only
+	}{
+		\usepackage[nosolutionfiles]{answers}   				% inline answers for use when proofreading
+	}
+
+	\ifthenelse{\boolean{IPAD}}{
+	
+		%%   IPAD SETTINGS   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		\usepackage[	papersize={6in,7.84375in},
+					hmarginratio=1:1,
+					includeheadfoot,
+		 			headsep=3mm,	 
+					tmargin=4mm,				% \
+					lmargin=6mm,				%   \
+					rmargin=6mm,				%	 WAS margin=6mm	
+					bmargin=4mm, 				%   /
+					verbose]{geometry}
+
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+		% More liberal limits for placing floats
+		% via https://tex.stackexchange.com/a/11382
+		\renewcommand{\topfraction}{.85}
+		\renewcommand{\bottomfraction}{.7}
+		\renewcommand{\textfraction}{.15}
+		\renewcommand{\floatpagefraction}{.66}
+		\renewcommand{\dbltopfraction}{.66}
+		\renewcommand{\dblfloatpagefraction}{.66}
+		\setcounter{topnumber}{9}
+		\setcounter{bottomnumber}{9}
+		\setcounter{totalnumber}{20}
+		\setcounter{dbltopnumber}{9}
+
+	}{
+	
+		%%   FOR  PRINT    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%
+		%
+		\ifthenelse{\boolean{SYMMETRIC}}{
+		 	% WITH SYMMETRIC MARGINS FOR PDF PREVIEW    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			\usepackage[	papersize={5.5in,8.5in},
+						verbose,
+						headsep=0.3cm,		  
+						tmargin=1.5cm,
+						lmargin=1.7cm,
+						rmargin=1.7cm,
+						bmargin=1.3cm,
+						footskip=0.5cm]{geometry}
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			% use		papersize={8.5in,11in}, lmargin=2.5cm, rmargin=8.52cm,			% for 8.5" x 11" full page print
+
+		}{
+		 	% NON-SYMMETRIC MARGINS FOR PRINTING    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			%
+			%
+			% LULU   5.5"x8.5"    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			\usepackage[	papersize={5.5in,8.5in},
+						verbose,
+						headsep=0.3cm,
+						tmargin=1.5cm,
+						lmargin=2.00cm,			% for print lulu
+						rmargin=1.4cm,
+						bmargin=1.3cm,
+						footskip=0.5cm]{geometry}
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+			% LULU HARDCOVER 6x9 = US trade  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			%	\usepackage[	papersize={6in,9in},
+			%				verbose,
+			%				headsep=0.4cm,		  
+			%				tmargin=2.135cm,		
+			%				lmargin=2.90cm,
+			%				rmargin=1.77cm,		% for print 6 x 9
+			%				bmargin=1.935cm,
+			%				footskip=0.7cm]{geometry}
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+			% IngramSpark version:   5.625x8.75"	=  5.5x8.5"  + 0.125 bleed on 3 sides   %%%%%%%%%%%%%%%%%%%%%%%
+			%	\usepackage[	papersize={5.625in,8.75in},			% 
+			%				verbose,
+			%				headsep=0.3cm,		  
+			%				tmargin= 18.175mm,		% 1.5cm + 0.125"
+			%				lmargin=1.95cm,
+			%				rmargin= 17.675mm,		%	right = 14.5+3.175
+			%				bmargin= 16.175mm,  	% 13+3.175
+			%				footskip=0.5cm]{geometry}
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+		}  % /SYMMETRIC
+		
+	}  % /PRINT
+
+}   % /not-DRAFTMODE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%   MANUAL CLEARPAGE COMMANDS    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifthenelse{\boolean{FORPRINT}} {					% Special line breaks for print version  
+	\newcommand{\printcp}{\clearpage}
+	\newcommand{\printni}{\noindent}
+}{
+	\newcommand{\printcp}{}
+	\newcommand{\printni}{}
+}
+
+\ifthenelse{\boolean{IPAD}} {						% Special linebreaks for iPad version  
+	\newcommand{\ipadcp}{\newpage}
+	\newcommand{\ipadni}{\noindent}
+}{
+	\newcommand{\ipadcp}{}
+	\newcommand{\ipadni}{}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%   INDEX    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Special commands to make \indexprologue work as expected
+% nullify bidi redefinition; this should go after polyglossia and imakeidx have been loaded
+\usepackage{imakeidx}
+\let\imakeidxtheindex\theindex
+\let\imakeidxendtheindex\endtheindex
+\AtBeginDocument{%
+	\let\theindex\imakeidxtheindex
+	\let\endtheindex\imakeidxendtheindex
+}
+% /Special commands via https://tex.stackexchange.com/a/263797
+\makeindex[intoc]
+
+\let\oldindex\index										% Workaround to avoid spurious spaces
+\renewcommand*{\index}[1]{\oldindex{#1}\ignorespaces}			% via https://tex.stackexchange.com/a/26561
+\newcommand{\emphindexdef}[1]{\emph{#1}\oldindex{#1|textbf}}	% Used for term definition --- emph and index entry in bold
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%   LATEX PACKAGES    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[pdftex,
+	pdfversion=1.5,
+	hyperfootnotes=false,
+	pdfstartview=Fit,		% default value
+	pdfstartpage=1,			% default value
+	pdfpagemode=UseNone,	% default value
+	bookmarks=true,		% default value
+	linktocpage=false,		% default value
+	pdfpagelayout=SinglePage,
+	pdfdisplaydoctitle,
+	pdfpagelabels=true,
+	bookmarksopen=true,
+	bookmarksopenlevel=0,
+	colorlinks=false,
+	pdfborder={0 0 0},
+	linkcolor=black]{hyperref}				% hyperref needs to be loaded after imakeidx for hyperlinks to work
+\usepackage[T1]{fontenc} 					% use T1 encoding
+%\usepackage{cmap}					% for copy pastable text in PDF
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}				% English hyphenation
+\usepackage{ucs}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{longtable}					% for table compatibility with PolyTeX
+\usepackage{moreverb}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{lastpage}
+%\pdfminorversion=3					% for generating PDF v1.3 --- which is closest to PDF/X-3:2002
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{float}							% FOR [H] option for figures
+\usepackage[verbose]{wrapfig}
+% \usepackage[section]{placeins}
+\usepackage[inline]{enumitem}
+\setitemize{itemsep=-0.03in}					% Lists were to airy (tighten)
+\renewcommand{\labelitemii}{$\triangleright$}		% 2nd level itemize
+%\setlist{nolistsep}
+%\setitemize{topsep=0.5em}
+%\setitemize{partopsep=0.5em}
+%\setitemize{topsep=0.5em}
+\usepackage{pdfpages}						% for including cover
+\usepackage{mathtools}						% for \shortintertext  
+\usepackage{emptypage}						% really blank page at the end of chapter
+\usepackage{cancel}
+%\usepackage{textcomp}						% for \textquotesingle, foot and inch units in appendix)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%   FONTS    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{mathpazo}		% PALATINO (chosen Sep 10 2017)
+\usepackage{mathabx}
+%\usepackage{eulervm}		% another source of math -- less italic
+
+%\usepackage{kpfonts}				% KP Serif
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%   PAGE HEADERS and FOOTERS    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{fancyhdr}
+\usepackage{textcase}
+\fancypagestyle{plain}{
+	\fancyhf{}
+	\renewcommand{\headrulewidth}{0pt}
+	\renewcommand{\footrulewidth}{0pt}
+	\fancyfoot[C]{\footnotesize\thepage}	    
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead{} 
+\makeatletter
+\renewcommand{\sectionmark}[1]{\markright{\thesection~~\MakeTextUppercase{#1}}}
+\renewcommand{\chaptermark}[1]{\markboth{\MakeTextUppercase{#1}}{}}
+\makeatother
+\fancyhead[LE]{\footnotesize\thepage}
+\fancyhead[CE]{\footnotesize\sc \leftmark}	 		% \nouppercase
+\fancyhead[CO]{\footnotesize\sc \rightmark}
+\fancyhead[RO]{\footnotesize\thepage}
+\renewcommand{\headrulewidth}{0pt} 			% no line plz
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ 
+
+
+%%%   NO BULLSHIT CUSTOM FORMATTING COMMANDS   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{secnumdepth}{1}						% table of contents up to section level
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\superpar}{\bigskip\par\centerline{*\,*\,*}\medskip\par}      % logical break in narrative, a.k.a. asterism
+\newcommand\softsection[1]{				% SOFT SECTION  =  Not numbered but shows in TOC and sets headers
+  \section*{#1}%
+  \addcontentsline{toc}{section}{#1}
+  \markright{\MakeTextUppercase{#1}}
+}
+\newcommand\softchapter[1]{%
+   \chapter*{#1}%
+   \addcontentsline{toc}{chapter}{#1}%
+   \markboth{\MakeTextUppercase{#1}}{}
+}
+\newcommand{\mycenteredheading}[1]{
+{\centering
+	\textbf{\Large #1}
+
+}
+	\vspace*{5mm}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\button}[1]{\boxed{\,#1\phantom{\small l}\!}}			% for calculator buttons
+\newcommand*{\eqdef}{\stackrel{\scriptscriptstyle\text{def}}{=}}		% "defined to be equal" symbol (prev. used \equiv; other common is := )
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\COMMENT}[1]{\noindent [{\color{blue}\textit{#1}}]} 		% for visible comments that will show up in blue  
+%\newcommand{\COMMENT}[1]{}		% comments turned off
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CENSORSHIP MACROS
+% example usage:
+%   \ifthenelse{\boolean{PG13}}{
+%       Check this stuff out:
+%   }{
+%       Check this shit out:
+%   }
+%
+% for single words --- micro censorship :) --- we can write a latex macro
+\newcommand{\pgt}[2]{\ifthenelse{\boolean{PG13}}{\ignorespaces#1\unskip}{\ignorespaces#2\unskip}}
+% example usage:   Check this \pgt{stuff}{shit} out:
+%%%   SHADED BOX environment   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{shadethm}
+\newshadetheorem{shadetheorem}{Theorem}
+\renewcommand{\theshadeshadetheorem}{}			% turn off theorem numbering
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%   FIGURES   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[small, bf, tableposition=top]{caption}	% Small text in figure captions 
+\usepackage{booktabs}						% for table rules (toprule, midrule, bottomrule)
+\usepackage{arydshln}						% for \hdashline
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%   EXERCISES and PROBLEMS    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{multicol}
+\setlength{\premulticols}{8pt}		% the multicols environment measures the current page to determine whether
+							% there is enough room for some portion of multicolumn output. This is controlled by the \premulticols
+							% If the space is less than \premulticols, a new page is started.
+\setlength{\multicolsep}{5.0pt plus 2.0pt minus 1.5pt}  % 50% of original values
+	\def\twocol{\begin{multicols}{2}}
+	\def\endtwocol{\end{multicols}}
+	\def\threecol{\begin{multicols}{3}}
+	\def\endthreecol{\end{multicols}}
+	\def\fourcol{\begin{multicols}{4}}
+	\def\endfourcol{\end{multicols}}
+	\def\fivecol{\begin{multicols}{5}}
+	\def\endfivecol{\end{multicols}}
+\usepackage{wasysym}					% for octagon symbol
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
