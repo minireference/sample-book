@@ -1,7 +1,7 @@
 \chapter{The second chapter}
 \label{cha:a_chapter}
 
-This is the first paragraph of the Softcover Markdown template produced with the \softcover\ command-line interface. It shows how to write a document in Markdown, a lightweight markup language, augmented with the \href{http://kramdown.gettalong.org/}{kramdown} converter and some custom extensions, including support for embedded \PolyTeX, a subset of the powerful \LaTeX\ typesetting system.\footnote{Pronunciations of {}``LaTeX{}'' differ, but \emph{lay}-tech is the one I prefer.} For more information, see \href{http://manual.softcover.io/book}{\emph{The Softcover Book}}. To learn how to easily publish (and optionally sell) documents produced with Softcover, visit \href{http://softcover.io/}{Softcover.io}.
+This is the first paragraph of the Softcover Markdown template produced with the \softcover{} command-line interface. It shows how to write a document in Markdown, a lightweight markup language, augmented with the \href{http://kramdown.gettalong.org/}{kramdown} converter and some custom extensions, including support for embedded \PolyTeX{}, a subset of the powerful \LaTeX{} typesetting system.\footnote{Pronunciations of {}``LaTeX{}'' differ, but \emph{lay}-tech is the one I prefer.} For more information, see \href{http://manual.softcover.io/book}{\emph{The Softcover Book}}. To learn how to easily publish (and optionally sell) documents produced with Softcover, visit \href{http://softcover.io/}{Softcover.io}.
 
 This is the \emph{second} paragraph, showing how to emphasize text.\footnote{This is a footnote. It is numbered automatically.} You can also make text \textbf{bold} or \emph{emphasize a second way}. Via embedded \PolyTeX, Softcover also supports colored text, such as \coloredtext{red}{red}, \coloredtext{CornflowerBlue}{cornflower blue}, and \coloredtexthtml{E8AB3A}{arbitrary HTML colors}.
 
@@ -9,7 +9,7 @@ This is the \emph{second} paragraph, showing how to emphasize text.\footnote{Thi
 
 \label{sec:a_section}
 
-This is a section. You can refer to it using the \LaTeX\ cross-reference syntax, like so: Section~\ref{sec:a_section}.
+This is a section. You can refer to it using the \LaTeX{} cross-reference syntax, like so: Section~\ref{sec:a_section}.
 
 \subsection{Source code}
 
@@ -56,9 +56,9 @@ end
 
 \subsection{Mathematics}
 
-Softcover{}'s Markdown mode supports mathematical typesetting using \LaTeX\ syntax, including inline math, such as \( \phi^2 - \phi - 1 = 0, \) and centered math, such as
+Softcover{}'s Markdown mode supports mathematical typesetting using \LaTeX{} syntax, including inline math, such as \( \phi^2 - \phi - 1 = 0, \) and centered math, such as
 \[ \phi = \frac{1+\sqrt{5}}{2}. \]
-It also supports centered equations with linked cross-reference via embedded \PolyTeX\ (Eq.~\eqref{eq:phi}).
+It also supports centered equations with linked cross-reference via embedded \PolyTeX{} (Eq.~\eqref{eq:phi}).
 
 \begin{equation}
 \label{eq:phi}
@@ -69,7 +69,7 @@ Softcover also supports an alternate math syntax, such as \(\phi^2 - \phi - 1 = 
 
 \[\phi = \frac{1+\sqrt{5}}{2}.\]
 
-The \LaTeX\ syntax is strongly preferred, but the alternate syntax is included for maximum compatibility with other systems.
+The \LaTeX{} syntax is strongly preferred, but the alternate syntax is included for maximum compatibility with other systems.
 
 
 
@@ -114,7 +114,7 @@ Softcover supports the inclusion of images, like this:
 
 \image{figures/math/conic_sections_four-shapes.png}
 
-Using \LaTeX\ labels, you can also include a caption (as in Figure~\ref{fig:captioned_image}) or just a figure number (as in Figure~\ref{fig:figure_number}).
+Using \LaTeX{} labels, you can also include a caption (as in Figure~\ref{fig:captioned_image}) or just a figure number (as in Figure~\ref{fig:figure_number}).
 
 \begin{figure}[H]
 \begin{center}
@@ -218,7 +218,7 @@ Visit \href{http://manual.softcover.io}{\emph{The Softcover Book}} to learn more
 			and different coin flips correspond to random variables $Y_1$, $Y_2$, $Y_3$, \ldots which are independent copies of $Y$.
 			The probability of getting \texttt{heads} on the first flip is $P_N(1)=\textrm{Pr}\!\left( \{ Y_1=\texttt{heads} \} \right)\! =p$.
 			The probability of getting \texttt{heads} on the second flip corresponds
-			to the event $\{Y_1=\texttt{tails}\} \ \texttt{AND} \ \{Y_2=\texttt{heads} \}$.
+			to the event $\{Y_1=\texttt{tails}\} \; \texttt{AND} \; \{Y_2=\texttt{heads} \}$.
 			We assumed the coin flips are independent so % the probability of this event is the product
 			$P_N(2)=(1-p)p$.
 			Similarly $P_N(3) = (1-p)^2p$.
