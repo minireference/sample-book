@@ -318,7 +318,7 @@ def transform(extractedmanifest=EXTRACTED_MANIFEST):
     for relpath in allsourcefiles:
         # read in
         sourcepath = os.path.join(sourcedir, relpath)
-        soup = TexSoup.TexSoup(open(sourcepath).read())
+        soup = TexSoup.TexSoup(open(sourcepath).read(), skip_envs=('verbatimtab', 'code'))
 
         # run the soup-transforming pipeline
         for tansformation in tansformations:
@@ -865,7 +865,7 @@ def latexpand(sourcedir, mainfilename):
                 print('  - reading', childrelpath)
                 includepath = os.path.join(sourcedir, childrelpath)
                 assert os.path.exists(includepath), 'missing input file ' + includepath
-                childdoc = TexSoup.TexSoup(open(includepath).read(), skip_envs=('verbatimtab',))
+                childdoc = TexSoup.TexSoup(open(includepath).read(), skip_envs=('verbatimtab', 'code'))
                 latexpand_recursive(childdoc, texlines, relpath=childrelpath, parentrelpath=relpath)
             elif texnode.find('input'):
                 # B: deep includes: input statements in environment or BraceGroup
@@ -878,7 +878,7 @@ def latexpand(sourcedir, mainfilename):
                     print('  - reading deep include', childrelpath)
                     includepath = os.path.join(sourcedir, childrelpath)
                     assert os.path.exists(includepath), 'missing deep input file ' + includepath
-                    childdoc = TexSoup.TexSoup(open(includepath).read(), skip_envs=('verbatimtab',))
+                    childdoc = TexSoup.TexSoup(open(includepath).read(), skip_envs=('verbatimtab', 'code'))
                     latexpand_recursive(childdoc, texlines, relpath=childrelpath, parentrelpath=relpath)
             else:
                 #  C: regular non-include lines
@@ -887,7 +887,7 @@ def latexpand(sourcedir, mainfilename):
 
     mainpath = os.path.join(sourcedir, mainfilename)
     print('reading ', mainfilename)
-    soup = TexSoup.TexSoup(open(mainpath).read(), skip_envs=('verbatimtab',))
+    soup = TexSoup.TexSoup(open(mainpath).read(), skip_envs=('verbatimtab', 'code'))
     doc = soup.document  # skip preamble
     texlines = []
     latexpand_recursive(doc, texlines, relpath=mainfilename, parentrelpath=None)
