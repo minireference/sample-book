@@ -1,7 +1,7 @@
 Sample Book
 ===========
 Starter template for a scientific book written in LaTeX with build-scripts for
-producing PDF, HTML, ePub, and mobi eBook formats.
+producing PDF, HTML, ePub, and Mobi eBook formats.
 
 Technologies uses:
   - `softcover` the best build system for eBooks ever built
@@ -10,18 +10,12 @@ Technologies uses:
   - `Docker` for running processing on a remote machine (so laptop doesn't melt)
 
 
-TODOs
- - improve sanity checks at each step
-   - one sourcefile cannot appear in two places (ERROR instead of warn?)
-   - after load, cannot be includegraphics with .pdf paths
-   - includes only once
-
 
 
 ## Install
 
 ```bash
-# 1. create a Python virtualenv (required for pygments code highliting)
+# 1. create a Python virtualenv (py27 required for pygments code highliting)
 virtualenv -p python2.7 venv2
 source venv2/bin/activate
 
@@ -151,6 +145,7 @@ fab extract transform load
 
 ## Book structure (softcover LaTeX)
 
+```
     sample-book.tex
     chapters/
         preface.tex
@@ -163,6 +158,7 @@ fab extract transform load
         figures/
             someimg.png
             anotherimg.jpeg
+```
 
 You can assume the "build process" is happening in the root of the git repository
 so you can use relative paths to figures, e.g. `images/figures/someimg.png` and
@@ -171,54 +167,63 @@ they will be resolved correctly.
 
 ## Configs
 
-  - `config/book.yml`: book metadata
-  - `config/lang.yml`: i18n strings
-  - `config/manifest.yml`: detailed list of source files that make up the book (external repo)
-  - `config/preamble.tex`: this file is only used to get the latex `documentclass` declaration.
-     The actual `documentclass` declaration used for `build:pdf` is whatever is in `sample-book.tex`.
-  - `latex_styles/softcover.sty`: main LaTeX header file that defines the LaTeX macros and styles
-     and includes the other config files below.
-  - `latex_styles/custom.sty `: define additional macros, e.g. `\newcommand{\unitvec}[1]{\ensuremath{\hat #1}}`.
-     These macros will be available in all build pipelines.
-  - `latex_styles/custom_pdf.sty`: same as the above but used only for LaTeX build pipeline
+- `config/book.yml`: book metadata
+- `config/lang.yml`: i18n strings
+- `config/manifest.yml`: detailed list of source files that make up the book (external repo)
+- `config/preamble.tex`: this file is only used to get the latex `documentclass` declaration.
+    The actual `documentclass` declaration used for `build:pdf` is whatever is in `sample-book.tex`.
+- `latex_styles/softcover.sty`: main LaTeX header file that defines the LaTeX macros and styles
+    and includes the other config files below.
+- `latex_styles/custom.sty `: define additional macros, e.g. `\newcommand{\unitvec}[1]{\ensuremath{\hat #1}}`.
+    These macros will be available in all build pipelines.
+- `latex_styles/custom_pdf.sty`: same as the above but used only for LaTeX build pipeline
 
 
 
 ## Book build directories
 
-  - `html` build directory for the HTML format. 
-    - `html/images` is a symlink to the `images/` directory in the project root.
-  - `epub` build directory for the epub format
-  - `ebooks` output directory for .pdf, .epub, and .mobi formats
-  - `99anssol` directory where exercises answers and solutions are collected to
-    be printed in the Answers and Solutions appendix. Only relevant when `\setboolean{SOLSINTHEBACK}{true}`.
-  - `log` very detailed logging output you'll want to check when things break
+- `html` build directory for the HTML format. 
+  - `html/images` is a symlink to the `images/` directory in the project root.
+- `epub` build directory for the epub format
+- `ebooks` output directory for .pdf, .epub, and .mobi formats
+- `99anssol` directory where exercises answers and solutions are collected to
+  be printed in the Answers and Solutions appendix. Only relevant when `\setboolean{SOLSINTHEBACK}{true}`.
+- `log` very detailed logging output you'll want to check when things break
+
 
 
 ## Exercises and problems
 
 ### Definitions
 
-  - Exercise = easy question with numbering contiguous throughout chapter, e.g. `E{chapter}.{ecounter}`.
-  - Problem = harder end-of-chapter problem, labelled `P{chapter}.{pcounter}`.
+- Exercise = easy question with numbering contiguous throughout chapter, e.g. `E{chapter}.{ecounter}`.
+- Problem = harder end-of-chapter problem, labelled `P{chapter}.{pcounter}`.
 
 
 ### Exercise formatting
 
-  - each exercise section starts an `{exercises}{chNUM}` where `chNUM` is some filename  (e.g. ch2)
-  - each exercise environment contains
-    - question text
-    - one or more {hint} environments
-    - an {eanswer} environment (optional)
-    - an {esolution} environment (optional)
+- each exercise section starts an `{exercises}{chNUM}` where `chNUM` is some filename  (e.g. ch2)
+- each exercise environment contains
+  - question text
+  - one or more {hint} environments
+  - an {eanswer} environment (optional)
+  - an {esolution} environment (optional)
 
 
 ### Problems formatting
 
-  - each problems section starts an `{problems}{CHNUM}` where CHNUM is some filename  (e.g. ch2)
-  - each problem environment contains
-    - question text
-    - one or more {hint} environments
-    - an {answer} environment (optional)
-    - an {solution} environment (optional)
+- each problems section starts an `{problems}{CHNUM}` where CHNUM is some filename  (e.g. ch2)
+- each problem environment contains
+  - question text
+  - one or more {hint} environments
+  - an {answer} environment (optional)
+  - an {solution} environment (optional)
 
+
+## TODOs
+- [ ] improve sanity checks at each step
+  - [ ] one sourcefile cannot appear in two places (ERROR instead of warn?)
+  - [ ] after load, cannot be includegraphics with .pdf paths
+  - [ ] includes only once
+- [ ] fix remaining issues to make sure ebook-check pass
+- [ ] test adding optipng to build pipeline to see if .epub size reduced
