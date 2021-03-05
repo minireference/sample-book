@@ -1,7 +1,10 @@
 Sample Book
 ===========
 Starter template for a scientific book written in LaTeX with build-scripts for
-producing PDF, HTML, ePub, and Mobi eBook formats.
+producing PDF, HTML, ePub, and Mobi eBook formats. A detailed description and
+walkthrough of these scripts can be found in this blog post:
+https://minireference.com/blog/generating-epub-from-latex/
+
 
 Technologies uses:
   - `softcover` the best build system for eBooks ever built
