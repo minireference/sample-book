@@ -7,37 +7,46 @@ https://minireference.com/blog/generating-epub-from-latex/
 
 
 Technologies uses:
-  - `softcover` the best build system for eBooks ever built
-  - `alvinwan/TexSoup` for parsing latex source into AST (used for source linting and formatting only)
-  - `Fabric` automation library in Python (think Makefile but written in Python)
-  - `Docker` for running processing on a remote machine (so laptop doesn't melt)
+- `softcover` the best build system for eBooks ever built
+- `TexSoup` for parsing latex source into AST (used for source linting and formatting only)
+- `Fabric` automation library in Python (think Makefile but written in Python)
+- `Docker` for running processing on a remote machine (so my laptop doesn't melt)
 
 
-
-
-## Install
+## Initial install (local)
 
 ```bash
-# 1. create a Python virtualenv (py27 required for pygments code highliting)
-virtualenv -p python2.7 venv2
-source venv2/bin/activate
-
-
-# 2. install Ruby v2.6.3 so we don't have to use system-ruby
+# 1. install Ruby v2.6.3 so we don't have to use system-ruby
 rvm install ruby-2.6.3
+rvm use ruby-2.6.3
+
+# 2. install softcover from source
+git clone git@github.com:minireference/softcover.git
+cd softcover
+bundle install
+bundle exec rake install
+
+cd ..
+
+# 2. install polytexnic from source (to overwrite the one installed in previous step)
+git clone git@github.com:minireference/polytexnic.git
+cd polytexnic
+bundle install
+bundle exec rake install
 ```
+
 
 
 ## Build (local)
 
 ```bash
-# make sure we're running the right Pythons and Rubies
-source venv2/bin/activate
+# make sure we're running the Ruby version that has softcover and polytexnic installed
 rvm use ruby-2.6.3
 
-softcover check   # make sure sytem all requirements are installed
+softcover check   # check that all requirements are installed
 sofcover build    # builds HTML, ePub, mobi, and PDF
 ```
+
 
 
 ## Docker build (local)
@@ -81,7 +90,6 @@ Build the ePub format:
 ```bash
 fab dbuild:epub
 ```
-
 
 
 ## Book sources (minireference LaTeX)

@@ -1,7 +1,7 @@
 FROM circleci/ruby:2.6.6-buster-node-browsers-legacy
 LABEL maintainer="ivan@minireference.com"
 LABEL company="Minireference Co."
-LABEL version="1.1.1"
+LABEL version="1.1.2"
 
 USER root
 
