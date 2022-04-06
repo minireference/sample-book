@@ -1,4 +1,4 @@
-FROM circleci/ruby:2.6.6-buster-node-browsers-legacy
+FROM circleci/ruby:2.6-bullseye-node-browsers-legacy
 LABEL maintainer="ivan@minireference.com"
 LABEL company="Minireference Co."
 LABEL version="1.1.2"
@@ -10,9 +10,9 @@ USER root
 # install deps
 # ==============================================================================
 RUN gem install -v 2.1.4 bundler
-RUN echo 'deb http://deb.debian.org/debian buster-backports main' > /etc/apt/sources.list.d/backports.list
+RUN echo 'deb http://deb.debian.org/debian bullseye-backports main' > /etc/apt/sources.list.d/backports.list
 RUN apt-get update -qq \
-  && apt-get -t buster-backports install -qy --no-install-recommends "inkscape" \
+  && apt-get -t bullseye-backports install -qy --no-install-recommends "inkscape" \
   && apt-get install -qy --no-install-recommends \
       texlive-xetex texlive-latex-recommended texlive-latex-extra \
       texlive-lang-english texlive-lang-french texlive-lang-cyrillic \
@@ -65,4 +65,3 @@ RUN mkdir /book
 WORKDIR /book
 
 EXPOSE 4000
-
